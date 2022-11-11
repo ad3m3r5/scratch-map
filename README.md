@@ -6,8 +6,8 @@
 <br/>
 
 ## Features
-  * US States Map
   * World Map
+  * US States Map
   * Date Traveled To Location
 
 <br/>
