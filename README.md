@@ -1,6 +1,6 @@
 # SCRATCH-MAP
 
-![logo](https://user-images.githubusercontent.com/11009228/200929096-323b0d87-023a-4f24-aedd-9747471441dc.jpg)
+![logo](https://user-images.githubusercontent.com/11009228/201435148-647ed019-7cec-4e75-bce9-a4d1972fb4e9.jpg)
 
 <p style="text-align: center;">An open-source scratch-off style map to track your travels.</p>
 <br/>
