@@ -1,0 +1,41 @@
+div.navbar-container
+
+  div.navbar-wrapper
+    nav.navbar
+      a(href='/').site-logo
+        include ../../public/images/logo.svg
+
+      ul
+        li
+          a(href='/') Home
+        li
+          a(href='/worldmap') World
+        li
+          a(href='/statemap') USA
+
+      button.nav-toggle
+        span
+
+  script.
+    var navToggle = document.querySelector('.nav-toggle');
+    var navMenu = document.querySelector('.navbar ul');
+    var navLinks = document.querySelectorAll('.navbar a');
+
+    navToggle.addEventListener('click', toggleClick);
+    navLinks.forEach(elem => elem.addEventListener('click', navLinkClick));
+
+    function allEventListners() {
+      navToggle.addEventListener('click', toggleClick);
+      navLinks.forEach(elem => elem.addEventListener('click', navLinkClick));
+    }
+
+    function toggleClick() {
+      navToggle.classList.toggle('toggle-open');
+      navMenu.classList.toggle('open');
+    }
+
+    function navLinkClick() {
+      if(navMenu.classList.contains('open')) {
+        navToggle.click();
+      }
+    }

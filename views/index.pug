@@ -1,0 +1,87 @@
+extends layout
+
+block content
+
+  style.
+    .table-title {
+      margin-bottom: 10px;
+    }
+
+    .scratched-row {
+      display: flex;
+      margin: 0 auto;
+      width: 90%;
+    }
+
+    .scratched-column {
+      flex: 25%;
+      padding: 5px;
+    }
+
+    .scratched-table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    .scratched-table th {
+      font-size: 16px;
+    }
+
+    .scratched-table th, .scratched-table td {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+    }
+
+    .scratched-table tr:nth-child(even) {
+      background-color: #dddddd;
+    }
+
+  h1#title #{title}
+
+  script.
+    var countriesList = !{JSON.stringify(countriesList)};
+    var scratchedCountries = !{JSON.stringify(scratchedCountries)};
+
+  div.scratched-row
+    div.scratched-column
+      h3.table-title Countries (#{Object.keys(countriesList).length})
+      table.scratched-table
+        tr
+          th Country
+          th Code
+        each key, val in countriesList
+          tr
+            td #{key}
+            td #{val}
+    div.scratched-column
+      h3.table-title Visited (#{scratchedCountries.length})
+      table.scratched-table
+        tr
+          th Country
+          th Year
+        each val in scratchedCountries
+          tr
+            td #{val.name}
+            td #{val.year}
+
+    div.scratched-column
+      h3.table-title US States (#{Object.keys(statesList).length})
+      table.scratched-table
+        tr
+          th State
+          th Code
+        each key, val in statesList
+          tr
+            td #{key}
+            td #{val}
+    div.scratched-column
+      h3.table-title Visited (#{scratchedStates.length})
+      table.scratched-table
+        tr
+          th State
+          th Year
+        each val in scratchedStates
+          tr
+            td #{val.name}
+            td #{val.year}
