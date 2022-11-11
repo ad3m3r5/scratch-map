@@ -1,8 +1,8 @@
 import fs from 'fs';
 import path from "path";
 import { fileURLToPath } from "url";
-import { Low } from 'lowdb'
-import { JSONFile } from 'lowdb/node'
+import { LowSync } from 'lowdb'
+import { JSONFileSync } from 'lowdb/node'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -17,10 +17,10 @@ export const createConnection = async () => {
 
   const file = path.join(dbLocation, 'db.json');
 
-  const adapter = new JSONFile(file);
-  db = new Low(adapter);
+  const adapter = new JSONFileSync(file);
+  db = new LowSync(adapter);
 
-  await db.read();
+  db.read();
 
   db.data ||= {
     scratched: { countries: [], states: [] },
@@ -28,7 +28,18 @@ export const createConnection = async () => {
     states: JSON.parse(fs.readFileSync(path.join(__dirname, './states.json')))
   };
 
-  await db.write();
+  // update countries and states in DB if changed
+  let countries = JSON.parse(fs.readFileSync(path.join(__dirname, './countries.json')))
+  let states = JSON.parse(fs.readFileSync(path.join(__dirname, './states.json')))
+
+  if (JSON.stringify(db.data.countries) != JSON.stringify(countries)) {
+    db.data.countries = countries;
+  }
+  if (JSON.stringify(db.data.states) != JSON.stringify(states)) {
+    db.data.states = states;
+  }
+
+  db.write();
 };
 
 export const getConnection = () => db;
