@@ -138,6 +138,9 @@ No territories are included on this map.
 
 ## Running
 **Docker**
+
+[![Docker Hub](https://img.shields.io/badge/DockerHub-image-blue?logo=docker&style=plastic)](https://hub.docker.com/r/ad3m3r5/scratch-map) ![Docker Image Size (tag)](https://img.shields.io/docker/image-size/ad3m3r5/scratch-map/latest?logo=docker&style=plastic)
+
 ```
 mkdir -p /opt/docker/scratch-map/data
 
