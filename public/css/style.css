@@ -190,5 +190,5 @@ html, body {
 
 /* SweetAlert2 */
 .swal2-popup.swal2-toast.swal2-show {
-  top: 80px !important;
+  top: 65px !important;
 }
