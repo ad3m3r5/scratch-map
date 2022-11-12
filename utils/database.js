@@ -29,15 +29,13 @@ export const createConnection = async () => {
   };
 
   // update countries and states in DB if changed
-  let countries = JSON.parse(fs.readFileSync(path.join(__dirname, './countries.json')))
-  let states = JSON.parse(fs.readFileSync(path.join(__dirname, './states.json')))
-
-  if (JSON.stringify(db.data.countries) != JSON.stringify(countries)) {
-    db.data.countries = countries;
-  }
-  if (JSON.stringify(db.data.states) != JSON.stringify(states)) {
-    db.data.states = states;
-  }
+  const validTypes = ['countries', 'states'];
+  validTypes.forEach(type => {
+    let importedType = JSON.parse(fs.readFileSync(path.join(__dirname, `./${type}.json`)));
+    if (JSON.stringify(db.data[type]) != JSON.stringify(importedType)) {
+      db.data[type] = importedType;
+    }
+  });
 
   db.write();
 };

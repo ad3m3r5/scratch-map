@@ -158,11 +158,8 @@ async function clickObject(e) {
       let dataSet = jsonResponse.scratched;
       scratchedObjects = dataSet;
 
-      if (mapType == 'c') {
-        objectClass = document.querySelector('.countries');
-        objectGroups = objectClass.querySelectorAll(':scope > g');
-      } else if (mapType == 's') {
-        objectClass = document.querySelector('.states');
+      if (validTypes.includes(mapType)) {
+        objectClass = document.querySelector(`.${mapType}`);
         objectGroups = objectClass.querySelectorAll(':scope > g');
       }
       renderScratched(objectGroups);
@@ -179,6 +176,38 @@ async function clickObject(e) {
     }
     
   }
+}
+
+async function rightClickObject(e) {
+  e.stopPropagation();
+  e.preventDefault();
+
+  let object = {
+    code: e.target.closest(`.${mapType} > g`).id,
+    name: '',
+    year: '',
+    url: ''
+  };
+
+  // get name of object
+  for (var key of Object.keys(objectList)) {
+    if (object.code.toUpperCase() == key.toUpperCase()) {
+      object.name = objectList[key];
+    }
+  }
+
+  saResponse = await Swal.fire({
+    title: `View ${object.name} map?`,
+    icon: 'question',
+    showConfirmButton: true,
+    showDenyButton: true,
+    confirmButtonText: 'Yes',
+    denyButtonText: 'No',
+    confirmButtonColor: '#4d9e1b',
+    denyButtonColor: '#f54b38'
+  });
+
+  console.log(saResponse);
 }
 
 function renderScratched(objects) {  
