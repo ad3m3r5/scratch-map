@@ -178,38 +178,6 @@ async function clickObject(e) {
   }
 }
 
-async function rightClickObject(e) {
-  e.stopPropagation();
-  e.preventDefault();
-
-  let object = {
-    code: e.target.closest(`.${mapType} > g`).id,
-    name: '',
-    year: '',
-    url: ''
-  };
-
-  // get name of object
-  for (var key of Object.keys(objectList)) {
-    if (object.code.toUpperCase() == key.toUpperCase()) {
-      object.name = objectList[key];
-    }
-  }
-
-  saResponse = await Swal.fire({
-    title: `View ${object.name} map?`,
-    icon: 'question',
-    showConfirmButton: true,
-    showDenyButton: true,
-    confirmButtonText: 'Yes',
-    denyButtonText: 'No',
-    confirmButtonColor: '#4d9e1b',
-    denyButtonColor: '#f54b38'
-  });
-
-  console.log(saResponse);
-}
-
 function renderScratched(objects) {  
   for (let i = 0; i < objects.length; i++) {
     objects[i].classList.remove('scratched');
