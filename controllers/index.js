@@ -51,30 +51,28 @@ export const getHome = ((req, res, next) => {
   });
 });
 
-// world map
-export const getWorldMap = ((req, res, next) => {
-  let countriesList = getConnection().data.countries;
-  let scratchedCountries = getConnection().data.scratched.countries;
+// map
+export const getMap = ((req, res, next) => {
+  let mapType = req.params.mapType;
 
+  if (!validTypes.includes(mapType)) {
+    res.render('error', { status: '404', message: `/map/${mapType} Not Found` });
+  } else {
+    let objectList = getConnection().data[mapType];
+    let scratchedObjects = getConnection().data.scratched[mapType];
+  
+    let title = `Map of ${mapType.charAt(0).toUpperCase + mapType.slice(1)}`;
+  
+    if (mapType == 'countries') title = 'World Map';
+    if (mapType == 'states') title = 'US States';
+  
     res.render('map', {
-    title: 'World Map',
-    mapType: 'countries',
-    objectList: countriesList,
-    scratchedObjects: scratchedCountries
-  });
-});
-
-// states map
-export const getStateMap = ((req, res, next) => {
-  let statesList = getConnection().data.states;
-  let scratchedStates = getConnection().data.scratched.states;
-
-  res.render('map', {
-    title: 'US States',
-    mapType: 'states',
-    objectList: statesList,
-    scratchedObjects: scratchedStates
-  });
+      title,
+      mapType,
+      objectList,
+      scratchedObjects
+    });
+  }
 });
 
 // scratch endpoint
