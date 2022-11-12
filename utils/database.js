@@ -10,7 +10,7 @@ const dbLocation = process.env.DBLOCATION || path.join(__dirname, '../data');
 
 let db;
 
-const validTypes = ['countries', 'states', 'canada'];
+const validTypes = ['countries', 'states'];
 
 export const createConnection = async () => {
   if (!fs.existsSync(dbLocation)){
