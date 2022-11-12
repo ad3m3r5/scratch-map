@@ -5,7 +5,7 @@
   "main": "server.js",
   "type": "module",
   "author": "ad3m3r5",
-  "license": "MIT",
+  "license": "AGPL-3.0",
   "scripts": {
     "start": "node server.js",
     "dev": "nodemon --verbose server.js"
