@@ -18,42 +18,111 @@ async function clickObject(e) {
   e.stopPropagation();
   e.preventDefault();
 
+  let object = {
+    code: '',
+    name: '',
+    year: '',
+    url: ''
+  };
+
   let parentGroup = null;
   if (maptype == 'c') {
     parentGroup = e.target.closest('.countries > g');
   } else if (maptype == 's') {
     parentGroup = e.target.closest('.states > g');
   }
-  let objectCode = parentGroup.id;
-  let objectName = '';
+  if (parentGroup !== null) {
+    object.code = parentGroup.id;
+  }
+
+  // get name of object
   for (var key of Object.keys(objectList)) {
-    if (objectCode.toUpperCase() == key.toUpperCase()) {
-      objectName = objectList[key];
+    if (object.code.toUpperCase() == key.toUpperCase()) {
+      object.name = objectList[key];
     }
   }
 
+  // determine if object has already been scratched
   let scratched = false;
   for (let i=0; i<scratchedObjects.length; i++) {
-    if (scratchedObjects[i].code.toUpperCase() == objectCode.toUpperCase()) {
+    if (scratchedObjects[i].code.toUpperCase() == object.code.toUpperCase()) {
       scratched = true;
+
+      object.year = scratchedObjects[i].year;
+      object.url = scratchedObjects[i].url;
     }
   }
 
-  let saResponse = await Swal.fire({
-    title: `${scratched ? 'Unscratch' : 'Scratch'} ${objectName}?`,
-    icon: 'question',
-    input: scratched ? null : 'text',
-    inputLabel: scratched ? null : 'Year you visited',
-    inputPlaceholder: scratched ? null : (new Date().getFullYear()),
-    showConfirmButton: true,
-    showDenyButton: true,
-    confirmButtonText: 'Yes',
-    denyButtonText: 'No',
-    confirmButtonColor: '#4d9e1b',
-    denyButtonColor: '#f54b38'
-  });
+  let saResponse = null;
+  let keepScratched = null;
+  // Prompt user
+  if (scratched) {
+    saResponse = await Swal.fire({
+      title: `Update ${object.name}?`,
+      icon: 'question',
+      html:
+        `<label for="swal2-checkbox-1" class="swal2-checkbox" style="display: flex;">` +
+          `<span class="swal2-label">Scratched: </span>` +
+          `<input type="checkbox" id="swal2-checkbox-1" checked>` +
+        `</label>` +
+        `<br/>` +
+        `<label for="swal2-input-1" class="swal2-input-label">Year you visited</label>` +
+        `<input id="swal2-input-1" class="swal2-input" placeholder="${new Date().getFullYear()}" value="${object.year || ''}" type="text" style="width: -webkit-fill-available;">` +
+        `<label for="swal2-input-2" class="swal2-input-label">Link to Photo Album</label>` +
+        `<input id="swal2-input-2" class="swal2-input" placeholder="https://mycloud.com/${object.name.toLowerCase()}-trip-photos" value="${object.url || ''}" type="text" style="width: -webkit-fill-available;">`,
+        preConfirm: () => {
+          return {
+            checkbox: document.getElementById('swal2-checkbox-1').checked,
+            year: document.getElementById('swal2-input-1').value,
+            url: document.getElementById('swal2-input-2').value
+          }
+        },
+      showConfirmButton: true,
+      showDenyButton: true,
+      confirmButtonText: 'Yes',
+      denyButtonText: 'No',
+      confirmButtonColor: '#4d9e1b',
+      denyButtonColor: '#f54b38'
+    });
 
-  if (saResponse.isConfirmed) {
+    if (saResponse.isConfirmed) {
+      if (saResponse.value.checkbox) {
+        keepScratched = true;
+      } else {
+        keepScratched = false;
+      }
+    }
+  } else if (!scratched) {
+    saResponse = await Swal.fire({
+      title: `Scratch ${object.name}?`,
+      icon: 'question',
+      html:
+        `<label for="swal2-input-1" class="swal2-input-label">Year you visited</label>` +
+        `<input id="swal2-input-1" class="swal2-input" placeholder="${new Date().getFullYear()}" type="text" style="width: -webkit-fill-available;">` +
+        
+        `<label for="swal2-input-2" class="swal2-input-label">Link to Photo Album</label>` +
+        `<input id="swal2-input-2" class="swal2-input" placeholder="https://mycloud.com/${object.name.toLowerCase()}-trip-photos" type="text" style="width: -webkit-fill-available;">`,
+      preConfirm: () => {
+        return {
+          year: document.getElementById('swal2-input-1').value,
+          url: document.getElementById('swal2-input-2').value
+        }
+      },
+      showConfirmButton: true,
+      showDenyButton: true,
+      confirmButtonText: 'Yes',
+      denyButtonText: 'No',
+      confirmButtonColor: '#4d9e1b',
+      denyButtonColor: '#f54b38'
+    });
+  };
+
+  if (saResponse == null) {
+    Toast.fire({
+      icon: 'error',
+      title: 'An unknown error has occurred' 
+    });
+  } else if (saResponse.isConfirmed) {
     const rawResponse = await fetch('/scratch', {
       method: 'POST',
       headers: {
@@ -62,25 +131,15 @@ async function clickObject(e) {
       },
       body: JSON.stringify({
         'type': maptype,
-        'code': objectCode,
-        'scratch': !scratched,
-        'year': scratched ? "" : saResponse.value
+        'code': object.code,
+        'scratch': !scratched ? true : (keepScratched ? true : false),
+        'year': saResponse.value.year,
+        'url': saResponse.value.url
       })
     });
     let jsonResponse = await rawResponse.json();
 
-    const Toast = Swal.mixin({
-      toast: true,
-      position: 'top-end',
-      showConfirmButton: false,
-      timer: 3000,
-      timerProgressBar: true,
-      didOpen: (toast) => {
-        toast.addEventListener('mouseenter', Swal.stopTimer)
-        toast.addEventListener('mouseleave', Swal.resumeTimer)
-      }
-    });
-
+    // handle api response
     if (jsonResponse.status == 200) {
       let dataSet = jsonResponse.scratched;
       scratchedObjects = dataSet;
@@ -102,7 +161,7 @@ async function clickObject(e) {
       Toast.fire({
         icon: 'error',
         title: jsonResponse.message
-      })
+      });
     }
     
   }
@@ -121,3 +180,16 @@ function renderScratched(objects) {
     }
   }
 }
+
+// preconfigured toast object
+const Toast = Swal.mixin({
+  toast: true,
+  position: 'top-end',
+  showConfirmButton: false,
+  timer: 3000,
+  timerProgressBar: true,
+  didOpen: (toast) => {
+    toast.addEventListener('mouseenter', Swal.stopTimer)
+    toast.addEventListener('mouseleave', Swal.resumeTimer)
+  }
+});

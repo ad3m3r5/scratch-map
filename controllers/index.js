@@ -79,10 +79,10 @@ export const getStateMap = ((req, res, next) => {
 // scratch endpoint
 export const postScratch = (async (req, res, next) => {
   console.log(req.body);
-  if (Object.keys(req.body).length !== 4) {
+  if (Object.keys(req.body).length !== 5) {
     // body attribute count
     return res.status(422).json({ status: 422, message: 'Invalid body length' }).send();
-  } else if (typeof req.body.type !== 'string' || typeof req.body.code !== 'string' || typeof req.body.scratch !== 'boolean' || typeof req.body.year !== 'string') {
+  } else if (typeof req.body.type !== 'string' || typeof req.body.code !== 'string' || typeof req.body.scratch !== 'boolean' || typeof req.body.year !== 'string' || typeof req.body.url !== 'string') {
     // body attribute data types
     return res.status(422).json({ status: 422, message: 'Invalid data type' }).send();
   } else if (req.body.type.length !== 1) {
@@ -100,6 +100,9 @@ export const postScratch = (async (req, res, next) => {
   } else if (/^\d+\.\d+$/.test(req.body.year)) {
     // year only contains numbers
     return res.status(422).json({ status: 422, message: 'Invalid year' }).send();
+  } else if (req.body.url.length < 0 || req.body.url.length > 1024) {
+    // url length
+    return res.status(422).json({ status: 422, message: 'Invalid url length' }).send();
   } else {
     let countriesList = getConnection().data.countries;
     let statesList = getConnection().data.states;
@@ -117,20 +120,53 @@ export const postScratch = (async (req, res, next) => {
 
     // new scratch
     if (req.body.scratch) {
+      // check if already scratched
+      let exists = false;
+      let existsIndex = null;
       if (req.body.type == 'c') {
-        getConnection().data.scratched.countries.push({
-          "code": req.body.code.toUpperCase(),
-          "year": req.body.year
-        });
+        for (let i=0; i < getConnection().data.scratched.countries.length; i++) {
+          if (getConnection().data.scratched.countries[i].code.toUpperCase() == req.body.code.toUpperCase()) {
+            exists = true;
+            existsIndex = i;
+          }
+        }
+
+        if (exists) {
+          // update existing scratch
+          getConnection().data.scratched.countries[existsIndex].year = req.body.year;
+          getConnection().data.scratched.countries[existsIndex].url = req.body.url;
+        } else {
+          // add new scratch
+          getConnection().data.scratched.countries.push({
+            'code': req.body.code.toUpperCase(),
+            'year': req.body.year || '',
+            'url': req.body.url || ''
+          });
+        }
       } else if (req.body.type == 's') {
-        getConnection().data.scratched.states.push({
-          "code": req.body.code.toUpperCase(),
-          "year": req.body.year
-        });
+        for (let i=0; i < getConnection().data.scratched.states.length; i++) {
+          if (getConnection().data.scratched.states[i].code.toUpperCase() == req.body.code.toUpperCase()) {
+            exists = true;
+            existsIndex = i;
+          }
+        }
+
+        if (exists) {
+          // update existing scratch
+          getConnection().data.scratched.states[existsIndex].year = req.body.year;
+          getConnection().data.scratched.states[existsIndex].url = req.body.url;
+        } else {
+          // add new scratch
+          getConnection().data.scratched.states.push({
+            'code': req.body.code.toUpperCase(),
+            'year': req.body.year || '',
+            'url': req.body.url || ''
+          });
+        }
       }
       getConnection().write();
-    // undo scratch
     } else {
+      // undo scratch
       let scratched = getConnection().data.scratched;
       let objectIndex = null;
       if (req.body.type == 'c') {
