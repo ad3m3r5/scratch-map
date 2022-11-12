@@ -160,6 +160,10 @@ docker run -d --restart=always --name scratch-map -p 8080:8080 \
 * `npm install`
 * `npm run`
 
+**Running as a Service**
+
+This varies depending on the OS, however I would recommend checking out [PM2](https://pm2.keymetrics.io/).
+
 ### Environment Variables
   * `process.env.DBLOCATION`
     * (recommended) somewhere outside of app dir for update compatibility
@@ -181,10 +185,10 @@ docker run -d --restart=always --name scratch-map -p 8080:8080 \
 
 ## Screenshots
 
-![image](https://user-images.githubusercontent.com/11009228/201389392-2dfeabac-0ce3-4aca-9706-88a49b5cb746.png)
+![Home Page](https://user-images.githubusercontent.com/11009228/201389392-2dfeabac-0ce3-4aca-9706-88a49b5cb746.png)
 
-![image](https://user-images.githubusercontent.com/11009228/201389466-269d0fe5-88e0-42d6-bd9e-fe1fe79befb8.png)
+![World Map](https://user-images.githubusercontent.com/11009228/201389466-269d0fe5-88e0-42d6-bd9e-fe1fe79befb8.png)
 
-![image](https://user-images.githubusercontent.com/11009228/201389578-262e80b1-a6ab-407c-baf2-bcb803789778.png)
+![Example Popup](https://user-images.githubusercontent.com/11009228/201492766-4c1a7614-6d48-411f-90e4-97ac9a6f4ca1.png)
 
-![image](https://user-images.githubusercontent.com/11009228/201389708-1e3643a1-1cf6-4f23-98ec-e34a72acafd0.png)
+![States Map](https://user-images.githubusercontent.com/11009228/201389708-1e3643a1-1cf6-4f23-98ec-e34a72acafd0.png)
