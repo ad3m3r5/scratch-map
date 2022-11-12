@@ -69,14 +69,26 @@ async function clickObject(e) {
         `<label for="swal2-input-1" class="swal2-input-label">Year you visited</label>` +
         `<input id="swal2-input-1" class="swal2-input" placeholder="${new Date().getFullYear()}" value="${object.year || ''}" type="text" style="width: -webkit-fill-available;">` +
         `<label for="swal2-input-2" class="swal2-input-label">Link to Photo Album</label>` +
-        `<input id="swal2-input-2" class="swal2-input" placeholder="https://mycloud.com/${object.name.toLowerCase()}-trip-photos" value="${object.url || ''}" type="text" style="width: -webkit-fill-available;">`,
-        preConfirm: () => {
+        `<input id="swal2-input-2" class="swal2-input" placeholder="https://mycloud.com/${object.name.toLowerCase()}-trip-photos" value="${object.url || ''}" type="url" style="width: -webkit-fill-available;">`,
+      preConfirm: () => {
+        let year = document.getElementById('swal2-input-1').value;
+        let url = document.getElementById('swal2-input-2').value;
+        if ((year.length > 0 && !isValidYear(year)) || year.length > 6) {
+          Swal.showValidationMessage(
+            `Invalid Year. Year must must be a number and less than 6 characters.`
+          )
+        } else if ((url.length > 0 && !isValidURL(url)) || url.length > 1024) {
+          Swal.showValidationMessage(
+            `Invalid URL. URL must contain a protocol and be less than 1024 characters.`
+          )
+        } else {
           return {
             checkbox: document.getElementById('swal2-checkbox-1').checked,
             year: document.getElementById('swal2-input-1').value,
             url: document.getElementById('swal2-input-2').value
           }
-        },
+        }
+      },
       showConfirmButton: true,
       showDenyButton: true,
       confirmButtonText: 'Yes',
@@ -101,11 +113,23 @@ async function clickObject(e) {
         `<input id="swal2-input-1" class="swal2-input" placeholder="${new Date().getFullYear()}" type="text" style="width: -webkit-fill-available;">` +
         
         `<label for="swal2-input-2" class="swal2-input-label">Link to Photo Album</label>` +
-        `<input id="swal2-input-2" class="swal2-input" placeholder="https://mycloud.com/${object.name.toLowerCase()}-trip-photos" type="text" style="width: -webkit-fill-available;">`,
+        `<input id="swal2-input-2" class="swal2-input" placeholder="https://mycloud.com/${object.name.toLowerCase()}-trip-photos" type="url" style="width: -webkit-fill-available;">`,
       preConfirm: () => {
-        return {
-          year: document.getElementById('swal2-input-1').value,
-          url: document.getElementById('swal2-input-2').value
+        let year = document.getElementById('swal2-input-1').value;
+        let url = document.getElementById('swal2-input-2').value;
+        if ((year.length > 0 && !isValidYear(year)) || year.length > 6) {
+          Swal.showValidationMessage(
+            `Invalid Year. Year must must be a number and less than 6 characters.`
+          )
+        } else if ((url.length > 0 && !isValidURL(url)) || url.length > 1024) {
+          Swal.showValidationMessage(
+            `Invalid URL. URL must contain a protocol and be less than 1024 characters.`
+          )
+        } else {
+          return {
+            year: document.getElementById('swal2-input-1').value,
+            url: document.getElementById('swal2-input-2').value
+          }
         }
       },
       showConfirmButton: true,
@@ -193,3 +217,17 @@ const Toast = Swal.mixin({
     toast.addEventListener('mouseleave', Swal.resumeTimer)
   }
 });
+
+function isValidYear(year) {
+  const regex = /^-?\d+\.?\d*$/;
+
+  console.log(regex.test(year));
+
+  return regex.test(year);
+}
+
+function isValidURL(url) {
+  const regex = /(?:https?):\/\/(\w+:?\w*)?(\S+)(:\d+)?(\/|\/([\w#!:.?+=&%!\-\/]))?/;
+
+  return regex.test(url);
+}

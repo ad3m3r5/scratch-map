@@ -94,15 +94,18 @@ export const postScratch = (async (req, res, next) => {
   } else if (req.body.code.length !== 2) {
     // country/state code length
     return res.status(422).json({ status: 422, message: 'Invalid code length' }).send();
-  } else if (req.body.year.length < 0 || req.body.year.length > 4) {
+  } else if (req.body.year.length < 0 || req.body.year.length > 6) {
     // year length
     return res.status(422).json({ status: 422, message: 'Invalid year length' }).send();
-  } else if (/^\d+\.\d+$/.test(req.body.year)) {
+  } else if (req.body.year.length > 0 && !isValidYear(req.body.year)) {
     // year only contains numbers
     return res.status(422).json({ status: 422, message: 'Invalid year' }).send();
   } else if (req.body.url.length < 0 || req.body.url.length > 1024) {
     // url length
     return res.status(422).json({ status: 422, message: 'Invalid url length' }).send();
+  } else if (req.body.url.length > 0 && !isValidURL(req.body.url)) {
+    // url valid (has protocol defined)
+    return res.status(422).json({ status: 422, message: 'Invalid url' }).send();
   } else {
     let countriesList = getConnection().data.countries;
     let statesList = getConnection().data.states;
@@ -204,3 +207,15 @@ export const postScratch = (async (req, res, next) => {
     });
   }
 });
+
+function isValidYear(year) {
+  const regex = /^-?\d+\.?\d*$/;
+
+  return regex.test(year);
+}
+
+function isValidURL(url) {
+  const regex = /(?:https?):\/\/(\w+:?\w*)?(\S+)(:\d+)?(\/|\/([\w#!:.?+=&%!\-\/]))?/;
+
+  return regex.test(url);
+}
