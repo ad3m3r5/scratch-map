@@ -11,7 +11,6 @@ renderScratched(objectGroups);
 
 for (let i = 0; i < objectGroups.length; i++) {
   objectGroups[i].addEventListener('click', clickObject);
-  objectGroups[i].addEventListener('contextmenu', rightClickObject);
 }
 
 async function clickObject(e) {
