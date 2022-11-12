@@ -1,10 +1,9 @@
 var objectClass = null, objectGroups = null;
 
-if (maptype == 'c') {
-  objectClass = document.querySelector('.countries');
-  objectGroups = objectClass.querySelectorAll(':scope > g');
-} else if (maptype == 's') {
-  objectClass = document.querySelector('.states');
+const validTypes = ['countries', 'states'];
+
+if (validTypes.includes(mapType)) {
+  objectClass = document.querySelector(`.${mapType}`);
   objectGroups = objectClass.querySelectorAll(':scope > g');
 }
 
@@ -12,6 +11,7 @@ renderScratched(objectGroups);
 
 for (let i = 0; i < objectGroups.length; i++) {
   objectGroups[i].addEventListener('click', clickObject);
+  objectGroups[i].addEventListener('contextmenu', rightClickObject);
 }
 
 async function clickObject(e) {
@@ -19,21 +19,11 @@ async function clickObject(e) {
   e.preventDefault();
 
   let object = {
-    code: '',
+    code: e.target.closest(`.${mapType} > g`).id,
     name: '',
     year: '',
     url: ''
   };
-
-  let parentGroup = null;
-  if (maptype == 'c') {
-    parentGroup = e.target.closest('.countries > g');
-  } else if (maptype == 's') {
-    parentGroup = e.target.closest('.states > g');
-  }
-  if (parentGroup !== null) {
-    object.code = parentGroup.id;
-  }
 
   // get name of object
   for (var key of Object.keys(objectList)) {
@@ -154,7 +144,7 @@ async function clickObject(e) {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        'type': maptype,
+        'type': mapType,
         'code': object.code,
         'scratch': !scratched ? true : (keepScratched ? true : false),
         'year': saResponse.value.year,
@@ -168,10 +158,10 @@ async function clickObject(e) {
       let dataSet = jsonResponse.scratched;
       scratchedObjects = dataSet;
 
-      if (maptype == 'c') {
+      if (mapType == 'c') {
         objectClass = document.querySelector('.countries');
         objectGroups = objectClass.querySelectorAll(':scope > g');
-      } else if (maptype == 's') {
+      } else if (mapType == 's') {
         objectClass = document.querySelector('.states');
         objectGroups = objectClass.querySelectorAll(':scope > g');
       }

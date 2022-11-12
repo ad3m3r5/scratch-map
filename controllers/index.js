@@ -1,5 +1,6 @@
 import { getConnection } from '../utils/database.js';
 
+const validTypes = ['countries', 'states'];
 
 // home page
 export const getHome = ((req, res, next) => {
@@ -57,7 +58,7 @@ export const getWorldMap = ((req, res, next) => {
 
     res.render('map', {
     title: 'World Map',
-    maptype: 'c',
+    mapType: 'countries',
     objectList: countriesList,
     scratchedObjects: scratchedCountries
   });
@@ -70,7 +71,7 @@ export const getStateMap = ((req, res, next) => {
 
   res.render('map', {
     title: 'US States',
-    maptype: 's',
+    mapType: 'states',
     objectList: statesList,
     scratchedObjects: scratchedStates
   });
@@ -85,11 +86,11 @@ export const postScratch = (async (req, res, next) => {
   } else if (typeof req.body.type !== 'string' || typeof req.body.code !== 'string' || typeof req.body.scratch !== 'boolean' || typeof req.body.year !== 'string' || typeof req.body.url !== 'string') {
     // body attribute data types
     return res.status(422).json({ status: 422, message: 'Invalid data type' }).send();
-  } else if (req.body.type.length !== 1) {
+  } else if (req.body.type.length < 0 || req.body.type.length > 20) {
     // scratch type length
     return res.status(422).json({ status: 422, message: 'Invalid object length' }).send();
-  } else if (req.body.type !== 'c' && req.body.type !== 's') {
-    // scratch type - country/state
+  } else if (!validTypes.includes(req.body.type)) {
+    // scratch type
     return res.status(422).json({ status: 422, message: 'Invalid object type' }).send();
   } else if (req.body.code.length !== 2) {
     // country/state code length
@@ -107,83 +108,46 @@ export const postScratch = (async (req, res, next) => {
     // url valid (has protocol defined)
     return res.status(422).json({ status: 422, message: 'Invalid url' }).send();
   } else {
-    let countriesList = getConnection().data.countries;
-    let statesList = getConnection().data.states;
-
     // check that the country/state code exists
-    if (req.body.type == 'c') {
-      if (!(req.body.code.toUpperCase() in countriesList)) {
-        return res.status(422).json({ status: 422, message: 'Invalid object code' }).send();
-      }
-    } else if (req.body.type == 's') {
-      if (!(req.body.code.toUpperCase() in statesList)) {
-        return res.status(422).json({ status: 422, message: 'Invalid object code' }).send();
-      }
+    if (!(req.body.code.toUpperCase() in getConnection().data[req.body.type])) {
+      return res.status(422).json({ status: 422, message: 'Invalid object code' }).send();
     }
+
+    let scratched = getConnection().data.scratched;
 
     // new scratch
     if (req.body.scratch) {
       // check if already scratched
       let exists = false;
       let existsIndex = null;
-      if (req.body.type == 'c') {
-        for (let i=0; i < getConnection().data.scratched.countries.length; i++) {
-          if (getConnection().data.scratched.countries[i].code.toUpperCase() == req.body.code.toUpperCase()) {
-            exists = true;
-            existsIndex = i;
-          }
-        }
 
-        if (exists) {
-          // update existing scratch
-          getConnection().data.scratched.countries[existsIndex].year = req.body.year;
-          getConnection().data.scratched.countries[existsIndex].url = req.body.url;
-        } else {
-          // add new scratch
-          getConnection().data.scratched.countries.push({
-            'code': req.body.code.toUpperCase(),
-            'year': req.body.year || '',
-            'url': req.body.url || ''
-          });
-        }
-      } else if (req.body.type == 's') {
-        for (let i=0; i < getConnection().data.scratched.states.length; i++) {
-          if (getConnection().data.scratched.states[i].code.toUpperCase() == req.body.code.toUpperCase()) {
-            exists = true;
-            existsIndex = i;
-          }
-        }
-
-        if (exists) {
-          // update existing scratch
-          getConnection().data.scratched.states[existsIndex].year = req.body.year;
-          getConnection().data.scratched.states[existsIndex].url = req.body.url;
-        } else {
-          // add new scratch
-          getConnection().data.scratched.states.push({
-            'code': req.body.code.toUpperCase(),
-            'year': req.body.year || '',
-            'url': req.body.url || ''
-          });
+      for (let i=0; i < scratched[req.body.type].length; i++) {
+        if (scratched[req.body.type][i].code.toUpperCase() == req.body.code.toUpperCase()) {
+          exists = true;
+          existsIndex = i;
         }
       }
+      if (exists) {
+        // update existing scratch
+        scratched[req.body.type][existsIndex].year = req.body.year;
+        scratched[req.body.type][existsIndex].url = req.body.url;
+      } else {
+        // add new scratch
+        scratched[req.body.type].push({
+          'code': req.body.code.toUpperCase(),
+          'year': req.body.year || '',
+          'url': req.body.url || ''
+        });
+      }
+
+      getConnection().data.scratched = scratched;
       getConnection().write();
     } else {
       // undo scratch
-      let scratched = getConnection().data.scratched;
-      let objectIndex = null;
-      if (req.body.type == 'c') {
-        objectIndex = scratched.countries.findIndex(x => x.code == req.body.code.toUpperCase());
-      } else if (req.body.type == 's') {
-        objectIndex = scratched.states.findIndex(x => x.code == req.body.code.toUpperCase());
-      }
+      let objectIndex = scratched[req.body.type].findIndex(x => x.code == req.body.code.toUpperCase());
 
       if (objectIndex > -1) {
-        if (req.body.type == 'c') {
-          scratched.countries.splice(objectIndex, 1);
-        } else if (req.body.type == 's') {
-          scratched.states.splice(objectIndex, 1);
-        }
+        scratched[req.body.type].splice(objectIndex, 1);
 
         getConnection().data.scratched = scratched;
         getConnection().write();
@@ -192,12 +156,7 @@ export const postScratch = (async (req, res, next) => {
       }
     }
 
-    let returnedScratched = {};
-    if (req.body.type == 'c') {
-      returnedScratched = getConnection().data.scratched.countries;
-    } else if (req.body.type == 's') {
-      returnedScratched = getConnection().data.scratched.states;
-    }
+    let returnedScratched = getConnection().data.scratched[req.body.type];
 
     // return the new scratched values
     return res.status(200).json({

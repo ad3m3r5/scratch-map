@@ -4,15 +4,15 @@ block content
   link(rel='stylesheet', href='/css/sweetalert2.min.css')
   script(src='/js/sweetalert2.all.min.js', type='text/javascript')
 
-  if maptype == 'c'
+  if mapType == 'countries'
     link(rel='stylesheet', href='/css/world.css')
-  else if maptype == 's'
+  else if mapType == 'states'
     link(rel='stylesheet', href='/css/states.css')
   
   script.
     var objectList = !{JSON.stringify(objectList)};
     var scratchedObjects = !{JSON.stringify(scratchedObjects)};
-    var maptype = !{JSON.stringify(maptype)};
+    var mapType = !{JSON.stringify(mapType)};
 
   h1#title #{title}
 
@@ -22,13 +22,13 @@ block content
       button.zoom-in(type='button', onclick='zoomIn()') +
       button.zoom-out(type='button', onclick='zoomOut()') -
   
-    if maptype == 'c'
+    if mapType == 'countries'
       div#svg-container(
         data-zoom-on-wheel="zoom-amount: 0.003; min-scale: 1; max-scale: 8;",
         data-pan-on-drag="button: left;"
       )
         include ../public/images/world.svg
-    else if maptype == 's'
+    else if mapType == 'states'
       div#svg-container(
         data-zoom-on-wheel="zoom-amount: 0.003; min-scale: 1; max-scale: 2;",
         data-pan-on-drag="button: left;"
