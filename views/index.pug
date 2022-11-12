@@ -16,6 +16,7 @@ block content
     .scratched-column {
       flex: 25%;
       padding: 5px;
+      overflow: hidden;
     }
 
     .scratched-table {
@@ -31,6 +32,7 @@ block content
       border: 1px solid #dddddd;
       text-align: left;
       padding: 8px;
+      overflow: hidden;
     }
 
     .scratched-table tr:nth-child(even) {
@@ -60,10 +62,13 @@ block content
         tr
           th Country
           th Year
+          th Link
         each val in scratchedCountries
           tr
             td #{val.name}
             td #{val.year}
+            td
+              a(href=val.url target='_blank') #{val.url}
 
     div.scratched-column
       h3.table-title US States (#{Object.keys(statesList).length})
@@ -81,7 +86,10 @@ block content
         tr
           th State
           th Year
+          th Link
         each val in scratchedStates
           tr
             td #{val.name}
             td #{val.year}
+            td
+              a(href=val.url target='_blank') #{val.url}
