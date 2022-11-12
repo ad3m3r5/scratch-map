@@ -142,6 +142,8 @@ No territories are included on this map.
 
 [![Docker Hub](https://img.shields.io/badge/DockerHub-image-blue?logo=docker&style=plastic)](https://hub.docker.com/r/ad3m3r5/scratch-map) ![Docker Image Size (tag)](https://img.shields.io/docker/image-size/ad3m3r5/scratch-map/latest?logo=docker&style=plastic)
 
+The commands to create the data directory and set permissions are Linux specific.
+
 ```
 mkdir -p /opt/docker/scratch-map/data
 
@@ -153,7 +155,7 @@ docker run -d --restart=always --name scratch-map -p 8080:8080 \
   ad3m3r5/scratch-map:latest
 ```
 
-**Linux**
+**Any OS Using NPM**
 * Set ENV vars (see below) somewhere they will persist
 * `npm install`
 * `npm run`
