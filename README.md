@@ -9,6 +9,7 @@
   * World Map
   * US States Map
   * Date Traveled To Location
+  * Link a Photo Album URL to a Scratch
 
 <br/>
 
