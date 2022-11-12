@@ -221,8 +221,6 @@ const Toast = Swal.mixin({
 function isValidYear(year) {
   const regex = /^-?\d+\.?\d*$/;
 
-  console.log(regex.test(year));
-
   return regex.test(year);
 }
 
