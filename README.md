@@ -5,6 +5,26 @@
 <p style="text-align: center;">An open-source scratch-off style map to track your travels.</p>
 <br/>
 
+## Table of Contents
+  * [Features](#features)
+  * [World Map](#world-map)
+    * [Countries](#countries)
+    * [Countries VS Territories](#countries-vs-territories)
+  * [US Map](#us-map)
+  * [Running](#running)
+    * [Docker](#docker)
+    * [Using NPM](#using-npm-any-os)
+    * [Running as a Service](#running-as-a-service-any-os)
+    * [Environment Variables](#environment-variables)
+  * [Tech Stack](#tech-stack)
+  * [Screenshots](#screenshots)
+  * [Contributing](CONTRIBUTING.md)
+  * [Credits](#credits)
+    * [Maps](#maps)
+    * [Libraries](#libraries)
+
+<br/>
+
 ## Features
   * World Map
   * US States Map
@@ -125,20 +145,9 @@ No territories are included on this map.
 
 <br/>
 
-## Credits
-* World Map SVG
-  * https://commons.wikimedia.org/wiki/File:BlankMap-World.svg
-  * The SVG was modified heavily by myself to add labels and individual borders.
-* US Map SVG
-  * https://commons.wikimedia.org/wiki/File:Blank_US_Map_With_Labels.svg
-  * This map was only slightly altered.
-* pan/zoom on the SVGs
-  * https://github.com/luncheon/svg-pan-zoom-container
-
-<br/>
-
 ## Running
-**Docker**
+
+### Docker
 
 [![Docker Hub](https://img.shields.io/badge/DockerHub-image-blue?logo=docker&style=plastic)](https://hub.docker.com/r/ad3m3r5/scratch-map) ![Docker Image Size (tag)](https://img.shields.io/docker/image-size/ad3m3r5/scratch-map/latest?logo=docker&style=plastic)
 
@@ -155,13 +164,12 @@ docker run -d --restart=always --name scratch-map -p 8080:8080 \
   ad3m3r5/scratch-map:latest
 ```
 
-**Any OS Using NPM**
+### Using NPM (any OS)
 * Set ENV vars (see below) somewhere they will persist
 * `npm install`
 * `npm run`
 
-**Running as a Service**
-
+### Running as a Service (any OS)
 This varies depending on the OS, however I would recommend checking out [PM2](https://pm2.keymetrics.io/).
 
 ### Environment Variables
@@ -189,6 +197,27 @@ This varies depending on the OS, however I would recommend checking out [PM2](ht
 
 ![World Map](https://user-images.githubusercontent.com/11009228/201389466-269d0fe5-88e0-42d6-bd9e-fe1fe79befb8.png)
 
-![Example Popup](https://user-images.githubusercontent.com/11009228/201492766-4c1a7614-6d48-411f-90e4-97ac9a6f4ca1.png)
-
 ![States Map](https://user-images.githubusercontent.com/11009228/201389708-1e3643a1-1cf6-4f23-98ec-e34a72acafd0.png)
+
+![Example Pop-up](https://user-images.githubusercontent.com/11009228/201492766-4c1a7614-6d48-411f-90e4-97ac9a6f4ca1.png)
+
+<br/>
+
+## Credits
+
+### Maps
+* World Map SVG
+  * https://commons.wikimedia.org/wiki/File:BlankMap-World.svg
+  * The SVG was modified heavily altered.
+* US Map SVG
+  * https://commons.wikimedia.org/wiki/File:Blank_US_Map_With_Labels.svg
+  * This map was only slightly altered.
+* Canadian Map SVG
+  * https://commons.wikimedia.org/wiki/File:Canada_blank_map.svg
+  * This map was moderately altered.
+
+### Libraries
+* pan/zoom on the SVGs
+  * https://github.com/luncheon/svg-pan-zoom-container
+* scratch prompts/pop-ups
+  * https://github.com/sweetalert2/sweetalert2
