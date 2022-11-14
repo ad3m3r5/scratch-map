@@ -41,10 +41,15 @@ Example of adding a map of Canadian Provinces/Territories:
 
   * Creation of the map SVG file.
     * The SVG must follow the structure of the existing maps.
+    * Try to keep the width:height scale 2:1, e.g. 1200x600
+    * Remove all styling (using map.css only) except for necessary text styling (size, etc.)
       * SVG
         * Type: svg
         * Attributes
           * id="svg-map"
+          * viewBox="0 0 1200 600"
+          * width="1200"
+          * height="600"
       * Top Level Group (group of entities/countries/states)
         * Type: group
         * Attributes
