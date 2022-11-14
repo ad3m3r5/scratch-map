@@ -217,7 +217,11 @@ This varies depending on the OS, however I would recommend checking out [PM2](ht
   * This map was moderately altered.
 
 ### Libraries
-* pan/zoom on the SVGs
+* pan/zoom for SVGs
   * https://github.com/luncheon/svg-pan-zoom-container
 * scratch prompts/pop-ups
   * https://github.com/sweetalert2/sweetalert2
+
+### Fonts
+* Roboto - used on SVG labels
+  * https://fonts.google.com/specimen/Roboto
