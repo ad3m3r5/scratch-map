@@ -1,9 +1,11 @@
 var objectClass = null, objectGroups = null;
 
-const validTypes = ['countries', 'states'];
-
 if (validTypes.includes(mapType)) {
-  objectClass = document.querySelector(`.${mapType}`);
+  if (mapType == 'countries' || mapType == 'states') {
+    objectClass = document.querySelector(`.${mapType}`);
+  } else {
+    objectClass = document.querySelector(`.entities`);
+  }
   objectGroups = objectClass.querySelectorAll(':scope > g');
 }
 
@@ -18,11 +20,17 @@ async function clickObject(e) {
   e.preventDefault();
 
   let object = {
-    code: e.target.closest(`.${mapType} > g`).id,
+    code: '',
     name: '',
     year: '',
     url: ''
   };
+
+  if (mapType == 'countries' || mapType == 'states') {
+    object.code = e.target.closest(`.${mapType} > g`).id;
+  } else {
+    object.code = e.target.closest(`.entities > g`).id;
+  }
 
   // get name of object
   for (var key of Object.keys(objectList)) {
@@ -158,7 +166,11 @@ async function clickObject(e) {
       scratchedObjects = dataSet;
 
       if (validTypes.includes(mapType)) {
-        objectClass = document.querySelector(`.${mapType}`);
+        if (mapType == 'countries' || mapType == 'states') {
+          objectClass = document.querySelector(`.${mapType}`);
+        } else {
+          objectClass = document.querySelector(`.entities`);
+        }
         objectGroups = objectClass.querySelectorAll(':scope > g');
       }
       renderScratched(objectGroups);

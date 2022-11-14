@@ -19,7 +19,84 @@ html, body {
   margin: 20px auto;
   padding: 20px 0px;
 }
-    
+
+/* Index page */
+.table-title {
+  margin-bottom: 10px;
+}
+
+.section-row {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 auto;
+  width: 90%;
+  justify-content: space-between;
+}
+
+.section-column {
+  flex: 50%;
+  max-width: 50%;
+  padding: 5px;
+  overflow: hidden;
+}
+.section-inner-column {
+  flex: 50%;
+  padding: 5px;
+  overflow: hidden;
+}
+
+.section-collapsible-button {
+  background-color: #777;
+  color: white;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+}
+
+.active, .section-collapsible-button:hover {
+  background-color: #555;
+}
+
+.section-collapsible-content {
+  padding: 15px 18px;
+  display: none;
+  overflow: hidden;
+  background-color: #f1f1f1;
+}
+
+.section-table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.section-table th {
+  font-size: 16px;
+}
+
+.section-table th, .section-table td {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+  overflow: hidden;
+}
+
+.section-table tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+@media screen and (max-width: 1150px) {
+  .section-column {
+    flex: 100%;
+    max-width: 100%;
+    padding: 5px;
+    overflow: hidden;
+  }
+}
+
 /* Map pages */
 #map-container {
   margin: 0 auto;

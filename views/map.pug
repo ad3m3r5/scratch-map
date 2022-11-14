@@ -8,11 +8,15 @@ block content
     link(rel='stylesheet', href='/css/world.css')
   else if mapType == 'states'
     link(rel='stylesheet', href='/css/states.css')
+  else 
+    link(rel='stylesheet', href='/css/map.css')
   
   script.
     var objectList = !{JSON.stringify(objectList)};
     var scratchedObjects = !{JSON.stringify(scratchedObjects)};
     var mapType = !{JSON.stringify(mapType)};
+    var validTypes = !{JSON.stringify(validTypes)};
+    var mapSVG = !{JSON.stringify(mapSVG)};
 
   h1#title #{title}
 
@@ -27,13 +31,19 @@ block content
         data-zoom-on-wheel="zoom-amount: 0.003; min-scale: 1; max-scale: 8;",
         data-pan-on-drag="button: left;"
       )
-        include ../public/images/world.svg
+        !=mapSVG
     else if mapType == 'states'
       div#svg-container(
         data-zoom-on-wheel="zoom-amount: 0.003; min-scale: 1; max-scale: 2;",
         data-pan-on-drag="button: left;"
       )
-        include ../public/images/states.svg
+        !=mapSVG
+    else
+      div#svg-container(
+        data-zoom-on-wheel="zoom-amount: 0.003; min-scale: 1; max-scale: 8;",
+        data-pan-on-drag="button: left;"
+      )
+        !=mapSVG
   
   script(src='/js/scratch.js', type='text/javascript')
 

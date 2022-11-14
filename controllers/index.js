@@ -1,53 +1,42 @@
-import { getConnection } from '../utils/database.js';
+import fs from 'fs';
+import path from "path";
+import { fileURLToPath } from "url";
 
-const validTypes = ['countries', 'states'];
+import { validTypes, getConnection } from '../utils/database.js';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // home page
 export const getHome = ((req, res, next) => {
-  let countriesList = getConnection().data.countries;
-  let statesList = getConnection().data.states;
-  let scratchedCountries = getConnection().data.scratched.countries;
-  let scratchedStates = getConnection().data.scratched.states;
+  let dbData = getConnection().data;
+  let scratched = dbData.scratched;
 
-  let unscratchedCountries = (() => {
-    let unscratched = {};
-    for (const [key, value] of Object.entries(countriesList)) {
-      let countryIndex = scratchedCountries.findIndex(x => x.code == key);
-      if (countryIndex == -1) unscratched[key] = value;
-    }
-    return unscratched;
-  })();
+  let unscratchedLists = {};
+  for (let i = 0; i < validTypes.length; i++) {
 
-  let unscratchedStates = (() => {
-    let unscratched = {};
-    for (const [key, value] of Object.entries(statesList)) {
-      let stateIndex = scratchedStates.findIndex(x => x.code == key);
-      if (stateIndex == -1) unscratched[key] = value;
+    // get list of unscratched entities
+    unscratchedLists[validTypes[i]] = {};
+    for (const [key, value] of Object.entries(dbData[validTypes[i]])) {
+      let index = scratched[validTypes[i]].findIndex(x => x.code == key);
+      if (index == -1) unscratchedLists[validTypes[i]][key] = value;
     }
-    return unscratched;
-  })();
 
-  for (let i=0; i<scratchedCountries.length; i++) {
-    for (const [key, value] of Object.entries(countriesList)) {
-      if (scratchedCountries[i].code == key) {
-        scratchedCountries[i].name = value;
-      }
-    }
-  }
-  for (let i=0; i<scratchedStates.length; i++) {
-    for (const [key, value] of Object.entries(statesList)) {
-      if (scratchedStates[i].code == key) {
-        scratchedStates[i].name = value;
+    // add names to scratched list
+    for (let j = 0; j < scratched[validTypes[i]].length; j++) {
+      for (const [key, value] of Object.entries(dbData[validTypes[i]])) {
+        if (scratched[validTypes[i]][j].code == key) {
+          scratched[validTypes[i]][j].name = value;
+        }
       }
     }
   }
 
   res.render('index', {
     title: 'Home',
-    countriesList: unscratchedCountries,
-    statesList: unscratchedStates,
-    scratchedCountries,
-    scratchedStates
+    dbData,
+    validTypes,
+    unscratchedLists,
+    scratchedLists: scratched
   });
 });
 
@@ -61,7 +50,7 @@ export const getMap = ((req, res, next) => {
     let objectList = getConnection().data[mapType];
     let scratchedObjects = getConnection().data.scratched[mapType];
   
-    let title = `Map of ${mapType.charAt(0).toUpperCase + mapType.slice(1)}`;
+    let title = `Map of ${mapType.charAt(0).toUpperCase() + mapType.slice(1)}`;
   
     if (mapType == 'countries') title = 'World Map';
     if (mapType == 'states') title = 'US States';
@@ -69,8 +58,10 @@ export const getMap = ((req, res, next) => {
     res.render('map', {
       title,
       mapType,
+      validTypes,
       objectList,
-      scratchedObjects
+      scratchedObjects,
+      mapSVG: fs.readFileSync(path.join(__dirname, `../public/images/${mapType}.svg`))
     });
   }
 });
