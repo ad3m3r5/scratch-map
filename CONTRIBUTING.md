@@ -42,7 +42,7 @@ Example of adding a map of Canadian Provinces/Territories:
   * Creation of the map SVG file.
     * The SVG must follow the structure of the existing maps.
     * Try to keep the width:height scale 2:1, e.g. 1200x600
-    * Remove all styling (using map.css only) except for necessary text styling (size, etc.)
+    * Remove all styling (using map.css only) except for necessary label styling (text size, etc.)
       * SVG
         * Type: svg
         * Attributes
@@ -50,21 +50,26 @@ Example of adding a map of Canadian Provinces/Territories:
           * viewBox="0 0 1200 600"
           * width="1200"
           * height="600"
-      * Top Level Group (group of entities/countries/states)
-        * Type: group
+      * Top Level Group - group of entities (countries, states, etc.)
+        * Type: g (group)
         * Attributes
           * id="entities"
           * class="entities"
-      * Individual entities/countries/states (group of paths/text/label-xxx)
-        * Type: group
+      * Individual entities (group of paths, sub-groups, etc.)
+        * Type: g (group)
         * Attributes
           * id="<2-LETTER-CODE>"
         * Label
           * Text
-            * Type: text
+            * Type: path
             * Attributes
               * id="<2-LETTER-CODE-text>
               * class="label-text"
+            * Creation
+              * Font: Roboto
+              * Font Size: 16pt (~21.3px)
+              * Convert object to path
+              * Combine paths if necessary
           * Box (Only if main body cannot contain Text)
             * Type: rect
             * Attributes
@@ -75,37 +80,30 @@ Example of adding a map of Canadian Provinces/Territories:
             * Attributes
               * id="<2-LETTER-CODE-connector>
               * class="label-connector"
+      * Bodies of Water
+        * Unless they are necessary, add class="water" to hide them
 
     * EXAMPLE:
       ```
       public/images/canada.svg
 
-      <svg id="svg-map">
-        <g class="provinces">
+      <svg id="svg-map" viewBox="0 0 1200 600" width="1200px" height="600px">
+        <g class="entities">
           <g id="AB">
+            <path id="AB-text" class="label-text" xxxxx>
+          
             <path xxxxx/>
             <path xxxxx/>
-            
-            <text id="AB-text" class="label-text">
-              <span>AB</span>
-            </text>
           </g>
 
           <g id="NS">
-            <path d="xxxxx" />
-            <path d="xxxxx" />
-            
-            <text id="NS-text" class="label-text">
-              <span>NS</span>
-            </text>
-
-            <path
-              id="NS-connector"
-              class="label-connector
-              d="xxxxx" />
-            
+            <path id="NS-connector" class="label-connector d="xxxxx" />
+            <path id="NS-text" class="label-text" xxxxx>
             <rect id="NS-box" class="label-box"
-              width="xxx" height="xxx" />
+              width="xxx" height="xxx" x="xxx" y="xxx" rx="xxx" ry="xxx" />
+
+            <path d="xxxxx" />
+            <path d="xxxxx" />
           </g>
 
           ...
@@ -137,3 +135,32 @@ Example of adding a map of Canadian Provinces/Territories:
 
       const validTypes = [..., 'canada'];
       ```
+  
+  * Add to navbar
+    * To reduce clutter, please only do so if it's a major country.
+    * EXAMPLE:
+      ```
+      views/includes/navbar.pug
+
+      ...
+
+      ul
+        li
+          a(href='/') Home
+        li
+          a(href='/map/countries') World
+        li
+          a(href='/map/states') USA
+        li
+          a(href='/map/canada') Canada
+
+        ...
+      
+      ...
+      ```
+  
+  * Add a screenshot of the rendered map (unscratched)
+    * EXAMPLE:
+      * How-to: https://umaar.com/dev-tips/156-element-screenshot/
+        * Select the `<div id="svg-container">` element
+      * Save to: public/images/canada.png
