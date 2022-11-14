@@ -4,11 +4,37 @@ block content
 
   h1#title #{title}
 
+  div#map-section
+    - for (var i = 0; i < validTypes.length; i++)
+      a.map-box(href=`/map/${validTypes[i]}`)
+        div.map-box-map
+          img.map-box-img(src=`/images/${validTypes[i]}.png`)
+          //-svg.map-box-img(width="100px", height="100px")
+            //-use(xlink:href=`../public/images/${validTypes[i]}.svg`)
+          //-object(type="image/svg+xml" data=`/images/${validTypes[i]}.svg`)
+        if (validTypes[i] == 'countries')
+          div.map-box-label World
+        else if (validTypes[i] == 'states')
+          div.map-box-label US States
+        else
+          div.map-box-label #{validTypes[i].charAt(0).toUpperCase() + validTypes[i].slice(1)}
+    
+  br
+  br
+  br
+
   - for (var i = 0; i < validTypes.length; i += 2)
     - if (i%2 == 0)
       div.section-row
         div.section-column
-          button.section-collapsible-button #{validTypes[i].charAt(0).toUpperCase() + validTypes[i].slice(1)}
+          button.section-collapsible-button
+            if (validTypes[i] == 'countries')
+               span.section-collapsible-title World
+            else if (validTypes[i] == 'states')
+              span.section-collapsible-title US States
+            else
+              span.section-collapsible-title #{validTypes[i].charAt(0).toUpperCase() + validTypes[i].slice(1)}
+            span.section-collapsible-icon ╲╱
           div.section-collapsible-content
             div.section-inner-column
               h3.table-title Not-Visited (#{Object.keys(unscratchedLists[validTypes[i]]).length})
@@ -35,7 +61,14 @@ block content
                       a(href=val.url target='_blank') #{val.url}
         - if (validTypes[i+1] !== undefined)
             div.section-column
-              button.section-collapsible-button #{validTypes[i+1].charAt(0).toUpperCase() + validTypes[i+1].slice(1)}
+              button.section-collapsible-button
+                if (validTypes[i+1] == 'countries')
+                  span.section-collapsible-title World
+                else if (validTypes[i+1] == 'states')
+                  span.section-collapsible-title US States
+                else
+                  span.section-collapsible-title #{validTypes[i+1].charAt(0).toUpperCase() + validTypes[i+1].slice(1)}
+                span.section-collapsible-icon ╲╱
               div.section-collapsible-content
                 div.section-inner-column
                   h3.table-title Not-Visited (#{Object.keys(unscratchedLists[validTypes[i+1]]).length})
@@ -66,14 +99,18 @@ block content
 
     for (let i = 0; i < collapsibles.length; i++) {
       collapsibles[i].addEventListener('click', function() {
-        this.classList.toggle('active');
+        var collIcon = this.querySelector('.section-collapsible-icon');
         var collContent = this.nextElementSibling;
         let collContentStyle = getComputedStyle(collContent);
 
-        if (collContent.style.display == 'flex' || collContentStyle.display == 'flex') {
-          collContent.style.display = 'none';
-        } else if (collContent.style.display == 'none' || collContentStyle.display == 'none') {
+        if (!this.classList.contains('active')) {
+          this.classList.add('active');
+          collIcon.innerHTML = '╱╲';
           collContent.style.display = 'flex';
+        } else if (this.classList.contains('active')) {
+          this.classList.remove('active');
+          collIcon.innerHTML = '╲╱';
+          collContent.style.display = 'none';
         }
       });
     }

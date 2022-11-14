@@ -6,8 +6,6 @@ block content
 
   if mapType == 'countries'
     link(rel='stylesheet', href='/css/world.css')
-  else if mapType == 'states'
-    link(rel='stylesheet', href='/css/states.css')
   else 
     link(rel='stylesheet', href='/css/map.css')
   
@@ -16,7 +14,6 @@ block content
     var scratchedObjects = !{JSON.stringify(scratchedObjects)};
     var mapType = !{JSON.stringify(mapType)};
     var validTypes = !{JSON.stringify(validTypes)};
-    var mapSVG = !{JSON.stringify(mapSVG)};
 
   h1#title #{title}
 
@@ -32,15 +29,9 @@ block content
         data-pan-on-drag="button: left;"
       )
         !=mapSVG
-    else if mapType == 'states'
-      div#svg-container(
-        data-zoom-on-wheel="zoom-amount: 0.003; min-scale: 1; max-scale: 2;",
-        data-pan-on-drag="button: left;"
-      )
-        !=mapSVG
     else
       div#svg-container(
-        data-zoom-on-wheel="zoom-amount: 0.003; min-scale: 1; max-scale: 8;",
+        data-zoom-on-wheel="zoom-amount: 0.003; min-scale: 1; max-scale: 2;",
         data-pan-on-drag="button: left;"
       )
         !=mapSVG

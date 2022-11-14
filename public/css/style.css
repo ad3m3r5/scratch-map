@@ -25,6 +25,47 @@ html, body {
   margin-bottom: 10px;
 }
 
+#map-section {
+  display: flex;
+  margin: 0 auto;
+  width: 90%;
+  justify-content: start;
+}
+
+.map-box {
+  flex: 16.66%;
+  max-width: 16.66%;
+  padding: 5px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  color: white;
+  text-decoration: inherit;
+}
+
+.map-box-map {
+  flex-basis: 100%;
+  align-items: stretch;
+  background: grey;
+}
+
+.map-box-map object {
+  width: 100%;
+}
+
+.map-box-img {
+  width: 100%;
+  height: auto;
+}
+
+.map-box-label {
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+  background: grey;
+  font-size: 18px;
+}
+
 .section-row {
   display: flex;
   flex-wrap: wrap;
@@ -55,6 +96,15 @@ html, body {
   text-align: left;
   outline: none;
   font-size: 15px;
+}
+
+.section-collapsible-title {
+  float: left;
+  font-size: 18px;
+}
+
+.section-collapsible-icon {
+  float: right;
 }
 
 .active, .section-collapsible-button:hover {

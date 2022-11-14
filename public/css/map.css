@@ -3,8 +3,8 @@
   display: none;
 }
 
-/* entities paths */
-.entities g path {
+/* entity paths */
+.entities g path:not(.label-connector):not(.label-text) {
   fill:#cca11f;
   fill-opacity:1;
   /* borders */
@@ -19,22 +19,22 @@
 .entities g.not-scratched path {
   fill: #cca11f;
 }
-.entities g.scratched path:not(.label-connector) {
+.entities g.scratched path:not(.label-connector):not(.label-text) {
   fill: #c2c2c2;
 }
 
-.entities g:hover, .entities g path:hover:not(.label-connector),
-.entities g:hover path:not(.label-connector) {
+.entities g:hover, .entities g path:hover:not(.label-connector):not(.label-text),
+.entities g:hover path:not(.label-connector):not(.label-text) {
   fill: #8f8f8f;
   cursor: pointer;
 }
 
-.entities g.scratched:hover, .entities g.scratched path:hover:not(.label-connector),
-.entities g.scratched:hover path:not(.label-connector) {
+.entities g.scratched:hover, .entities g.scratched path:hover:not(.label-connector):not(.label-text),
+.entities g.scratched:hover path:not(.label-connector):not(.label-text) {
   fill: #c2c2c2;
 }
 
-/* label box paths */
+/* label box */
 .entities g .label-box {
   fill:#cca11f;
   fill-opacity:1;
@@ -60,8 +60,12 @@
 }
 
 /* label text */
-.entities g .label-text {
-  font-size:26px;
+.entities g .label-text, .entities g .label-text path {
+  fill:#ffffff;
+  fill-opacity:1;
+  stroke:none;
+  /* text */
+  font-size:20px;
   font-style:normal;
   font-variant:normal;
   font-weight:normal;
@@ -69,10 +73,7 @@
   line-height:125%;
   letter-spacing:0px;
   word-spacing:0px;
-  fill:#ffffff;
-  fill-opacity:1;
-  stroke:none;
-  font-family:Trebuchet MS, Helvetica, sans-serif;
+  font-family: 'Roboto', Arial, Trebuchet MS, Helvetica, sans-serif;
 }
 
 /* label connector */
