@@ -1,6 +1,6 @@
 {
   "name": "scratch-map",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "description": "open-source scratch-off style map",
   "main": "server.js",
   "type": "module",
