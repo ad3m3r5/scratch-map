@@ -2,94 +2,115 @@ extends layout
 
 block content
 
-  style.
-    .table-title {
-      margin-bottom: 10px;
-    }
-
-    .scratched-row {
-      display: flex;
-      margin: 0 auto;
-      width: 90%;
-    }
-
-    .scratched-column {
-      flex: 25%;
-      padding: 5px;
-      overflow: hidden;
-    }
-
-    .scratched-table {
-      border-collapse: collapse;
-      width: 100%;
-    }
-
-    .scratched-table th {
-      font-size: 16px;
-    }
-
-    .scratched-table th, .scratched-table td {
-      border: 1px solid #dddddd;
-      text-align: left;
-      padding: 8px;
-      overflow: hidden;
-    }
-
-    .scratched-table tr:nth-child(even) {
-      background-color: #dddddd;
-    }
-
   h1#title #{title}
 
+  div#map-section
+    - for (var i = 0; i < validTypes.length; i++)
+      a.map-box(href=`/map/${validTypes[i]}`)
+        div.map-box-map
+          img.map-box-img(src=`/images/${validTypes[i]}.png`)
+          //-svg.map-box-img(width="100px", height="100px")
+            //-use(xlink:href=`../public/images/${validTypes[i]}.svg`)
+          //-object(type="image/svg+xml" data=`/images/${validTypes[i]}.svg`)
+        if (validTypes[i] == 'countries')
+          div.map-box-label World
+        else if (validTypes[i] == 'states')
+          div.map-box-label US States
+        else
+          div.map-box-label #{validTypes[i].charAt(0).toUpperCase() + validTypes[i].slice(1)}
+    
+  br
+  br
+  br
+
+  - for (var i = 0; i < validTypes.length; i += 2)
+    - if (i%2 == 0)
+      div.section-row
+        div.section-column
+          button.section-collapsible-button
+            if (validTypes[i] == 'countries')
+               span.section-collapsible-title World
+            else if (validTypes[i] == 'states')
+              span.section-collapsible-title US States
+            else
+              span.section-collapsible-title #{validTypes[i].charAt(0).toUpperCase() + validTypes[i].slice(1)}
+            span.section-collapsible-icon ╲╱
+          div.section-collapsible-content
+            div.section-inner-column
+              h3.table-title Not-Visited (#{Object.keys(unscratchedLists[validTypes[i]]).length})
+              table.section-table
+                tr
+                  th Name
+                  th Code
+                each key, val in unscratchedLists[validTypes[i]]
+                  tr
+                    td #{key}
+                    td #{val}
+            div.section-inner-column
+              h3.table-title Visited (#{scratchedLists[validTypes[i]].length})
+              table.section-table
+                tr
+                  th Name
+                  th Year
+                  th Link
+                each val in scratchedLists[validTypes[i]]
+                  tr
+                    td #{val.name}
+                    td #{val.year}
+                    td
+                      a(href=val.url target='_blank') #{val.url}
+        - if (validTypes[i+1] !== undefined)
+            div.section-column
+              button.section-collapsible-button
+                if (validTypes[i+1] == 'countries')
+                  span.section-collapsible-title World
+                else if (validTypes[i+1] == 'states')
+                  span.section-collapsible-title US States
+                else
+                  span.section-collapsible-title #{validTypes[i+1].charAt(0).toUpperCase() + validTypes[i+1].slice(1)}
+                span.section-collapsible-icon ╲╱
+              div.section-collapsible-content
+                div.section-inner-column
+                  h3.table-title Not-Visited (#{Object.keys(unscratchedLists[validTypes[i+1]]).length})
+                  table.section-table
+                    tr
+                      th Name
+                      th Code
+                    each key, val in unscratchedLists[validTypes[i+1]]
+                      tr
+                        td #{key}
+                        td #{val}
+                div.section-inner-column
+                  h3.table-title Visited (#{scratchedLists[validTypes[i+1]].length})
+                  table.section-table
+                    tr
+                      th Name
+                      th Year
+                      th Link
+                    each val in scratchedLists[validTypes[i+1]]
+                      tr
+                        td #{val.name}
+                        td #{val.year}
+                        td
+                          a(href=val.url target='_blank') #{val.url}
+  
   script.
-    var countriesList = !{JSON.stringify(countriesList)};
-    var scratchedCountries = !{JSON.stringify(scratchedCountries)};
+    var collapsibles = document.querySelectorAll('.section-collapsible-button');
 
-  div.scratched-row
-    div.scratched-column
-      h3.table-title Countries (#{Object.keys(countriesList).length})
-      table.scratched-table
-        tr
-          th Country
-          th Code
-        each key, val in countriesList
-          tr
-            td #{key}
-            td #{val}
-    div.scratched-column
-      h3.table-title Visited (#{scratchedCountries.length})
-      table.scratched-table
-        tr
-          th Country
-          th Year
-          th Link
-        each val in scratchedCountries
-          tr
-            td #{val.name}
-            td #{val.year}
-            td
-              a(href=val.url target='_blank') #{val.url}
+    for (let i = 0; i < collapsibles.length; i++) {
+      collapsibles[i].addEventListener('click', function() {
+        var collIcon = this.querySelector('.section-collapsible-icon');
+        var collContent = this.nextElementSibling;
+        let collContentStyle = getComputedStyle(collContent);
 
-    div.scratched-column
-      h3.table-title US States (#{Object.keys(statesList).length})
-      table.scratched-table
-        tr
-          th State
-          th Code
-        each key, val in statesList
-          tr
-            td #{key}
-            td #{val}
-    div.scratched-column
-      h3.table-title Visited (#{scratchedStates.length})
-      table.scratched-table
-        tr
-          th State
-          th Year
-          th Link
-        each val in scratchedStates
-          tr
-            td #{val.name}
-            td #{val.year}
-            td
-              a(href=val.url target='_blank') #{val.url}
+        if (!this.classList.contains('active')) {
+          this.classList.add('active');
+          collIcon.innerHTML = '╱╲';
+          collContent.style.display = 'flex';
+        } else if (this.classList.contains('active')) {
+          this.classList.remove('active');
+          collIcon.innerHTML = '╲╱';
+          collContent.style.display = 'none';
+        }
+      });
+    }
