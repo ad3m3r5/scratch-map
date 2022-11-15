@@ -26,6 +26,7 @@
   * US States Map
   * Canadian Map
   * Australian Map
+  * French Map
   * Date Traveled To Location
   * Link a Photo Album URL to a Scratch
 
