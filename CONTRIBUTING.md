@@ -1,6 +1,7 @@
 # Contributing to SCRATCH-MAP
 
 ## Table of Contents
+  * [REAMDE](README.md)
   * [Who Can Contribute](#who-can-contribute)
   * [How You Can Contribute](#how-you-can-contribute)
     * [Reporting Issues and Bugs](#reporting-issues-and-bugs)
@@ -9,6 +10,8 @@
   * [Contributing Guide](#contributing-guide)
     * [Adding Functionality](#adding-functionality)
     * [Adding Maps](#adding-maps)
+
+<br/>
 
 ## Who Can Contribute
 In short, anyone. All that I ask is that you familiarize yourself with the project, the idea behind it (simplicity), the [README](README.md), and this document. This project is meant to be open and contributed to by the public, so feel free to improve upon it.
