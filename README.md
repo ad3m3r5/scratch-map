@@ -7,10 +7,11 @@
 
 ## Table of Contents
   * [Features](#features)
-  * [World Map](#world-map)
-    * [Countries](#countries)
-    * [Countries VS Territories](#countries-vs-territories)
-  * [US Map](#us-map)
+    * [World Map](#world-map)
+      * [Countries](#countries)
+      * [Countries VS Territories](#countries-vs-territories)
+    * [US Map](#us-map)
+    * [Canadian Map](#canadian-map)
   * [Running](#running)
     * [Docker](#docker)
     * [Using NPM](#using-npm-any-os)
@@ -28,6 +29,7 @@
 ## Features
   * World Map
   * US States Map
+  * Canadian Map
   * Date Traveled To Location
   * Link a Photo Album URL to a Scratch
 
@@ -143,6 +145,9 @@ Some territories have been listed independently, while others have been kept und
 Contains the 50 official US States plus Washington DC.
 No territories are included on this map.
 
+## Canadian Map
+Contains the 10 provinces and 3 territories.
+
 <br/>
 
 ## Running
@@ -193,11 +198,13 @@ This varies depending on the OS, however I would recommend checking out [PM2](ht
 
 ## Screenshots
 
-![Home Page](https://user-images.githubusercontent.com/11009228/201389392-2dfeabac-0ce3-4aca-9706-88a49b5cb746.png)
+![Home Page](https://user-images.githubusercontent.com/11009228/201794201-dcff2e3c-027e-45da-9379-6ee855838a14.png)
 
 ![World Map](https://user-images.githubusercontent.com/11009228/201389466-269d0fe5-88e0-42d6-bd9e-fe1fe79befb8.png)
 
 ![States Map](https://user-images.githubusercontent.com/11009228/201389708-1e3643a1-1cf6-4f23-98ec-e34a72acafd0.png)
+
+![Canadian Map](https://user-images.githubusercontent.com/11009228/201794259-20e3f9b5-b126-4c8d-8cb0-820b6f16da0a.png)
 
 ![Example Pop-up](https://user-images.githubusercontent.com/11009228/201492766-4c1a7614-6d48-411f-90e4-97ac9a6f4ca1.png)
 
