@@ -27,6 +27,7 @@
   * Canadian Map
   * Australian Map
   * French Map
+  * Mexican Map
   * Date Traveled To Location
   * Link a Photo Album URL to a Scratch
 
