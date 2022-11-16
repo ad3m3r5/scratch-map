@@ -9,6 +9,7 @@
   * [Canadian Map](#canadian-map)
   * [Australian Map](#australian-map)
   * [French Map](#french-map)
+  * [Mexican Map](#mexican-map)
   * [Credits](#credits)
     * [Maps](#maps)
 
@@ -138,6 +139,10 @@ Contains the 8 official states and the 2 internal territories that are often tre
 
 ## French Map
 Contains the 13 official regions as of 2015.
+<br/>
+
+## Mexican Map
+Contains the 31 states and the capital Mexico City, which make up the 32 federal administrative divisions.
 
 
 ## Credits
@@ -158,3 +163,6 @@ Contains the 13 official regions as of 2015.
 * French Map SVG
   * https://commons.wikimedia.org/wiki/File:Fond_de_carte_des_13_nouvelles_r%C3%A9gions_de_France_m%C3%A9tropolitaine.svg
   * This map was lightly altered.
+* Mexican Map SVG
+  * https://commons.wikimedia.org/wiki/File:Mexico,_administrative_divisions_-_de_-_colored.svg
+  * this map was moderately altered.
