@@ -11,7 +11,8 @@ const dbLocation = process.env.DBLOCATION || path.join(__dirname, '../data');
 let db;
 
 export const validTypes = ['countries', 'states', 'canada',
-                            'australia', 'france', 'mexico'];
+                            'australia', 'france', 'mexico',
+                            'japan', 'spain', 'united-kingdom'];
 
 export const createConnection = async () => {
   if (!fs.existsSync(dbLocation)){
@@ -26,12 +27,31 @@ export const createConnection = async () => {
   db.read();
 
   db.data ||= {
+    version: "1.0",
     scratched: { countries: [], states: [] },
     countries: JSON.parse(fs.readFileSync(path.join(__dirname, './countries.json'))),
     states: JSON.parse(fs.readFileSync(path.join(__dirname, './states.json')))
   };
 
+  // check data schema version
+  checkDBVersion();
 
+  // update map arrays for new/changed maps
+  updateDBMaps();
+
+  db.write();
+};
+
+export const getConnection = () => db;
+
+
+function checkDBVersion() {
+  if (!db.data.hasOwnProperty('version')) {
+    db.data.version = "1.0";
+  }
+}
+
+function updateDBMaps() {
   // update types in DB if changed
   validTypes.forEach(type => {
     // add array to scratched for each validType
@@ -45,8 +65,4 @@ export const createConnection = async () => {
       db.data[type] = importedType;
     }
   });
-
-  db.write();
-};
-
-export const getConnection = () => db;
+}
