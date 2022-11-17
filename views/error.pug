@@ -1,5 +1,14 @@
 extends layout
 
 block content
-  h1 #{status}
-  h2 #{message}
+
+  style.
+    .error-section  { 
+      text-align: center;
+      margin: 20px auto;
+      padding: 25px;
+    }
+
+  div.error-section
+    h1 #{status}
+    h2 #{message}
