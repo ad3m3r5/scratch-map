@@ -35,6 +35,7 @@ export const getHome = ((req, res, next) => {
     title: 'Home',
     dbData,
     validTypes,
+    parseTypeName,
     unscratchedLists,
     scratchedLists: scratched
   });
@@ -166,4 +167,15 @@ function isValidURL(url) {
   const regex = /(?:https?):\/\/(\w+:?\w*)?(\S+)(:\d+)?(\/|\/([\w#!:.?+=&%!\-\/]))?/;
 
   return regex.test(url);
+}
+
+function parseTypeName(name) {
+  let spaced = name.replaceAll('-', ' ');
+  let words = spaced.split(' ');
+
+  for (let i = 0; i < words.length; i++) {
+    words[i] = words[i][0].toUpperCase() + words[i].substr(1);
+  }
+
+  return words.join(' ');
 }
