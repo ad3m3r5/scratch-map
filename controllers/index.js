@@ -51,7 +51,7 @@ export const getMap = ((req, res, next) => {
     let objectList = getConnection().data[mapType];
     let scratchedObjects = getConnection().data.scratched[mapType];
   
-    let title = `Map of ${mapType.charAt(0).toUpperCase() + mapType.slice(1)}`;
+    let title = `Map of ${parseTypeName(mapType)}`;
   
     if (mapType == 'countries') title = 'World Map';
     if (mapType == 'states') title = 'US States';
