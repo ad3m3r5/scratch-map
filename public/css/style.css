@@ -27,6 +27,7 @@ html, body {
 
 #map-section {
   display: flex;
+  flex-wrap: wrap;
   margin: 0 auto;
   width: 90%;
   justify-content: start;
@@ -142,8 +143,11 @@ html, body {
   .section-column {
     flex: 100%;
     max-width: 100%;
-    padding: 5px;
-    overflow: hidden;
+  }
+
+  .map-box {
+    flex: 33.33%;
+    max-width: 33.33%;
   }
 }
 
