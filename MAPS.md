@@ -10,19 +10,23 @@
   * [Australian Map](#australian-map)
   * [French Map](#french-map)
   * [Mexican Map](#mexican-map)
+  * [Japanese Map](#japanese-map)
+  * [Spanish Map](#spanish-map)
+  * [British Map](#british-map)
   * [Credits](#credits)
     * [Maps](#maps)
 
 <br/>
 
 ## World Map
+Contains all official UN member states with some territories and other entities listed independantly.
 
-### Countries
 Baseline (Common Names): https://en.wikipedia.org/wiki/List_of_sovereign_states
-
 Codes: https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes
 
-**Differences:**
+### Countries
+
+**Naming Differences:**
 * Bahamas, The -> Bahamas
 * Cape Verde -> Cabo Verde
 * Gambia, The -> Gambia
@@ -125,24 +129,56 @@ Some territories have been listed independently, while others have been kept und
 Contains the 50 official US States plus Washington DC.
 No territories are included on this map.
 
+Codes: https://www.iso.org/obp/ui/#iso:code:3166:US
+
 <br/>
 
 ## Canadian Map
 Contains the 10 provinces and 3 territories.
+
+Codes: https://www.iso.org/obp/ui/#iso:code:3166:CA
 
 <br/>
 
 ## Australian Map
 Contains the 8 official states and the 2 internal territories that are often treated as states, leaving Jervis Bay Territory out.
 
+Codes: https://www.iso.org/obp/ui/#iso:code:3166:AU
+
 <br/>
 
 ## French Map
 Contains the 13 official regions as of 2015.
+
+Codes: https://www.iso.org/obp/ui/#iso:code:3166:FR
+
 <br/>
 
 ## Mexican Map
 Contains the 31 states and the capital Mexico City, which make up the 32 federal administrative divisions.
+
+Codes: https://www.iso.org/obp/ui/#iso:code:3166:MX
+
+<br/>
+
+## Japanese Map
+Contains the 17 prefectures of Japan.
+
+Codes: http://www.statoids.com/ujp.html
+
+<br/>
+
+## Spanish Map
+Contains the 50 official provinces and the 2 autonomous cities in Africa.
+
+Codes: https://www.iso.org/obp/ui/#iso:code:3166:ES
+
+<br/>
+
+## British Map
+Contains the 50 official provinces and the 2 autonomous cities in Africa.
+
+Codes: https://www.iso.org/obp/ui/#iso:code:3166:ES
 
 
 ## Credits
@@ -165,4 +201,13 @@ Contains the 31 states and the capital Mexico City, which make up the 32 federal
   * This map was lightly altered.
 * Mexican Map SVG
   * https://commons.wikimedia.org/wiki/File:Mexico,_administrative_divisions_-_de_-_colored.svg
-  * this map was moderately altered.
+  * This map was moderately altered.
+* Japanese Map SVG
+  * https://commons.wikimedia.org/wiki/File:Regions_and_Prefectures_of_Japan_no_labels.svg
+  * This map was moderately altered.
+* Spanish Map SVG
+  * https://commons.wikimedia.org/wiki/File:Provinces_of_Spain.svg
+  * This map was moderately altered.
+* British Map SVG
+  * https://commons.wikimedia.org/wiki/File:British_Isles_map_showing_UK,_Republic_of_Ireland,_and_historic_counties.svg
+  * This map was moderately altered.

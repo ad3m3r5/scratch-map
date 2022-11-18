@@ -35,6 +35,7 @@ export const getHome = ((req, res, next) => {
     title: 'Home',
     dbData,
     validTypes,
+    parseTypeName,
     unscratchedLists,
     scratchedLists: scratched
   });
@@ -50,7 +51,7 @@ export const getMap = ((req, res, next) => {
     let objectList = getConnection().data[mapType];
     let scratchedObjects = getConnection().data.scratched[mapType];
   
-    let title = `Map of ${mapType.charAt(0).toUpperCase() + mapType.slice(1)}`;
+    let title = `Map of ${parseTypeName(mapType)}`;
   
     if (mapType == 'countries') title = 'World Map';
     if (mapType == 'states') title = 'US States';
@@ -166,4 +167,15 @@ function isValidURL(url) {
   const regex = /(?:https?):\/\/(\w+:?\w*)?(\S+)(:\d+)?(\/|\/([\w#!:.?+=&%!\-\/]))?/;
 
   return regex.test(url);
+}
+
+function parseTypeName(name) {
+  let spaced = name.replaceAll('-', ' ');
+  let words = spaced.split(' ');
+
+  for (let i = 0; i < words.length; i++) {
+    words[i] = words[i][0].toUpperCase() + words[i].substr(1);
+  }
+
+  return words.join(' ');
 }

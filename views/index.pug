@@ -17,7 +17,7 @@ block content
         else if (validTypes[i] == 'states')
           div.map-box-label US States
         else
-          div.map-box-label #{validTypes[i].charAt(0).toUpperCase() + validTypes[i].slice(1)}
+          div.map-box-label #{parseTypeName(validTypes[i])}
     
   br
   br
@@ -33,7 +33,7 @@ block content
             else if (validTypes[i] == 'states')
               span.section-collapsible-title US States
             else
-              span.section-collapsible-title #{validTypes[i].charAt(0).toUpperCase() + validTypes[i].slice(1)}
+              span.section-collapsible-title #{parseTypeName(validTypes[i])}
             span.section-collapsible-icon ╲╱
           div.section-collapsible-content
             div.section-inner-column
@@ -67,7 +67,7 @@ block content
                 else if (validTypes[i+1] == 'states')
                   span.section-collapsible-title US States
                 else
-                  span.section-collapsible-title #{validTypes[i+1].charAt(0).toUpperCase() + validTypes[i+1].slice(1)}
+                  span.section-collapsible-title #{parseTypeName(validTypes[i+1])}
                 span.section-collapsible-icon ╲╱
               div.section-collapsible-content
                 div.section-inner-column

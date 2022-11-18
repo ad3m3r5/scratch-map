@@ -45,7 +45,9 @@ Example of adding a map of Canadian Provinces/Territories:
   * Creation of the map SVG file.
     * The SVG must follow the structure of the existing maps.
     * Try to keep the width:height scale 2:1, e.g. 1200x600
-    * Remove all styling (using map.css only) except for necessary label styling (text size, etc.)
+    * Remove all styling (using map.css only)
+    * Convert everything to paths, including labels (text, box, connector)
+    * Remove all transforms (requires everything being a path) - https://github.com/Klowner/inkscape-applytransforms
       * SVG
         * Type: svg
         * Attributes
@@ -69,12 +71,12 @@ Example of adding a map of Canadian Provinces/Territories:
               * id="<2-LETTER-CODE-text>
               * class="label-text"
             * Creation
-              * Font: Roboto
-              * Font Size: 16pt (~21.3px)
+              * Font: Roboto (will need to be installed locally to create original text)
+              * Font Size: 16pt (~21.3px) - or at least the largest reasonably possible for readability
               * Convert object to path
               * Combine paths if necessary
           * Box (Only if main body cannot contain Text)
-            * Type: rect
+            * Type: path
             * Attributes
               * id="<2-LETTER-CODE-box>
               * class="label-box"
@@ -93,17 +95,16 @@ Example of adding a map of Canadian Provinces/Territories:
       <svg id="svg-map" viewBox="0 0 1200 600" width="1200px" height="600px">
         <g class="entities">
           <g id="AB">
-            <path id="AB-text" class="label-text" xxxxx>
+            <path id="AB-text" class="label-text" d="xxxxx" />
           
-            <path xxxxx/>
-            <path xxxxx/>
+            <path d="xxxxx" />
+            <path d="xxxxx" />
           </g>
 
           <g id="NS">
             <path id="NS-connector" class="label-connector d="xxxxx" />
-            <path id="NS-text" class="label-text" xxxxx>
-            <rect id="NS-box" class="label-box"
-              width="xxx" height="xxx" x="xxx" y="xxx" rx="xxx" ry="xxx" />
+            <path id="NS-text" class="label-text" d="xxxxx" />
+            <path id="NS-box" class="label-box" d="xxxxx" />
 
             <path d="xxxxx" />
             <path d="xxxxx" />
