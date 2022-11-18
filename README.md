@@ -32,6 +32,7 @@
   * Spanish Map
   * British Map
   * German Map
+  * New Zealand Map
   * Date Traveled To Location
   * Link a Photo Album URL to a Scratch
 

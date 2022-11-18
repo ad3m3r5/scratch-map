@@ -188,6 +188,15 @@ Contains the 16 states of Germany.
 
 Codes: https://www.iso.org/obp/ui/#iso:code:3166:DE
 
+<br />
+
+## New Zealand Map
+Containers the 16 regions and 1 island.
+
+Codes: https://www.iso.org/obp/ui/#iso:code:3166:NZ
+
+
+<br />
 
 ## Credits
 
@@ -221,4 +230,7 @@ Codes: https://www.iso.org/obp/ui/#iso:code:3166:DE
   * This map was moderately altered.
 * German Map SVG
   * https://commons.wikimedia.org/wiki/File:States_of_Germany_coded.svg
+  * This map was lightly altered.
+* New Zealand SVG
+  * https://commons.wikimedia.org/wiki/File:NZ_Regional_Councils_and_Territorial_Authorities_2017.svg
   * This map was lightly altered.
