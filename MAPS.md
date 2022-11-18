@@ -13,6 +13,7 @@
   * [Japanese Map](#japanese-map)
   * [Spanish Map](#spanish-map)
   * [British Map](#british-map)
+  * [German Map](#german-map)
   * [Credits](#credits)
     * [Maps](#maps)
 
@@ -176,9 +177,16 @@ Codes: https://www.iso.org/obp/ui/#iso:code:3166:ES
 <br/>
 
 ## British Map
-Contains the 50 official provinces and the 2 autonomous cities in Africa.
+Contains the England, Scotland, Wales, and Northern Ireland
 
-Codes: https://www.iso.org/obp/ui/#iso:code:3166:ES
+Codes: https://www.iso.org/obp/ui/#iso:code:3166:GB
+
+<br/>
+
+## German Map
+Contains the 16 states of Germany.
+
+Codes: https://www.iso.org/obp/ui/#iso:code:3166:DE
 
 
 ## Credits
@@ -211,3 +219,6 @@ Codes: https://www.iso.org/obp/ui/#iso:code:3166:ES
 * British Map SVG
   * https://commons.wikimedia.org/wiki/File:British_Isles_map_showing_UK,_Republic_of_Ireland,_and_historic_counties.svg
   * This map was moderately altered.
+* German Map SVG
+  * https://commons.wikimedia.org/wiki/File:States_of_Germany_coded.svg
+  * This map was lightly altered.
