@@ -12,7 +12,8 @@ let db;
 
 export const validTypes = ['countries', 'states', 'canada',
                             'australia', 'france', 'mexico',
-                            'japan', 'spain', 'united-kingdom'];
+                            'japan', 'spain', 'united-kingdom',
+                            'germany'];
 
 export const createConnection = async () => {
   if (!fs.existsSync(dbLocation)){

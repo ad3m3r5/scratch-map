@@ -31,6 +31,7 @@
   * Japanese Map
   * Spanish Map
   * British Map
+  * German Map
   * Date Traveled To Location
   * Link a Photo Album URL to a Scratch
 
