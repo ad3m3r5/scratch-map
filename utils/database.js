@@ -10,10 +10,11 @@ const dbLocation = process.env.DBLOCATION || path.join(__dirname, '../data');
 
 let db;
 
-export const validTypes = ['countries', 'states', 'canada',
-                            'australia', 'france', 'mexico',
-                            'japan', 'spain', 'united-kingdom',
-                            'germany', 'new-zealand'];
+export const validTypes = [
+  'countries', 'states', 'canada', 'australia', 'france',
+  'mexico', 'japan', 'spain', 'united-kingdom', 'germany',
+  'new-zealand', 'brazil', 'china', 'india'
+];
 
 export const createConnection = async () => {
   if (!fs.existsSync(dbLocation)){
@@ -29,9 +30,7 @@ export const createConnection = async () => {
 
   db.data ||= {
     version: "1.0",
-    scratched: { countries: [], states: [] },
-    countries: JSON.parse(fs.readFileSync(path.join(__dirname, './countries.json'))),
-    states: JSON.parse(fs.readFileSync(path.join(__dirname, './states.json')))
+    scratched: { }
   };
 
   // check data schema version
