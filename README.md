@@ -33,6 +33,9 @@
   * British Map
   * German Map
   * New Zealand Map
+  * Brazilian Map
+  * Chinese Map
+  * Indian Map
   * Date Traveled To Location
   * Link a Photo Album URL to a Scratch
 
