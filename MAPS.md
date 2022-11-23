@@ -14,6 +14,10 @@
   * [Spanish Map](#spanish-map)
   * [British Map](#british-map)
   * [German Map](#german-map)
+  * [New Zealand Map](#new-zealand-map)
+  * [Brazilian Map](#brazlian-map)
+  * [Chinese Map](#chinese-map)
+  * [Indian Map](#indian-map)
   * [Credits](#credits)
     * [Maps](#maps)
 
@@ -188,6 +192,36 @@ Contains the 16 states of Germany.
 
 Codes: https://www.iso.org/obp/ui/#iso:code:3166:DE
 
+<br />
+
+## New Zealand Map
+Containers the 16 regions and 1 island.
+
+Codes: https://www.iso.org/obp/ui/#iso:code:3166:NZ
+
+<br />
+
+## Brazlian Map
+Containers the 26 states and 1 federal district.
+
+Codes: https://www.iso.org/obp/ui/#iso:code:3166:BR
+
+<br />
+
+## Chinese Map
+Containers the 22 provinces, 4 municipalities, 5 autonomous regions, and 1 special administrative region.
+
+Codes: https://www.iso.org/obp/ui/#iso:code:3166:CN
+
+<br />
+
+## Indian Map
+Containers the 28 states and 8 union entities.
+
+Codes: https://www.iso.org/obp/ui/#iso:code:3166:IN
+
+
+<br />
 
 ## Credits
 
@@ -222,3 +256,15 @@ Codes: https://www.iso.org/obp/ui/#iso:code:3166:DE
 * German Map SVG
   * https://commons.wikimedia.org/wiki/File:States_of_Germany_coded.svg
   * This map was lightly altered.
+* New Zealand SVG
+  * https://commons.wikimedia.org/wiki/File:NZ_Regional_Councils_and_Territorial_Authorities_2017.svg
+  * This map was lightly altered.
+* Brailian Map SVG
+  * https://commons.wikimedia.org/wiki/File:Brazil_Blank_Map.svg
+  * This map was lightly altered.
+* Chinese Map SVG
+  * https://commons.wikimedia.org/wiki/File:China_blank_province_map.svg
+  * This map was moderately altered.
+* Indian Map SVG
+  * https://commons.wikimedia.org/wiki/File:India_location_map.svg
+  * This map was moderately altered.
