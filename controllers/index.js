@@ -82,7 +82,7 @@ export const postScratch = (async (req, res, next) => {
   } else if (!validTypes.includes(req.body.type)) {
     // scratch type
     return res.status(422).json({ status: 422, message: 'Invalid object type' }).send();
-  } else if (req.body.code.length < 2 || req.body.code.length > 3) {
+  } else if (req.body.code.length < 1 || req.body.code.length > 3) {
     // country/state code length
     return res.status(422).json({ status: 422, message: 'Invalid code length' }).send();
   } else if (req.body.year.length < 0 || req.body.year.length > 6) {
