@@ -22,6 +22,7 @@ export const createConnection = async () => {
   }
 
   const file = path.join(dbLocation, 'db.json');
+  console.log("dbLocation: " + file)
 
   const adapter = new JSONFileSync(file);
   db = new LowSync(adapter);
@@ -29,7 +30,7 @@ export const createConnection = async () => {
   db.read();
 
   db.data ||= {
-    version: "2.0",
+    version: "1.2",
     scratched: { }
   };
 
@@ -49,9 +50,11 @@ function checkDBVersion() {
   // add version for <none> or v1
   if (!db.data.hasOwnProperty('version')) {
     db.data.version = '1.0';
+  } else {
+    console.log('Current DB version: ' + db.data.version)
   }
 
-  // update v1 to v2
+  // update 1.0 to 1.2
   /*
     CHANGES:
       * RENAME: 'countries' -> 'world'
@@ -78,7 +81,7 @@ function checkDBVersion() {
     }
 
     // bump version
-    db.data.version = '2.0';
+    db.data.version = '1.2';
   }
 }
 
