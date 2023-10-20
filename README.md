@@ -21,22 +21,15 @@
 
 ## Features
 
-* World Map
-* US States Map
-* Canadian Map
-* Australian Map
-* French Map
-* Mexican Map
-* Japanese Map
-* Spanish Map
-* British Map
-* German Map
-* New Zealand Map
-* Brazilian Map
-* Chinese Map
-* Indian Map
 * Date Traveled To Location
 * Link a Photo Album URL to a Scratch
+* Maps
+  * World Map
+  * US States Map
+  * Canadian Map
+  * British Map
+  * Japanese Map
+  * ... and more!
 
 ## Running
 
@@ -52,14 +45,14 @@ mkdir -p /opt/docker/scratch-map/data
 chown -R 1000:1000 /opt/docker/scratch-map/data
 
 docker run -d --restart=always --name scratch-map -p 8080:8080 \
-  -e PORT=8080 -e DBLOCATION=/data \
+  -e PORT=8080 -e DBLOCATION=/data -e ENABLE_SHARE=false \
   -v /opt/docker/scratch-map/data:/data \
   ad3m3r5/scratch-map:latest
 ```
 
 ### Using NPM (any OS)
 
-* Set ENV vars (see below) somewhere they will persist
+* Set [ENV vars](#environment-variables) somewhere they will persist, such as a `.env` file
 * `npm install`
 * `npm run`
 
@@ -71,10 +64,13 @@ This varies depending on the OS, however I would recommend checking out [PM2](ht
 
 * `process.env.DBLOCATION` 
   * (recommended) somewhere outside of app dir for update compatibility
-  * DEFAULT: APPDIR/data/
+  * DEFAULT: `APPDIR/data/`
 * `process.env.PORT` 
   * (optional) port for app to run on
-  * DEFAULT: 3000
+  * DEFAULT: `3000`
+* `process.env.ENABLE_SHARE` 
+  * (optional) enable map sharing url path
+  * DEFAULT: `false`
 
 ## Tech Stack
 
