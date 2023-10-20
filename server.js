@@ -1,3 +1,4 @@
+import 'dotenv/config'
 import express from 'express';
 import http from 'http';
 import path from 'path';
@@ -40,7 +41,7 @@ app.use((err, req, res, next) => {
   );
 });
 
-// server startup
+// server startup 
 await createConnection();
 var server = http.createServer(app);
 server.listen(process.env.PORT || 3000);
