@@ -16,7 +16,7 @@ function resetView() {
 }
 
 function zoomIn() {
-  let maxZoom = (window.location.pathname == '/map/countries' ? 8 : 2);
+  let maxZoom = (window.location.pathname == '/map/world' ? 8 : 2);
   zoom(container, 1.2, {
     origin: {
       clientX: container.clientWidth/2,
@@ -28,7 +28,7 @@ function zoomIn() {
 }
 
 function zoomOut() {
-  let maxZoom = (window.location.pathname == '/map/countries' ? 8 : 2);
+  let maxZoom = (window.location.pathname == '/map/world' ? 8 : 2);
   zoom(container, 0.8, {
     origin: {
       clientX: container.clientWidth/2,

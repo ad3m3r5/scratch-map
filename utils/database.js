@@ -11,7 +11,7 @@ const dbLocation = process.env.DBLOCATION || path.join(__dirname, '../data');
 let db;
 
 export const validTypes = [
-  'countries', 'states', 'canada', 'australia', 'france',
+  'world', 'united-states-of-america', 'canada', 'australia', 'france',
   'mexico', 'japan', 'spain', 'united-kingdom', 'germany',
   'new-zealand', 'brazil', 'china', 'india'
 ];
@@ -37,7 +37,7 @@ export const createConnection = async () => {
   checkDBVersion();
 
   // update map arrays for new/changed maps
-  updateDBMaps();
+  //updateDBMaps();
 
   db.write();
 };
@@ -46,8 +46,39 @@ export const getConnection = () => db;
 
 
 function checkDBVersion() {
+  // add version for <none> or v1
   if (!db.data.hasOwnProperty('version')) {
-    db.data.version = "1.0";
+    db.data.version = '1.0';
+  }
+
+  // update v1 to v2
+  /*
+    CHANGES:
+      * RENAME: 'countries' -> 'world'
+      * RENAME: 'states' -> 'united-states-of-america'
+  */
+  if (db.data.version == '1.0') {
+    // RENAME: countries
+    if (db.data.scratched.hasOwnProperty('countries')) {
+      db.data.scratched.world = db.data.scratched.countries;
+      delete db.data.scratched.countries;
+    }
+    if (db.data.hasOwnProperty('countries')) {
+      db.data.world = db.data.countries;
+      delete db.data.countries;
+    }
+    // RENAME: states
+    if (db.data.scratched.hasOwnProperty('states')) {
+      db.data.scratched['united-states-of-america'] = db.data.scratched.states;
+      delete db.data.scratched.states;
+    }
+    if (db.data.hasOwnProperty('states')) {
+      db.data['united-states-of-america'] = db.data.states;
+      delete db.data.states;
+    }
+
+    // bump version
+    db.data.version = '2.0';
   }
 }
 

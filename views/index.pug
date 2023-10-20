@@ -12,12 +12,7 @@ block content
           //-svg.map-box-img(width="100px", height="100px")
             //-use(xlink:href=`../public/images/${validTypes[i]}.svg`)
           //-object(type="image/svg+xml" data=`/images/${validTypes[i]}.svg`)
-        if (validTypes[i] == 'countries')
-          div.map-box-label World
-        else if (validTypes[i] == 'states')
-          div.map-box-label US States
-        else
-          div.map-box-label #{parseTypeName(validTypes[i])}
+        div.map-box-label #{parseTypeName(validTypes[i])}
     
   br
   br
@@ -28,12 +23,7 @@ block content
       div.section-row
         div.section-column
           button.section-collapsible-button
-            if (validTypes[i] == 'countries')
-               span.section-collapsible-title World
-            else if (validTypes[i] == 'states')
-              span.section-collapsible-title US States
-            else
-              span.section-collapsible-title #{parseTypeName(validTypes[i])}
+            span.section-collapsible-title #{parseTypeName(validTypes[i])}
             span.section-collapsible-icon ╲╱
           div.section-collapsible-content
             div.section-inner-column
@@ -62,12 +52,7 @@ block content
         - if (validTypes[i+1] !== undefined)
             div.section-column
               button.section-collapsible-button
-                if (validTypes[i+1] == 'countries')
-                  span.section-collapsible-title World
-                else if (validTypes[i+1] == 'states')
-                  span.section-collapsible-title US States
-                else
-                  span.section-collapsible-title #{parseTypeName(validTypes[i+1])}
+                span.section-collapsible-title #{parseTypeName(validTypes[i+1])}
                 span.section-collapsible-icon ╲╱
               div.section-collapsible-content
                 div.section-inner-column

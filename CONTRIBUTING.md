@@ -152,9 +152,9 @@ Example of adding a map of Canadian Provinces/Territories:
         li
           a(href='/') Home
         li
-          a(href='/map/countries') World
+          a(href='/map/world') World
         li
-          a(href='/map/states') USA
+          a(href='/map/united-states-of-america') USA
         li
           a(href='/map/canada') Canada
 
