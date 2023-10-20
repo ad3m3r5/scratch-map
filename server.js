@@ -47,4 +47,8 @@ var server = http.createServer(app);
 server.listen(process.env.PORT || 3000);
 server.on('listening', () => {
   console.log(`scratch-map listening on port: ${server.address().port}`);
+
+  console.log('PORT: ', process.env.PORT)
+  console.log('DBLOCATION: ', process.env.DBLOCATION)
+  console.log('ENABLE_SHARE: ', process.env.ENABLE_SHARE)
 });
