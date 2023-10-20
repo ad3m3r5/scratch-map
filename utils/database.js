@@ -29,7 +29,7 @@ export const createConnection = async () => {
   db.read();
 
   db.data ||= {
-    version: "1.0",
+    version: "2.0",
     scratched: { }
   };
 
@@ -37,7 +37,7 @@ export const createConnection = async () => {
   checkDBVersion();
 
   // update map arrays for new/changed maps
-  //updateDBMaps();
+  updateDBMaps();
 
   db.write();
 };
