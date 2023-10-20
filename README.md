@@ -7,8 +7,8 @@
 ## Table of Contents
 
 * [Features](#features)
-* [MAPS](MAPS.md)
-* [CONTRIBUTING](CONTRIBUTING.md)
+* [MAPS](docs/MAPS.md)
+* [CONTRIBUTING](docs/CONTRIBUTING.md)
 * [Running](#running) 
   * [Docker](#docker)
   * [Using NPM](#using-npm-any-os)

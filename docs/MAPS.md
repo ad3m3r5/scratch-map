@@ -1,7 +1,7 @@
 # The Maps of SCRATCH-MAP
 
 ## Table of Contents
-  * [README](README.md)
+  * [README](../README.md)
   * [World Map](#world-map)
     * [Countries](#countries)
     * [Countries VS Territories](#countries-vs-territories)

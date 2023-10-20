@@ -1,7 +1,7 @@
 # Contributing to SCRATCH-MAP
 
 ## Table of Contents
-  * [REAMDE](README.md)
+  * [README](../README.md)
   * [Who Can Contribute](#who-can-contribute)
   * [How You Can Contribute](#how-you-can-contribute)
     * [Reporting Issues and Bugs](#reporting-issues-and-bugs)
