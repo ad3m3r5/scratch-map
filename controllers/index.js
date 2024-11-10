@@ -1,10 +1,7 @@
 import fs from 'fs';
 import path from "path";
-import { fileURLToPath } from "url";
 
 import { validTypes, getConnection } from '../utils/database.js';
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // home page
 export const getHome = ((req, res, next) => {
@@ -50,26 +47,30 @@ export const getMap = ((req, res, next) => {
   } else {
     let objectList = getConnection().data[mapType];
     let scratchedObjects = getConnection().data.scratched[mapType];
-  
+
     let title = `Map of ${parseTypeName(mapType)}`;
-  
+
     if (mapType == 'countries') title = 'World Map';
     if (mapType == 'states') title = 'US States';
-  
+
     res.render('map', {
       title,
       mapType,
       validTypes,
       objectList,
       scratchedObjects,
-      mapSVG: fs.readFileSync(path.join(__dirname, `../public/images/${mapType}.svg`))
+      mapSVG: fs.readFileSync(path.join(global.__rootDir, `/public/images/${mapType}.svg`))
     });
   }
 });
 
 // scratch endpoint
 export const postScratch = (async (req, res, next) => {
-  console.log(req.body);
+
+  if (global.LOG_LEVEL == 'DEBUG') {
+    console.debug(req.body);
+  }
+
   if (Object.keys(req.body).length !== 5) {
     // body attribute count
     return res.status(422).json({ status: 422, message: 'Invalid body length' }).send();

@@ -1,11 +1,8 @@
+import './utils/globals.js'
 import express from 'express';
 import http from 'http';
 import path from 'path';
-import { fileURLToPath } from 'url';
 import { createConnection } from './utils/database.js';
-
-//register __dirname
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // import express router
 import indexRouter from './routes/index.js';
@@ -13,13 +10,13 @@ import indexRouter from './routes/index.js';
 const app = express();
 
 // set view engine pug
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(global.__rootDir, 'views'));
 app.set('view engine', 'pug');
 
 // configure express middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(global.__rootDir, 'public')));
 
 // use express router
 app.use('/', indexRouter);
@@ -43,13 +40,32 @@ app.use((err, req, res, next) => {
 // server startup
 await createConnection();
 var server = http.createServer(app);
-server.listen(process.env.PORT || 3000);
+server.listen(global.PORT, global.ADDRESS);
 
 // HTTP Keep-Alive
+//   Helps avoid an abrupt shutdown on SIGINT
 server.on('connection', function (socket) {
   socket.setTimeout(5 * 1000);
 });
 
+// Shutdown on SIGTERM
+process.on('SIGTERM', () => {
+  if (global.LOG_LEVEL == 'DEBUG') console.debug("Received SIGTERM: Shutting down");
+  server.close(() => {
+    if (global.LOG_LEVEL == 'DEBUG') console.info("Shut down");
+  });
+});
+
+// Shutdown on SIGINT
+process.on('SIGINT', () => {
+  if (global.LOG_LEVEL == 'DEBUG') console.info("Received SIGINT: Shutting down");
+  process.exit(0);
+});
+
 server.on('listening', () => {
-  console.log(`scratch-map listening on port: ${server.address().port}`);
+  if (global.LOG_LEVEL == 'DEBUG') {
+    console.debug("scratch-map server properties: ", server.address());
+  } else {
+    console.info(`scratch-map listening: ${server.address().address}:${server.address().port}`);
+  }
 });
