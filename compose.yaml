@@ -1,0 +1,14 @@
+services:
+  scratch-map:
+    container_name: scratch-map
+    image: ad3m3r5/scratch-map:latest
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      ADDRESS: '0.0.0.0'
+      PORT: 8080
+      DATA_DIR: '/data'
+      LOG_LEVEL: 'INFO'
+    volumes:
+      - ./data:/data
