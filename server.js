@@ -44,6 +44,12 @@ app.use((err, req, res, next) => {
 await createConnection();
 var server = http.createServer(app);
 server.listen(process.env.PORT || 3000);
+
+// HTTP Keep-Alive
+server.on('connection', function (socket) {
+  socket.setTimeout(5 * 1000);
+});
+
 server.on('listening', () => {
   console.log(`scratch-map listening on port: ${server.address().port}`);
 });

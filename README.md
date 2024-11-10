@@ -79,7 +79,7 @@ This varies depending on the OS, however I would recommend checking out [PM2](ht
 <br/>
 
 ## Tech Stack
-* nodeJS (18.12.0)
+* nodeJS (18.20.4)
 * express
 * pug
 * lowdb
