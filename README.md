@@ -7,7 +7,8 @@
 
 ## Table of Contents
   * [Features](#features)
-  * [MAPS](MAPS.md)
+  * [CHANGELOG](docs/CHANGELOG.md)
+  * [MAPS](docs/MAPS.md)
   * [CONTRIBUTING](CONTRIBUTING.md)
   * [Running](#running)
     * [Docker](#docker)
@@ -55,7 +56,7 @@ mkdir -p /opt/docker/scratch-map/data
 chown -R 1000:1000 /opt/docker/scratch-map/data
 
 docker run -d --restart=always --name scratch-map -p 8080:8080 \
-  -e PORT=8080 -e DBLOCATION=/data \
+  -e PORT=8080 -e DATA_DIR=/data \
   -v /opt/docker/scratch-map/data:/data \
   ad3m3r5/scratch-map:latest
 ```
@@ -69,7 +70,7 @@ docker run -d --restart=always --name scratch-map -p 8080:8080 \
 This varies depending on the OS, however I would recommend checking out [PM2](https://pm2.keymetrics.io/).
 
 ### Environment Variables
-  * `process.env.DBLOCATION`
+  * `process.env.DATA_DIR`
     * (recommended) somewhere outside of app dir for update compatibility
     * DEFAULT: APPDIR/data/
   * `process.env.PORT`
