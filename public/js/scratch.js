@@ -58,7 +58,7 @@ async function clickObject(e) {
         `<label for="swal2-input-1" class="swal2-input-label">Year you visited</label>` +
         `<input id="swal2-input-1" class="swal2-input" placeholder="${new Date().getFullYear()}" value="${object.year || ''}" type="text" style="width: -webkit-fill-available;">` +
         `<label for="swal2-input-2" class="swal2-input-label">Link to Photo Album</label>` +
-        `<input id="swal2-input-2" class="swal2-input" placeholder="https://mycloud.com/${object.name.toLowerCase()}-trip-photos" value="${object.url || ''}" type="url" style="width: -webkit-fill-available;">`,
+        `<input id="swal2-input-2" class="swal2-input" placeholder="https://cloud.mydomain.com/${object.name.toLowerCase()}-trip-photos" value="${object.url || ''}" type="url" style="width: -webkit-fill-available;">`,
       preConfirm: () => {
         let year = document.getElementById('swal2-input-1').value;
         let url = document.getElementById('swal2-input-2').value;
@@ -100,9 +100,8 @@ async function clickObject(e) {
       html:
         `<label for="swal2-input-1" class="swal2-input-label">Year you visited</label>` +
         `<input id="swal2-input-1" class="swal2-input" placeholder="${new Date().getFullYear()}" type="text" style="width: -webkit-fill-available;">` +
-        
         `<label for="swal2-input-2" class="swal2-input-label">Link to Photo Album</label>` +
-        `<input id="swal2-input-2" class="swal2-input" placeholder="https://mycloud.com/${object.name.toLowerCase()}-trip-photos" type="url" style="width: -webkit-fill-available;">`,
+        `<input id="swal2-input-2" class="swal2-input" placeholder="https://cloud.mydomain.com/${object.name.toLowerCase()}-trip-photos" type="url" style="width: -webkit-fill-available;">`,
       preConfirm: () => {
         let year = document.getElementById('swal2-input-1').value;
         let url = document.getElementById('swal2-input-2').value;
@@ -133,7 +132,7 @@ async function clickObject(e) {
   if (saResponse == null) {
     Toast.fire({
       icon: 'error',
-      title: 'An unknown error has occurred' 
+      title: 'An unknown error has occurred'
     });
   } else if (saResponse.isConfirmed) {
     const rawResponse = await fetch('/scratch', {
@@ -173,11 +172,11 @@ async function clickObject(e) {
         title: jsonResponse.message
       });
     }
-    
+
   }
 }
 
-function renderScratched(objects) {  
+function renderScratched(objects) {
   for (let i = 0; i < objects.length; i++) {
     objects[i].classList.remove('scratched');
   }
