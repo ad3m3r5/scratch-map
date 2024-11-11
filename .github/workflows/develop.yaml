@@ -38,4 +38,4 @@ jobs:
           platforms: linux/amd64,linux/arm64,linux/arm/v7
           tags: |
             ${{ secrets.USERNAME }}/${{ github.event.repository.name }}:${{ env.IMAGE_VERSION }}
-            ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}/:${{ env.IMAGE_VERSION }}
+            ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}:${{ env.IMAGE_VERSION }}
