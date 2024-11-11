@@ -14,6 +14,7 @@ This released includes a breaking change noted below.
 ### Added
 - Environment variable `LOG_LEVEL`
 - Express/Node now listen for `SIGTERM` and `SIGINT` for better shutdown processes
+- Fullscreen button for map view
 
 ### Changed
 - BREAKING: Renamed `DBLOCATION` environment variable to `DATA_DIR`
