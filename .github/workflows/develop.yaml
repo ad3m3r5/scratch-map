@@ -1,4 +1,4 @@
-name: Setup, Build, and Push
+name: develop - Setup, Build, and Push
 on:
   push:
     branches:

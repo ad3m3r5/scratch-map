@@ -1,4 +1,4 @@
-name: Setup, Build, and Push
+name: Docker Buildx Debug
 on:
   push:
     branches:
