@@ -1,15 +1,17 @@
-FROM node:22.11.0-alpine3.20
+# node:18 required due to NPM bug on linux/arm/v7
+#   https://github.com/docker/build-push-action/issues/1071
+FROM node:18.20.4-alpine3.20
 
-ENV NODE_ENV=production
-ARG APP_DIR=/opt/scratch-map
+# Set the platform to build image for
+ENV \
+  NODE_ENV=production \
+  APP_DIR=/app
 
 RUN apk update \
   && apk upgrade --no-cache
 
-RUN mkdir $APP_DIR && chown -R node:node $APP_DIR
-
-WORKDIR $APP_DIR
 USER node
+WORKDIR $APP_DIR
 
 COPY --chown=node:node . .
 
