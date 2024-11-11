@@ -1,18 +1,18 @@
-FROM node:18.12.0-alpine3.16
+FROM node:22.11.0-alpine3.20
 
 ENV NODE_ENV=production
-ENV PORT=8080
-ENV DBLOCATION=/data
-ENV ENABLE_SHARE=false
+ARG APP_DIR=/opt/scratch-map
 
-WORKDIR /opt/scratch-map
+RUN apk update \
+  && apk upgrade --no-cache
 
-COPY --chown=node:node package*.json ./
+RUN mkdir $APP_DIR && chown -R node:node $APP_DIR
 
-RUN npm ci --omit=dev
+WORKDIR $APP_DIR
+USER node
 
 COPY --chown=node:node . .
 
-USER node
+RUN npm ci --omit=dev
 
 CMD [ "node", "server.js" ]

@@ -1,6 +1,6 @@
 {
   "name": "scratch-map",
-  "version": "1.1.12",
+  "version": "1.2.0",
   "description": "open-source scratch-off style map",
   "main": "server.js",
   "type": "module",
@@ -17,6 +17,6 @@
     "pug": "^3.0.2"
   },
   "devDependencies": {
-    "nodemon": "^2.0.20"
+    "nodemon": "^3.1.7"
   }
 }

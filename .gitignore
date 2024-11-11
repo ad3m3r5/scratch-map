@@ -1,6 +1,5 @@
-# Custom for scratch-map
+# scratch-map specific
 data/
-
 
 #####
 # https://raw.githubusercontent.com/github/gitignore/main/Node.gitignore
@@ -137,5 +136,4 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
-# Custom for scratch-map
 data/
