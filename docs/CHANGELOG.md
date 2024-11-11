@@ -1,5 +1,7 @@
 # Changelog
 
+This changelog will be based on the syntax provided by [keep a changelog](https://keepachangelog.com/)
+
 ## Table of Contents
   - [README](../README.md)
   - Changes
@@ -7,7 +9,7 @@
 
 ## [Unreleased] - 2024-11-10
 
-This released includes breaking changes noted below.
+This released includes a breaking change noted below.
 
 ### Added
 - Environment variable `LOG_LEVEL`
@@ -22,3 +24,7 @@ This released includes breaking changes noted below.
 - Based Docker image to bump Node and Alpine versions
 - Dockerfile logic to update alpine packages with apk
 - `console.log` has been replaced with `console.info` and `console.debug` to match `LOG_LEVEL`
+- json code files moved to subdirectory under `utils/`
+
+### Fixed
+- The map had an issue where dragging and releasing on the same entity would cause a click event. A timeout has been added to decrease the change of that.
