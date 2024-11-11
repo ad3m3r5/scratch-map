@@ -25,6 +25,10 @@
     - (optional) log level for console output
     - DEFAULT: `INFO`
     - OPTIONS: `INFO`, `DEBUG`
+  - `process.env.ENABLE_SHARE`
+    - (optional) enables/disables view-only /share routes for maps
+    - DEFAULT: `false`
+    - OPTIONS: `true`, `false`
 
 ### Docker
 
