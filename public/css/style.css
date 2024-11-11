@@ -163,19 +163,20 @@ html, body {
 .zoom-controls {
   float: left;
   padding: 5px 10px;
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+   -khtml-user-select: none; /* Konqueror HTML */
+     -moz-user-select: none; /* Old versions of Firefox */
+      -ms-user-select: none; /* Internet Explorer/Edge */
+          user-select: none; /* Non-prefixed version, currently
+                                supported by Chrome, Edge, Opera and Firefox */
 }
-.zoom-reset {
+.zoom-controls > button {
   display: inline-block;
-  padding: 0px 6px;
+  padding: 3px 8px;
   font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
-}
-.zoom-in {
-  display: inline-block;
-  padding: 0px 6px;
-}
-.zoom-out {
-  display: inline-block;
-  padding: 0px 6px;
+  font-weight: bold;
+  font-size: 15px;
 }
 
 #svg-container {
@@ -248,8 +249,8 @@ html, body {
   height: 39px;
   display: none;
 }
-.nav-toggle span, 
-.nav-toggle span:before, 
+.nav-toggle span,
+.nav-toggle span:before,
 .nav-toggle span:after {
   width: 28px;
   height: 3px;
