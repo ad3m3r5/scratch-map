@@ -44,7 +44,7 @@ function checkDBVersion() {
   if (!db.data.hasOwnProperty('version')) {
     db.data.version = '1.0';
   } else {
-    console.log('Current DB version: ' + db.data.version)
+    if (global.LOG_LEVEL == 'DEBUG') console.debug(`Current DB version: ${db.data.version}\n`)
   }
 
   if (db.data.version == '1.0') {
@@ -81,7 +81,7 @@ function updateDBMaps() {
     }
 
     // import json for each validType
-    let importedType = JSON.parse(fs.readFileSync(path.join(global.__rootDir, `/utils/${type}.json`)));
+    let importedType = JSON.parse(fs.readFileSync(path.join(global.__rootDir, `/utils/codes/${type}.json`)));
     if (JSON.stringify(db.data[type]) != JSON.stringify(importedType)) {
       db.data[type] = importedType;
     }
