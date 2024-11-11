@@ -78,25 +78,6 @@ export const getShare = ((req, res, next) => {
   }
 });
 
-// share
-export const getShare = ((req, res, next) => {
-  let mapType = req.params.mapType;
-
-  if (!validTypes.includes(mapType)) {
-    res.render('error', { status: '404', message: `${req.originalUrl} Not Found` });
-  } else {
-    let scratchedObjects = getConnection().data.scratched[mapType];
-
-    res.render('share', {
-      title: parseTypeName(mapType),
-      mapType,
-      validTypes,
-      scratchedObjects,
-      mapSVG: fs.readFileSync(path.join(__dirname, `../public/images/${mapType}.svg`))
-    });
-  }
-});
-
 // scratch endpoint
 export const postScratch = (async (req, res, next) => {
 

@@ -47,12 +47,6 @@ function checkDBVersion() {
     console.log('Current DB version: ' + db.data.version)
   }
 
-  // update 1.0 to 1.2
-  /*
-    CHANGES:
-      * RENAME: 'countries' -> 'world'
-      * RENAME: 'states' -> 'united-states-of-america'
-  */
   if (db.data.version == '1.0') {
     // RENAME: countries
     if (db.data.scratched.hasOwnProperty('countries')) {

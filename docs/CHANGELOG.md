@@ -16,6 +16,8 @@ This released includes breaking changes noted below.
 ### Changed
 - BREAKING: Renamed `DBLOCATION` environment variable to `DATA_DIR`
   - Update your `docker run` command, `compose.yaml` file, or other applications environment variable locations
+- Database attributes `countries` and `states` have been changed to `world` and `united-states-of-america`
+  - The db.json file should be automatically updated for you, including the db version label
 - Docs are more organized
 - Based Docker image to bump Node and Alpine versions
 - Dockerfile logic to update alpine packages with apk
