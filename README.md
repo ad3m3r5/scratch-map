@@ -48,7 +48,7 @@ See:
 <br />
 
 ## Tech Stack
-- nodeJS (18.20.4)
+- nodeJS
 - express
 - pug
 - lowdb
