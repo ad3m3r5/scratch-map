@@ -8,8 +8,8 @@
     - [Docker Setup](#docker-setup)
     - [Docker Run](#docker-run)
     - [Docker Compose](#docker-compose)
-  - [Using NPM](#using-npm-any-os)
-  - [Running as a Service](#running-as-a-service-any-os)
+  - [npm or yarn](#npm-or-yarn)
+  - [Run as a Service with pm2](#run-as-a-service-with-pm2)
 
 ### Environment Variables
   - `process.env.ADDRESS`
@@ -66,14 +66,18 @@ wget https://raw.githubusercontent.com/ad3m3r5/scratch-map/refs/heads/main/compo
 docker compose up -d
 ```
 
-### Using NPM (any OS)
-1) Set ENV vars (see above) somewhere they will persist
-2) `npm install`
-3) `npm run`
+### npm or yarn
+- Set ENV vars (see above) somewhere they will persist
+- npm
+  1) `npm install`
+  2) `npm start`
+- yarn
+  1) `yarn install`
+  2) `yarn start`
 
-### Running as a Service (any OS)
+### Run as a Service with pm2
 
-This varies depending on the OS, however I would recommend checking out [PM2](https://pm2.keymetrics.io/).
+This varies depending on the OS, however I would recommend checking out [pm2](https://pm2.keymetrics.io/).
 
 Example of pm2 command: `DATA_DIR=/data pm2 start server.js --name scratch-map`
 
