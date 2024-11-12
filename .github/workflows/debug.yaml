@@ -1,0 +1,87 @@
+name: "[debug] Setup, Build, and Push"
+on:
+  workflow_dispatch:
+
+env:
+  IMAGE_VERSION: debug
+
+jobs:
+  debug:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Register repository name
+        run: |
+          echo "REPOSITORY_NAME=${GITHUB_REPOSITORY#*/}" | tee $GITHUB_ENV
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Register package version
+        run: |
+          echo "PACKAGE_VERSION=$(cat package.json | jq '.version' | tr -d '"')" | tee $GITHUB_ENV
+
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          flavor: |
+            latest=false
+            prefix=${{ env.IMAGE_VERSION }}-,onlatest=true
+          images: |
+            ${{ vars.DOCKERHUB_USERNAME }}/${{ env.REPOSITORY_NAME }}
+            ghcr.io/${{ github.repository_owner }}/${{ env.REPOSITORY_NAME }}
+          tags: |
+            type=raw,prefix=,priority=1000,value=${{ env.IMAGE_VERSION }}
+            type=semver,pattern={{version}},value=${{ env.PACKAGE_VERSION }}
+            type=semver,pattern={{major}}.{{minor}},value=${{ env.PACKAGE_VERSION }}
+            type=semver,pattern={{major}},value=${{ env.PACKAGE_VERSION }}
+          labels: |
+            org.opencontainers.image.documentation=${{ github.server_url }}/${{ github.repository }}/
+            org.opencontainers.image.authors=${{ github.repository_owner }}
+
+      - name: Output vars
+        run: |
+          echo "github.repository_owner:  ${{ github.repository_owner }}"
+          echo "github.repository:        ${{ github.repository }}"
+          echo "env.REPOSITORY_NAME:      ${{ env.REPOSITORY_NAME }}"
+          echo "env.PACKAGE_VERSION:      ${{ env.PACKAGE_VERSION }}"
+#          echo "${{ toJSON(env.DOCKER_METADATA_OUTPUT_JSON) }}" | jq '.'
+#          echo '${{ toJSON(github) }}' | jq '.'
+
+      - name: Set up QEMU
+        id: qemu
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Output Buildx Info
+        run: |
+          echo "Name:      ${{ steps.buildx.outputs.name }}"
+          echo "Endpoint:  ${{ steps.buildx.outputs.endpoint }}"
+          echo "Status:    ${{ steps.buildx.outputs.status }}"
+          echo "Flags:     ${{ steps.buildx.outputs.flags }}"
+          echo "Platforms: ${{ steps.buildx.outputs.platforms }}"
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ vars.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          push: true
+          platforms: linux/amd64,linux/arm64,linux/arm/v7
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
