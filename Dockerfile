@@ -2,7 +2,6 @@
 #   https://github.com/docker/build-push-action/issues/1071
 FROM node:18.20.4-alpine3.20
 
-# Set the platform to build image for
 ENV \
   NODE_ENV=production \
   APP_DIR=/app
