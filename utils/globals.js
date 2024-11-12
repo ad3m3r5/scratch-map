@@ -8,8 +8,12 @@ const localDataDir = path.join(__rootDir, '/data');
 global.ADDRESS = process.env.ADDRESS || '0.0.0.0';
 global.PORT = process.env.PORT || 3000;
 global.DATA_DIR = process.env.DATA_DIR || localDataDir;
-global.LOG_LEVEL = process.env.LOG_LEVEL || 'INFO';
-if ('ENABLE_SHARE' in process.env && process.env.ENABLE_SHARE === 'true') {
+
+// Allow LOG_LEVEL to be any case
+global.LOG_LEVEL = (process.env.LOG_LEVEL).trim().toUpperCase() || 'INFO';
+
+// Allow ENABLE_SHARE to be any case or 1
+if ('ENABLE_SHARE' in process.env && (process.env.ENABLE_SHARE.trim().toLowerCase() === 'true' || process.env.ENABLE_SHARE.trim() === '1')) {
   global.ENABLE_SHARE = true;
 } else {
   global.ENABLE_SHARE = false;
