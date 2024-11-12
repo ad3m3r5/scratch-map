@@ -15,6 +15,8 @@ jobs:
 
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          ref: main
 
       - name: Register package version
         run: |
@@ -30,7 +32,7 @@ jobs:
             ${{ vars.DOCKERHUB_USERNAME }}/${{ env.REPOSITORY_NAME }}
             ghcr.io/${{ github.repository_owner }}/${{ env.REPOSITORY_NAME }}
           tags: |
-            type=raw,enable=${{ github.ref == format('refs/heads/{0}', 'master') }},value=latest
+            type=raw,value=latest
             type=semver,pattern={{version}},value=${{ env.PACKAGE_VERSION }}
             type=semver,pattern={{major}}.{{minor}},value=${{ env.PACKAGE_VERSION }}
             type=semver,pattern={{major}},value=${{ env.PACKAGE_VERSION }}

@@ -3,6 +3,8 @@ on:
   push:
     branches:
       - develop
+    paths-ignore:
+      - '.github/workflows/**'
   workflow_dispatch:
 
 env:
@@ -19,6 +21,8 @@ jobs:
 
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          ref: develop
 
       - name: Register package version
         run: |
