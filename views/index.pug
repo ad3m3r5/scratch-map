@@ -9,11 +9,8 @@ block content
       a.map-box(href=`/map/${validTypes[i]}`)
         div.map-box-map
           img.map-box-img(src=`/images/${validTypes[i]}.png`)
-          //-svg.map-box-img(width="100px", height="100px")
-            //-use(xlink:href=`../public/images/${validTypes[i]}.svg`)
-          //-object(type="image/svg+xml" data=`/images/${validTypes[i]}.svg`)
         div.map-box-label #{parseTypeName(validTypes[i])}
-    
+
   br
   br
   br
@@ -78,7 +75,7 @@ block content
                         td #{val.year}
                         td
                           a(href=val.url target='_blank') #{val.url}
-  
+
   script.
     var collapsibles = document.querySelectorAll('.section-collapsible-button');
 
