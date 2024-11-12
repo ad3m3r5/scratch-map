@@ -27,6 +27,8 @@ This released includes a breaking change noted below.
 
 ### Added
 - Share/Guest view-only mode using `/share/:map` URL path
+  - Enabled with `ENABLE_SHARE` environment variable
+  - Button provided on `/map/:map` page to create and copy link
 - Public GitHub Actions - these were previously in a private repository for debugging
 - Environment variable `LOG_LEVEL`
 - Express/Node now listen for `SIGTERM` and `SIGINT` for better shutdown processes
