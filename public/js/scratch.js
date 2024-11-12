@@ -66,7 +66,7 @@ async function clickObject(e) {
 
   let saResponse = null;
   let keepScratched = null;
-  // Prompt user
+  // prompt user
   if (scratched) {
     saResponse = await Swal.fire({
       title: `Update ${object.name}?`,

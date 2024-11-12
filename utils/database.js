@@ -48,7 +48,7 @@ function checkDBVersion() {
   }
 
   if (db.data.version == '1.0') {
-    // RENAME: countries
+    // rename: countries
     if (db.data.scratched.hasOwnProperty('countries')) {
       db.data.scratched.world = db.data.scratched.countries;
       delete db.data.scratched.countries;
@@ -57,7 +57,7 @@ function checkDBVersion() {
       db.data.world = db.data.countries;
       delete db.data.countries;
     }
-    // RENAME: states
+    // rename: states
     if (db.data.scratched.hasOwnProperty('states')) {
       db.data.scratched['united-states-of-america'] = db.data.scratched.states;
       delete db.data.scratched.states;
