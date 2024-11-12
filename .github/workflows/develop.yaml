@@ -1,4 +1,4 @@
-name: Setup, Build, and Push
+name: "[develop] Setup, Build, and Push"
 on:
   push:
     branches:
@@ -9,9 +9,40 @@ env:
   IMAGE_VERSION: develop
 
 jobs:
-  build:
+  develop:
     runs-on: ubuntu-latest
+
     steps:
+      - name: Register repository name
+        run: |
+          echo "REPOSITORY_NAME=${GITHUB_REPOSITORY#*/}" | tee $GITHUB_ENV
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Register package version
+        run: |
+          echo "PACKAGE_VERSION=$(cat package.json | jq '.version' | tr -d '"')" | tee $GITHUB_ENV
+
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          flavor: |
+            latest=false
+            prefix=${{ env.IMAGE_VERSION }}-,onlatest=true
+          images: |
+            ${{ vars.DOCKERHUB_USERNAME }}/${{ env.REPOSITORY_NAME }}
+            ghcr.io/${{ github.repository_owner }}/${{ env.REPOSITORY_NAME }}
+          tags: |
+            type=raw,prefix=,priority=1000,value=${{ env.IMAGE_VERSION }}
+            type=semver,pattern={{version}},value=${{ env.PACKAGE_VERSION }}
+            type=semver,pattern={{major}}.{{minor}},value=${{ env.PACKAGE_VERSION }}
+            type=semver,pattern={{major}},value=${{ env.PACKAGE_VERSION }}
+          labels: |
+            org.opencontainers.image.documentation=${{ github.server_url }}/${{ github.repository }}/
+            org.opencontainers.image.authors=${{ github.repository_owner }}
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
 
@@ -36,6 +67,5 @@ jobs:
         with:
           push: true
           platforms: linux/amd64,linux/arm64,linux/arm/v7
-          tags: |
-            ${{ vars.DOCKERHUB_USERNAME }}/${{ github.event.repository.name }}:${{ env.IMAGE_VERSION }}
-            ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}:${{ env.IMAGE_VERSION }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
