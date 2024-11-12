@@ -1,16 +1,20 @@
-name: Docker Buildx Debug
+name: "[buildx] Buildx Debug"
 on:
   workflow_dispatch:
 
 jobs:
-  debug:
+  buildx:
     runs-on: ubuntu-latest
+
     strategy:
       matrix:
+        node_alpine:
+          - node:18.20.4-alpine3.20
+          - node:20.18.0-alpine3.20
+          - node:22.11.0-alpine3.20
         image_arch:
           - linux/arm/v6
           - linux/arm/v7
-          - linux/arm/v8
           - linux/arm64
           - linux/amd64
         image_version:
@@ -27,5 +31,8 @@ jobs:
       - name: Output Buildx Info
         run: docker buildx ls
 
-      - name: Docker Run Loop
-        run: docker run --platform ${{ matrix.image_arch }} --rm alpine:${{ matrix.image_version }} uname -m
+      - name: "Docker Run Loop [alpine]"
+        run: docker run --rm --platform ${{ matrix.image_arch }} alpine:${{ matrix.image_version }} uname -m
+
+      - name: "Docker Run Loop [node]"
+        run: docker run --rm --platform ${{ matrix.image_arch }} ${{ matrix.node_alpine }} npm -v

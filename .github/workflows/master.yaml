@@ -7,6 +7,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Register repository name
         run: |
@@ -14,6 +15,28 @@ jobs:
 
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Register package version
+        run: |
+          echo "PACKAGE_VERSION=$(cat package.json | jq '.version' | tr -d '"')" | tee $GITHUB_ENV
+
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          flavor: |
+            latest=false
+          images: |
+            ${{ vars.DOCKERHUB_USERNAME }}/${{ env.REPOSITORY_NAME }}
+            ghcr.io/${{ github.repository_owner }}/${{ env.REPOSITORY_NAME }}
+          tags: |
+            type=raw,enable=${{ github.ref == format('refs/heads/{0}', 'master') }},value=latest
+            type=semver,pattern={{version}},value=${{ env.PACKAGE_VERSION }}
+            type=semver,pattern={{major}}.{{minor}},value=${{ env.PACKAGE_VERSION }}
+            type=semver,pattern={{major}},value=${{ env.PACKAGE_VERSION }}
+          labels: |
+            org.opencontainers.image.documentation=${{ github.server_url }}/${{ github.repository }}/
+            org.opencontainers.image.authors=${{ github.repository_owner }}
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
@@ -39,8 +62,5 @@ jobs:
         with:
           push: true
           platforms: linux/amd64,linux/arm64,linux/arm/v7
-          tags: |
-            ${{ vars.DOCKERHUB_USERNAME }}/${{ env.REPOSITORY_NAME }}:${{ github.event.release.tag_name }}
-            ${{ vars.DOCKERHUB_USERNAME }}/${{ env.REPOSITORY_NAME }}:latest
-            ghcr.io/${{ github.repository_owner }}/${{ env.REPOSITORY_NAME }}:${{ github.event.release.tag_name }}
-            ghcr.io/${{ github.repository_owner }}/${{ env.REPOSITORY_NAME }}:latest
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
