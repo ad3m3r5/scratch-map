@@ -73,11 +73,16 @@ See:
 ## Credits
 
 ### Libraries
-- pan/zoom for SVGs
-  - https://github.com/luncheon/svg-pan-zoom-container
-- scratch prompts/pop-ups
-  - https://github.com/sweetalert2/sweetalert2
+- [svg-pan-zoom-container](https://github.com/luncheon/svg-pan-zoom-container)
+  - pan/zoom for SVGs
+
+- [sweetalert2](https://github.com/sweetalert2/sweetalert2)
+  - Scratch prompts/pop-ups
 
 ### Fonts
-- Roboto - used on SVG labels
-  - https://fonts.google.com/specimen/Roboto
+- [Roboto](https://fonts.google.com/specimen/Roboto)
+  - Used on SVG labels
+
+### Icons
+- Share
+  - Source: https://upload.wikimedia.org/wikipedia/commons/5/58/Sharethis-grey.svg
