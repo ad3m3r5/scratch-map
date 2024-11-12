@@ -1,17 +1,11 @@
-name: "[develop] Setup, Build, and Push"
+name: Setup, Build, and Push
 on:
-  push:
-    branches:
-      - develop
-    paths-ignore:
-      - '.github/workflows/**'
+  release:
+    types: [published]
   workflow_dispatch:
 
-env:
-  IMAGE_VERSION: develop
-
 jobs:
-  develop:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -22,7 +16,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          ref: develop
+          ref: main
 
       - name: Register package version
         run: |
@@ -34,12 +28,11 @@ jobs:
         with:
           flavor: |
             latest=false
-            prefix=${{ env.IMAGE_VERSION }}-,onlatest=true
           images: |
             ${{ vars.DOCKERHUB_USERNAME }}/${{ env.REPOSITORY_NAME }}
             ghcr.io/${{ github.repository_owner }}/${{ env.REPOSITORY_NAME }}
           tags: |
-            type=raw,prefix=,priority=1000,value=${{ env.IMAGE_VERSION }}
+            type=raw,value=latest
             type=semver,pattern={{version}},value=${{ env.PACKAGE_VERSION }}
             type=semver,pattern={{major}}.{{minor}},value=${{ env.PACKAGE_VERSION }}
             type=semver,pattern={{major}},value=${{ env.PACKAGE_VERSION }}

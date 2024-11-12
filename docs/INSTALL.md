@@ -57,7 +57,7 @@ docker run -d --restart=always \
 ```
 cd /opt/containers/scratch-map
 
-wget https://raw.githubusercontent.com/ad3m3r5/scratch-map/refs/heads/master/compose.yaml
+wget https://raw.githubusercontent.com/ad3m3r5/scratch-map/refs/heads/main/compose.yaml
 
 docker compose up -d
 ```

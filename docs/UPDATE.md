@@ -42,7 +42,7 @@ docker compose up -d
 
 Assuming you installed scratch-map by cloning with git and are using *nix commands:
 
-- Ensure you are using the `master` branch of the repository:
+- Ensure you are using the `main` branch of the repository:
   - `cd <your_install_dir>
   - `git branch`
 - Pull the latest version
