@@ -1,9 +1,13 @@
 import fs from 'fs';
 import path from "path";
-import { LowSync } from 'lowdb'
-import { JSONFileSync } from 'lowdb/node'
+import { JSONFileSyncPreset } from 'lowdb/node'
 
 let db;
+
+const defaultData = {
+  version: "1.2",
+  scratched: { }
+};
 
 export const validTypes = [
   'world', 'united-states-of-america', 'canada', 'australia', 'france',
@@ -12,21 +16,17 @@ export const validTypes = [
 ];
 
 export const createConnection = async () => {
-  if (!fs.existsSync(global.DATA_DIR)){
+  // create DATA_DIR if it does not exist
+  if (!fs.existsSync(global.DATA_DIR)) {
+    if (global.LOG_LEVEL == 'DEBUG') console.debug(`Creating ${global.DATA_DIR}`);
     fs.mkdirSync(global.DATA_DIR, { recursive: true });
   }
 
-  const file = path.join(global.DATA_DIR, '/db.json');
+  const dbFile = path.join(global.DATA_DIR, '/db.json');
 
-  const adapter = new JSONFileSync(file);
-  db = new LowSync(adapter);
+  db = JSONFileSyncPreset(dbFile, defaultData);
 
   db.read();
-
-  db.data ||= {
-    version: "1.2",
-    scratched: { }
-  };
 
   // check data schema version
   checkDBVersion();
