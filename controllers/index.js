@@ -54,6 +54,7 @@ export const getMap = ((req, res, next) => {
       validTypes,
       objectList,
       scratchedObjects,
+      enableShare: global.ENABLE_SHARE,
       mapSVG: fs.readFileSync(path.join(global.__rootDir, `/public/images/${mapType}.svg`))
     });
   }

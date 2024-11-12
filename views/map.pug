@@ -1,26 +1,33 @@
 extends layout
 
 block content
-  link(rel='stylesheet', href='/css/sweetalert2.min.css')
-  script(src='/js/sweetalert2.all.min.js', type='text/javascript')
+  link(rel='stylesheet', href='/css/sweetalert2.11.14.5.min.css')
+  script(src='/js/sweetalert2.all.11.14.5.min.js', type='text/javascript')
 
   style
     include ../public/css/map.css
 
   script.
-    var objectList = !{JSON.stringify(objectList)};
-    var scratchedObjects = !{JSON.stringify(scratchedObjects)};
     var mapType = !{JSON.stringify(mapType)};
     var validTypes = !{JSON.stringify(validTypes)};
+    var objectList = !{JSON.stringify(objectList)};
+    var scratchedObjects = !{JSON.stringify(scratchedObjects)};
+    var enableShare = !{JSON.stringify(enableShare)};
 
   h1#title #{title}
 
+  if enableShare
+    div#external-controls
+      button#share-button(type='button', onclick='copyShareLink()')
+        span#share-text= 'Share '
+        include ../public/images/share.svg
+
   div#map-container
-    div.zoom-controls
-      button.zoom-fullscreen(type='button', onclick='fullscreenView()') Fullscreen
-      button.zoom-reset(type='button', onclick='resetView()') Reset
-      button.zoom-in(type='button', onclick='zoomIn()') +
-      button.zoom-out(type='button', onclick='zoomOut()') -
+    div#zoom-controls
+      button#zoom-fullscreen(type='button', onclick='fullscreenView()') Fullscreen
+      button#zoom-reset(type='button', onclick='resetView()') Reset
+      button#zoom-in(type='button', onclick='zoomIn()') +
+      button#zoom-out(type='button', onclick='zoomOut()') -
 
     if mapType == 'world'
       div#svg-container(
@@ -37,5 +44,15 @@ block content
 
   script(src='/js/scratch.js', type='text/javascript')
 
-  script(src='/js/svg-pan-zoom-container.min.js', type='text/javascript')
+  script(src='/js/svg-pan-zoom-container.0.6.1.min.js', type='text/javascript')
   script(src='/js/svg_controls.js', type='text/javascript')
+
+  if enableShare
+    script.
+      function copyShareLink() {
+        var currentUrl = window.location.href;
+        var shareUrl = currentUrl.replace("/map/", "/share/");
+
+        navigator.clipboard.writeText(shareUrl);
+        alert(`Share URL Copied!\n${shareUrl}`);
+      }

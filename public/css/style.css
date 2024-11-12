@@ -152,6 +152,29 @@ html, body {
 }
 
 /* Map pages */
+#external-controls {
+  margin: 0 auto;
+  width: 80%;
+  margin-bottom: 10px;
+}
+#share-button {
+  display: block;
+  margin: 0 auto;
+  padding: 8px 20px;
+  background-color: #cca11f;
+  border: none;
+  border-radius: 10px;
+}
+#share-text {
+  color: white;
+  font-size: 16px;
+}
+#share-icon {
+  height: 12px;
+  width: 12px;
+  fill: white;
+}
+
 #map-container {
   margin: 0 auto;
   overflow: hidden;
@@ -160,7 +183,7 @@ html, body {
   margin-bottom: 30px;
 }
 
-.zoom-controls {
+#zoom-controls {
   float: left;
   padding: 5px 10px;
   -webkit-touch-callout: none; /* iOS Safari */
@@ -171,7 +194,7 @@ html, body {
           user-select: none; /* Non-prefixed version, currently
                                 supported by Chrome, Edge, Opera and Firefox */
 }
-.zoom-controls > button {
+#zoom-controls > button {
   display: inline-block;
   padding: 3px 8px;
   font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
