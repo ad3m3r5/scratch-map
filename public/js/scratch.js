@@ -1,4 +1,5 @@
 var objectClass = null, objectGroups = null;
+var clickingObject = false, draggingObject = false;
 
 if (validTypes.includes(mapType)) {
   objectClass = document.querySelector(`.entities`);
@@ -9,9 +10,30 @@ renderScratched(objectGroups);
 
 for (let i = 0; i < objectGroups.length; i++) {
   objectGroups[i].addEventListener('click', clickObject);
+
+  objectGroups[i].addEventListener('mousedown', () => {
+    clickingObject = true;
+  });
+
+  objectGroups[i].addEventListener('mousemove', () => {
+    if (clickingObject) {
+      draggingObject = true;
+    }
+  });
+
+  objectGroups[i].addEventListener('mouseup', () => {
+    clickingObject = false;
+    setTimeout(() => draggingObject = false, 10);
+  });
 }
 
 async function clickObject(e) {
+  if (draggingObject) {
+    e.preventDefault();
+    e.stopPropagation();
+    return;
+  }
+
   e.stopPropagation();
   e.preventDefault();
 
@@ -44,7 +66,7 @@ async function clickObject(e) {
 
   let saResponse = null;
   let keepScratched = null;
-  // Prompt user
+  // prompt user
   if (scratched) {
     saResponse = await Swal.fire({
       title: `Update ${object.name}?`,

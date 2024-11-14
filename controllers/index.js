@@ -43,21 +43,36 @@ export const getMap = ((req, res, next) => {
   let mapType = req.params.mapType;
 
   if (!validTypes.includes(mapType)) {
-    res.render('error', { status: '404', message: `/map/${mapType} Not Found` });
+    res.render('error', { status: '404', message: `${req.originalUrl} Not Found` });
   } else {
     let objectList = getConnection().data[mapType];
     let scratchedObjects = getConnection().data.scratched[mapType];
 
-    let title = `Map of ${parseTypeName(mapType)}`;
-
-    if (mapType == 'countries') title = 'World Map';
-    if (mapType == 'states') title = 'US States';
-
     res.render('map', {
-      title,
+      title: parseTypeName(mapType),
       mapType,
       validTypes,
       objectList,
+      scratchedObjects,
+      enableShare: global.ENABLE_SHARE,
+      mapSVG: fs.readFileSync(path.join(global.__rootDir, `/public/images/${mapType}.svg`))
+    });
+  }
+});
+
+// view
+export const getView = ((req, res, next) => {
+  let mapType = req.params.mapType;
+
+  if (!validTypes.includes(mapType)) {
+    res.render('error', { status: '404', message: `${req.originalUrl} Not Found` });
+  } else {
+    let scratchedObjects = getConnection().data.scratched[mapType];
+
+    res.render('view', {
+      title: parseTypeName(mapType),
+      mapType,
+      validTypes,
       scratchedObjects,
       mapSVG: fs.readFileSync(path.join(global.__rootDir, `/public/images/${mapType}.svg`))
     });
@@ -77,7 +92,7 @@ export const postScratch = (async (req, res, next) => {
   } else if (typeof req.body.type !== 'string' || typeof req.body.code !== 'string' || typeof req.body.scratch !== 'boolean' || typeof req.body.year !== 'string' || typeof req.body.url !== 'string') {
     // body attribute data types
     return res.status(422).json({ status: 422, message: 'Invalid data type' }).send();
-  } else if (req.body.type.length < 0 || req.body.type.length > 20) {
+  } else if (req.body.type.length < 0 || req.body.type.length > 30) {
     // scratch type length
     return res.status(422).json({ status: 422, message: 'Invalid object length' }).send();
   } else if (!validTypes.includes(req.body.type)) {
@@ -157,6 +172,7 @@ export const postScratch = (async (req, res, next) => {
     });
   }
 });
+
 
 function isValidYear(year) {
   const regex = /^-?\d+\.?\d*$/;

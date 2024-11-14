@@ -1,4 +1,5 @@
 import './utils/globals.js'
+import 'dotenv/config'
 import express from 'express';
 import http from 'http';
 import path from 'path';
@@ -42,13 +43,13 @@ await createConnection();
 var server = http.createServer(app);
 server.listen(global.PORT, global.ADDRESS);
 
-// HTTP Keep-Alive
-//   Helps avoid an abrupt shutdown on SIGINT
+// http keep-alive
+//   helps avoid an abrupt shutdown on SIGINT
 server.on('connection', function (socket) {
   socket.setTimeout(5 * 1000);
 });
 
-// Shutdown on SIGTERM
+// shutdown on SIGTERM
 process.on('SIGTERM', () => {
   if (global.LOG_LEVEL == 'DEBUG') console.debug("Received SIGTERM: Shutting down");
   server.close(() => {
@@ -56,7 +57,7 @@ process.on('SIGTERM', () => {
   });
 });
 
-// Shutdown on SIGINT
+// shutdown on SIGINT
 process.on('SIGINT', () => {
   if (global.LOG_LEVEL == 'DEBUG') console.info("Received SIGINT: Shutting down");
   process.exit(0);

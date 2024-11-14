@@ -1,26 +1,27 @@
 extends layout
 
 block content
-  link(rel='stylesheet', href='/css/sweetalert2.11.14.5.min.css')
-  script(src='/js/sweetalert2.all.11.14.5.min.js', type='text/javascript')
 
   style
     include ../public/css/map.css
 
+  style.
+    .entities g:hover, .entities g path:hover:not(.label-connector):not(.label-text),
+    .entities g:hover path:not(.label-connector):not(.label-text) {
+      fill: #8f8f8f;
+      cursor: move;
+    }
+    .entities g:hover > .label-box {
+      fill: #8f8f8f;
+      cursor: move;
+    }
+
   script.
     var mapType = !{JSON.stringify(mapType)};
     var validTypes = !{JSON.stringify(validTypes)};
-    var objectList = !{JSON.stringify(objectList)};
     var scratchedObjects = !{JSON.stringify(scratchedObjects)};
-    var enableShare = !{JSON.stringify(enableShare)};
 
   h1#title #{title}
-
-  if enableShare
-    div#external-controls
-      button#share-button(type='button', onclick='copyViewLink()')
-        span#share-text= 'Share '
-        include ../public/images/share.svg
 
   div#map-container
     div#zoom-controls
@@ -42,17 +43,8 @@ block content
       )
         !=mapSVG
 
-  script(src='/js/scratch.js', type='text/javascript')
+  script
+    include ../public/js/view.js
 
   script(src='/js/svg-pan-zoom-container.0.6.1.min.js', type='text/javascript')
   script(src='/js/svg_controls.js', type='text/javascript')
-
-  if enableShare
-    script.
-      function copyViewLink() {
-        var currentUrl = window.location.href;
-        var viewUrl = currentUrl.replace("/map/", "/view/");
-
-        navigator.clipboard.writeText(viewUrl);
-        alert(`View-only URL Copied!\n${viewUrl}`);
-      }

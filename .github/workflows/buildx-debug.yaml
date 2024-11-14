@@ -32,7 +32,7 @@ jobs:
         run: docker buildx ls
 
       - name: "Docker Run Loop [alpine]"
-        run: docker run --rm --platform ${{ matrix.image_arch }} alpine:${{ matrix.image_version }} uname -m
+        run: docker run --rm --platform ${{ matrix.image_arch }} alpine:${{ matrix.image_version }} /bin/ash -c "/bin/uname -m"
 
       - name: "Docker Run Loop [node]"
-        run: docker run --rm --platform ${{ matrix.image_arch }} ${{ matrix.node_alpine }} npm -v
+        run: docker run --rm --platform ${{ matrix.image_arch }} ${{ matrix.node_alpine }} /bin/ash -c "/usr/local/bin/npm -v && /usr/local/bin/yarn -v"

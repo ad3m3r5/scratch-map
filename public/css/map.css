@@ -88,3 +88,87 @@
   stroke-opacity: 1;
   stroke-dasharray: none;*/
 }
+
+
+/* Default CSS options for World SVG */
+/* Circles around small countries and territories */
+.circlexx {
+  display: none;
+	opacity: 0;
+	/*fill: #c0c0c0;
+	stroke: #000000;
+	stroke-width: 0.5;*/
+}
+/* Smaller circles around subnational territories */
+.subxx {
+  display: none;
+	opacity: 0;
+	/*fill: #c0c0c0;
+	stroke: #000000;
+	stroke-width: 0.3;*/
+}
+/* land - all land, as opposed to water, should belong to this class */
+/*.landxx {
+	fill: #c0c0c0;
+	stroke: #ffffff;
+	stroke-width: 0.5;
+	fill-rule: evenodd;
+}*/
+/* coastlines of islands and continents with no borders on them */
+.coastxx {
+	stroke-width: 0.2;
+}
+/* territories without permanent population (the largest of which is Antarctica) */
+.antxx {
+	opacity: 1;
+	/*fill: #c0c0c0;*/
+}
+/* Circles around small countries without permanent population */
+.noxx {
+  display: none;
+	opacity: 0;
+	/*fill: #c0c0c0;
+	stroke: #000000;
+	stroke-width: 0.5;*/
+}
+/* territories with limited or no recognition */
+.limitxx {
+  display: none;
+	opacity: 0;
+	/*fill: #c0c0c0;
+	stroke: #ffffff;
+	stroke-width: 0.2;
+	fill-rule: evenodd;*/
+}
+/* Smaller circles around small territories with limited or no recognition */
+.unxx {
+  display: none;
+	opacity: 0;
+	/*fill: #c0c0c0;
+	stroke: #000000;
+	stroke-width: 0.3;*/
+}
+/* Oceans, seas, and large lakes */
+/*.oceanxx {
+	opacity: 1;
+	fill: #ffffff;
+	stroke: #000000;
+	stroke-width: 0.5;
+}*/
+/* Reserved class names:
+  .eu - for members of European Union
+  .eaeu - for members of Eurasian Economic Union */
+/* Additional style rules
+  The following are examples of colouring countries.
+  These can be substituted with custom styles to colour the countries on the map.
+  Colour a few countries:
+  .gb, .au, .nc {
+    fill: #ff0000;
+  }
+
+  Colour a few small-country circles (along with the countries):
+  .ms, .ky {
+    opacity: 1;
+    fill: #ff0000;
+  }
+*/

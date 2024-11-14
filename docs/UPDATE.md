@@ -10,7 +10,7 @@ Be sure to pay attention to any `Breaking Changes` in [CHANGELOG](./CHANGELOG.md
   - [Docker](#docker)
     - [Docker Run](#docker-run)
     - [Docker Compose](#docker-compose)
-  - [NPM or PM2](#npm-or-pm2)
+  - [npm, yarn, or pm2](#npm-yarn-or-pm2)
 
 ### Docker
 
@@ -38,7 +38,7 @@ docker compose pull
 docker compose up -d
 ```
 
-### NPM or PM2
+### npm, yarn, or pm2
 
 Assuming you installed scratch-map by cloning with git and are using *nix commands:
 
@@ -47,4 +47,4 @@ Assuming you installed scratch-map by cloning with git and are using *nix comman
   - `git branch`
 - Pull the latest version
   - `git pull`
-- Run your desired start command
+- Run your desired `install` and `start` command
