@@ -60,8 +60,8 @@ export const getMap = ((req, res, next) => {
   }
 });
 
-// share
-export const getShare = ((req, res, next) => {
+// view
+export const getView = ((req, res, next) => {
   let mapType = req.params.mapType;
 
   if (!validTypes.includes(mapType)) {
@@ -69,7 +69,7 @@ export const getShare = ((req, res, next) => {
   } else {
     let scratchedObjects = getConnection().data.scratched[mapType];
 
-    res.render('share', {
+    res.render('view', {
       title: parseTypeName(mapType),
       mapType,
       validTypes,

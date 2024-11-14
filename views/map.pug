@@ -18,7 +18,7 @@ block content
 
   if enableShare
     div#external-controls
-      button#share-button(type='button', onclick='copyShareLink()')
+      button#share-button(type='button', onclick='copyViewLink()')
         span#share-text= 'Share '
         include ../public/images/share.svg
 
@@ -49,10 +49,10 @@ block content
 
   if enableShare
     script.
-      function copyShareLink() {
+      function copyViewLink() {
         var currentUrl = window.location.href;
-        var shareUrl = currentUrl.replace("/map/", "/share/");
+        var viewUrl = currentUrl.replace("/map/", "/view/");
 
-        navigator.clipboard.writeText(shareUrl);
-        alert(`Share URL Copied!\n${shareUrl}`);
+        navigator.clipboard.writeText(viewUrl);
+        alert(`View-only URL Copied!\n${viewUrl}`);
       }

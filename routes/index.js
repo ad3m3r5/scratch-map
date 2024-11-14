@@ -5,13 +5,13 @@ var router = express.Router();
 import {
   getHome,
   getMap,
-  getShare,
+  getView,
   postScratch
 } from '../controllers/index.js';
 
 router.get('/', getHome);
 router.get('/map/:mapType', getMap);
-if (global.ENABLE_SHARE) router.get('/share/:mapType', getShare);
+if (global.ENABLE_SHARE) router.get('/view/:mapType', getView);
 router.post('/scratch', postScratch);
 
 export default router;

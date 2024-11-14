@@ -15,10 +15,8 @@ This changelog will be based on the syntax provided by [keep a changelog](https:
 - Authentication
   - Local
   - OAuth2
-  - SAML [Unsure]
 - Multi-Visit Support
 - "Home" country tagging
-  - This will most likely be pre-scratched and colored differently
 - Full date-picker rather than just "Year"
 
 ## [1.2.0] - TBD
@@ -26,7 +24,7 @@ This changelog will be based on the syntax provided by [keep a changelog](https:
 This released includes a breaking change noted below.
 
 ### Added
-- Share/Guest view-only mode using `/share/:map` URL path
+- View-only page using `/view/:map` URL path
   - Enabled with `ENABLE_SHARE` environment variable
   - Button provided on `/map/:map` page to create and copy link
 - Public GitHub Actions - these were previously in a private repository for debugging
