@@ -1,6 +1,11 @@
 var objectClass = null, objectGroups = null;
 var clickingObject = false, draggingObject = false;
 
+const maxURLLength = 1024;
+const validatorURLOptions = {
+  require_protocol: true
+};
+
 if (validTypes.includes(mapType)) {
   objectClass = document.querySelector(`.entities`);
   objectGroups = objectClass.querySelectorAll(':scope > g');
@@ -88,9 +93,9 @@ async function clickObject(e) {
           Swal.showValidationMessage(
             `Invalid Year. Year must must be a number and less than 6 characters.`
           )
-        } else if ((url.length > 0 && !isValidURL(url)) || url.length > 1024) {
+        } else if ((url.length > 0 && !validator.isURL(url, validatorURLOptions)) || url.length > maxURLLength) {
           Swal.showValidationMessage(
-            `Invalid URL. URL must contain a protocol and be less than 1024 characters.`
+            `Invalid URL. URL must contain a protocol and be less than ${maxURLLength} characters.`
           )
         } else {
           return {
@@ -131,9 +136,9 @@ async function clickObject(e) {
           Swal.showValidationMessage(
             `Invalid Year. Year must must be a number and less than 6 characters.`
           )
-        } else if ((url.length > 0 && !isValidURL(url)) || url.length > 1024) {
+        } else if ((url.length > 0 && !validator.isURL(url, validatorURLOptions)) || url.length > maxURLLength) {
           Swal.showValidationMessage(
-            `Invalid URL. URL must contain a protocol and be less than 1024 characters.`
+            `Invalid URL. URL must contain a protocol and be less than ${maxURLLength} characters.`
           )
         } else {
           return {
@@ -226,13 +231,7 @@ const Toast = Swal.mixin({
 });
 
 function isValidYear(year) {
-  const regex = /^-?\d+\.?\d*$/;
+  const regex = /^(0|[1-9]\d*)$/;
 
   return regex.test(year);
-}
-
-function isValidURL(url) {
-  const regex = /(?:https?):\/\/(\w+:?\w*)?(\S+)(:\d+)?(\/|\/([\w#!:.?+=&%!\-\/]))?/;
-
-  return regex.test(url);
 }

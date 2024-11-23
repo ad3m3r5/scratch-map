@@ -1,7 +1,13 @@
 import fs from 'fs';
 import path from "path";
+import validator from 'validator';
 
 import { validTypes, getConnection } from '../utils/database.js';
+
+const maxURLLength = 1024;
+const validatorURLOptions = {
+  require_protocol: true
+};
 
 // home page
 export const getHome = ((req, res, next) => {
@@ -88,7 +94,7 @@ export const postScratch = (async (req, res, next) => {
 
   if (Object.keys(req.body).length !== 5) {
     // body attribute count
-    return res.status(422).json({ status: 422, message: 'Invalid body length' }).send();
+    return res.status(422).json({ status: 422, message: 'Invalid attir length' }).send();
   } else if (typeof req.body.type !== 'string' || typeof req.body.code !== 'string' || typeof req.body.scratch !== 'boolean' || typeof req.body.year !== 'string' || typeof req.body.url !== 'string') {
     // body attribute data types
     return res.status(422).json({ status: 422, message: 'Invalid data type' }).send();
@@ -107,17 +113,19 @@ export const postScratch = (async (req, res, next) => {
   } else if (req.body.year.length > 0 && !isValidYear(req.body.year)) {
     // year only contains numbers
     return res.status(422).json({ status: 422, message: 'Invalid year' }).send();
-  } else if (req.body.url.length < 0 || req.body.url.length > 1024) {
+  } else if (req.body.url.length < 0 || req.body.url.length > maxURLLength) {
     // url length
     return res.status(422).json({ status: 422, message: 'Invalid url length' }).send();
-  } else if (req.body.url.length > 0 && !isValidURL(req.body.url)) {
-    // url valid (has protocol defined)
+  } else if (req.body.url.length > 0 && !validator.isURL(req.body.url, validatorURLOptions)) {
+    // check URL validity
     return res.status(422).json({ status: 422, message: 'Invalid url' }).send();
   } else {
     // check that the country/state code exists
     if (!(req.body.code.toUpperCase() in getConnection().data[req.body.type])) {
       return res.status(422).json({ status: 422, message: 'Invalid object code' }).send();
     }
+
+    let sanitizedUrl = sanitizeInput(req.body.url);
 
     let scratched = getConnection().data.scratched;
 
@@ -136,13 +144,13 @@ export const postScratch = (async (req, res, next) => {
       if (exists) {
         // update existing scratch
         scratched[req.body.type][existsIndex].year = req.body.year;
-        scratched[req.body.type][existsIndex].url = req.body.url;
+        scratched[req.body.type][existsIndex].url = sanitizedUrl;
       } else {
         // add new scratch
         scratched[req.body.type].push({
           'code': req.body.code.toUpperCase(),
           'year': req.body.year || '',
-          'url': req.body.url || ''
+          'url': sanitizedUrl || ''
         });
       }
 
@@ -173,17 +181,10 @@ export const postScratch = (async (req, res, next) => {
   }
 });
 
-
 function isValidYear(year) {
-  const regex = /^-?\d+\.?\d*$/;
+  const regex = /^(0|[1-9]\d*)$/;
 
   return regex.test(year);
-}
-
-function isValidURL(url) {
-  const regex = /(?:https?):\/\/(\w+:?\w*)?(\S+)(:\d+)?(\/|\/([\w#!:.?+=&%!\-\/]))?/;
-
-  return regex.test(url);
 }
 
 function parseTypeName(name) {
@@ -195,4 +196,17 @@ function parseTypeName(name) {
   }
 
   return words.join(' ');
+}
+
+function sanitizeInput(string) {
+  const map = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#x27;',
+    "/": '&#x2F;',
+  };
+  const reg = /[&<>"'/]/ig;
+  return string.replace(reg, (match)=>(map[match]));
 }

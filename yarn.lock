@@ -1705,6 +1705,7 @@ __metadata:
     lowdb: "npm:^7.0.1"
     nodemon: "npm:^3.1.7"
     pug: "npm:^3.0.3"
+    validator: "npm:^13.12.0"
   languageName: unknown
   linkType: soft
 
@@ -2028,6 +2029,13 @@ __metadata:
   version: 1.0.1
   resolution: "utils-merge@npm:1.0.1"
   checksum: 10c0/02ba649de1b7ca8854bfe20a82f1dfbdda3fb57a22ab4a8972a63a34553cf7aa51bc9081cf7e001b035b88186d23689d69e71b510e610a09a4c66f68aa95b672
+  languageName: node
+  linkType: hard
+
+"validator@npm:^13.12.0":
+  version: 13.12.0
+  resolution: "validator@npm:13.12.0"
+  checksum: 10c0/21d48a7947c9e8498790550f56cd7971e0e3d724c73388226b109c1bac2728f4f88caddfc2f7ed4b076f9b0d004316263ac786a17e9c4edf075741200718cd32
   languageName: node
   linkType: hard
 

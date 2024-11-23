@@ -11,7 +11,7 @@ This changelog will be based on the syntax provided by [keep a changelog](https:
 
 ## [Unreleased] - TBD
 
-### Future
+### Planned
 - Authentication
   - Local
   - OAuth2
@@ -46,6 +46,7 @@ This released includes a breaking change noted below.
 - Updated primary packages in `package.json`
 
 ### Fixed
+- The was an XSS vulnerabiltiy with the URL input for a photo album. This was fixed with input sanitization and validation. Discovered by [l4rm4nd](https://github.com/l4rm4nd)
 - The map had an issue where dragging and releasing on the same entity would cause a click event. A timeout has been added to decrease the change of that.
 
 ## [1.1.12] - 2023-11-23
