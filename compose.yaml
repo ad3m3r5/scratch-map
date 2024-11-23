@@ -8,7 +8,7 @@ services:
     environment:
       ADDRESS: '0.0.0.0'
       PORT: 8080
-      DATA_DIR: '/data'
+      DATA_DIR: '/my-data-dir'
       LOG_LEVEL: 'INFO'
     volumes:
-      - ./data:/data
+      - ./data:/my-data-dir

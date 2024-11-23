@@ -8,8 +8,8 @@ ENV \
 
 RUN apk update \
   && apk upgrade --no-cache \
-  mkdir $APP_DIR/data \
-  chown node:node $APP_DIR/data
+  && mkdir -p $APP_DIR/data \
+  && chown -R node:node $APP_DIR
 
 USER node
 WORKDIR $APP_DIR

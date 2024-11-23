@@ -49,8 +49,8 @@ chown -R 1000:1000 /opt/containers/scratch-map/data
 ```
 docker run -d --restart=always \
   --name scratch-map -p 8080:8080 \
-  -e PORT=8080 -e DATA_DIR=/data \
-  -v /opt/containers/scratch-map/data:/data \
+  -e PORT=8080 -e DATA_DIR=/my-data-dir \
+  -v /opt/containers/scratch-map/data:/my-data-dir \
   ad3m3r5/scratch-map:latest
 ```
 
@@ -77,6 +77,6 @@ docker compose up -d
 
 This varies depending on the OS, however I would recommend checking out [pm2](https://pm2.keymetrics.io/).
 
-Example of pm2 command: `DATA_DIR=/data pm2 start server.js --name scratch-map`
+Example of pm2 command: `DATA_DIR=/my-data-dir pm2 start server.js --name scratch-map`
 
 
