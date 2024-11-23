@@ -4,18 +4,23 @@
 
 <p style="text-align: center;">An open-source scratch-off style map to track your travels.</p>
 
+[![Docker Hub](https://img.shields.io/badge/DockerHub-image-blue?logo=docker&style=plastic)](https://hub.docker.com/r/ad3m3r5/scratch-map)
+![Docker Image Size (tag)](https://img.shields.io/docker/image-size/ad3m3r5/scratch-map/latest?logo=docker&style=plastic)
+![Docker Image Pulls](https://img.shields.io/docker/pulls/ad3m3r5/scratch-map?logo=docker&style=plastic)
+
+[![GitHub Container Registry](https://img.shields.io/badge/ghcr.io-image-lightgrey?logo=github&style=plastic)](https://github.com/ad3m3r5/scratch-map/pkgs/container/scratch-map)
+
 <br />
 
 ## Table of Contents
   - [Features](#features)
+  - [INSTALL](docs/INSTALL.md)
   - [CHANGELOG](docs/CHANGELOG.md)
   - [MAPS](docs/MAPS.md)
   - [CONTRIBUTING](CONTRIBUTING.md)
-  - [Installing / Updating](#installing--updating)
   - [Tech Stack](#tech-stack)
   - [Screenshots](#screenshots)
   - [Credits](#credits)
-    - [Libraries](#libraries)
 
 <br />
 
@@ -36,14 +41,6 @@
   - Indian Map
   - Date Traveled To Location
   - Link a Photo Album URL to a Scratch
-
-<br />
-
-## Installing / Updating
-
-See:
-  - [INSTALL](docs/INSTALL.md)
-  - [UPDATE](docs/UPDATE.md)
 
 <br />
 
@@ -78,6 +75,9 @@ See:
 
 - [sweetalert2](https://github.com/sweetalert2/sweetalert2)
   - Scratch prompts/pop-ups
+
+- [validator](https://github.com/validatorjs/validator.js)
+  - URL validation
 
 ### Fonts
 - [Roboto](https://fonts.google.com/specimen/Roboto)

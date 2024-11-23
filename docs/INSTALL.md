@@ -32,8 +32,6 @@
 
 ### Docker
 
-[![Docker Hub](https://img.shields.io/badge/DockerHub-image-blue?logo=docker&style=plastic)](https://hub.docker.com/r/ad3m3r5/scratch-map) ![Docker Image Size (tag)](https://img.shields.io/docker/image-size/ad3m3r5/scratch-map/latest?logo=docker&style=plastic)
-
 The commands to create the data directory and set permissions are *nix specific and may need to be changed for your system.
 
 The environment variables passed are examples.
