@@ -7,7 +7,9 @@ ENV \
   APP_DIR=/app
 
 RUN apk update \
-  && apk upgrade --no-cache
+  && apk upgrade --no-cache \
+  mkdir $APP_DIR/data \
+  chown node:node $APP_DIR/data
 
 USER node
 WORKDIR $APP_DIR
