@@ -77,7 +77,11 @@
   - Scratch prompts/pop-ups
 
 - [validator](https://github.com/validatorjs/validator.js)
-  - URL validation
+  - URL and date validation
+
+- [air-datepicker](https://github.com/t1m0n/air-datepicker)
+  - Scratch date selection
+
 
 ### Fonts
 - [Roboto](https://fonts.google.com/specimen/Roboto)

@@ -347,3 +347,8 @@ html, body {
 .swal2-popup.swal2-toast.swal2-show {
   top: 65px !important;
 }
+
+#air-datepicker-global-container {
+  /* SweetAlert2 default is 1060 */
+  z-index: 1100;
+}

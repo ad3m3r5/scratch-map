@@ -11,6 +11,19 @@ const validatorDateOptions = {
   format: 'MM-DD-YYYY'
 };
 
+const datePickerLocale = {
+  days: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+  daysShort: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+  daysMin: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+  months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+  monthsShort: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+  today: 'Today',
+  clear: 'Clear',
+  dateFormat: 'MM-dd-yyyy',
+  timeFormat: 'hh:mm aa',
+  firstDay: 0
+};
+
 if (validTypes.includes(mapType)) {
   objectClass = document.querySelector(`.entities`);
   objectGroups = objectClass.querySelectorAll(':scope > g');
@@ -68,7 +81,7 @@ async function clickObject(e) {
     if (scratchedObjects[i].code.toUpperCase() == object.code.toUpperCase()) {
       scratched = true;
 
-      objects.visits = scratchedObjects[i].visits;
+      object.visits = scratchedObjects[i].visits || [];
     }
   }
 
@@ -149,6 +162,13 @@ async function clickObject(e) {
         `<input id="swal2-input-1" class="swal2-input" placeholder="${tMonth}-${tDay}-${tYear}" type="text" style="width: -webkit-fill-available;">` +
         `<label for="swal2-input-2" class="swal2-input-label">Link to Photo Album</label>` +
         `<input id="swal2-input-2" class="swal2-input" placeholder="https://cloud.mydomain.com/${encodeURIComponent(object.name.toLowerCase())}-trip-photos" type="url" style="width: -webkit-fill-available;">`,
+      didOpen: () => {
+        new AirDatepicker('#swal2-input-1', {
+          locale: datePickerLocale,
+          buttons: [ 'clear' ],
+          autoClose: true
+        });
+      },
       preConfirm: () => {
         let date = document.getElementById('swal2-input-1').value;
         let url = document.getElementById('swal2-input-2').value;
@@ -183,6 +203,12 @@ async function clickObject(e) {
       title: 'An unknown error has occurred'
     });
   } else if (saResponse.isConfirmed) {
+    let newVisits = object.visits;
+    newVisits.push({
+      date: saResponse.value.date,
+      url: saResponse.value.url
+    });
+
     const rawResponse = await fetch('/scratch', {
       method: 'POST',
       headers: {
@@ -193,10 +219,7 @@ async function clickObject(e) {
         'type': mapType,
         'code': object.code,
         'scratch': !scratched ? true : (keepScratched ? true : false),
-        'visit': {
-          'date': saResponse.value.date,
-          'url': saResponse.value.url
-        }
+        'visits': newVisits
       })
     });
     let jsonResponse = await rawResponse.json();
