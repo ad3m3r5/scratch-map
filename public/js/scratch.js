@@ -1,9 +1,14 @@
 var objectClass = null, objectGroups = null;
 var clickingObject = false, draggingObject = false;
 
-const maxURLLength = 1024;
+const maxURLLength = 2048;
 const validatorURLOptions = {
   require_protocol: true
+};
+const validatorDateOptions = {
+  strictMode: true,
+  delimiters: ['-', '/'],
+  format: 'MM-DD-YYYY'
 };
 
 if (validTypes.includes(mapType)) {
@@ -45,8 +50,7 @@ async function clickObject(e) {
   let object = {
     code: '',
     name: '',
-    year: '',
-    url: ''
+    visits: []
   };
 
   object.code = e.target.closest(`.entities > g`).id;
@@ -64,8 +68,7 @@ async function clickObject(e) {
     if (scratchedObjects[i].code.toUpperCase() == object.code.toUpperCase()) {
       scratched = true;
 
-      object.year = scratchedObjects[i].year;
-      object.url = scratchedObjects[i].url;
+      objects.visits = scratchedObjects[i].visits;
     }
   }
 
@@ -73,6 +76,17 @@ async function clickObject(e) {
   let keepScratched = null;
   // prompt user
   if (scratched) {
+    let today = new Date();
+    let tMonth = String(today.getMonth() + 1).padStart(2, '0');  // Months are 0-based
+    let tDay = String(today.getDate()).padStart(2, '0');  // Add leading zero if needed
+    let tYear = today.getFullYear();
+
+    let visitEntry = `
+      <input id="swal2-input-1" class="swal2-input" placeholder="${tMonth}-${tDay}-${tYear}" value="${object.year || ''}" type="text" style="width: -webkit-fill-available;">
+      <label for="swal2-input-2" class="swal2-input-label">Link to Photo Album</label>
+      <input id="swal2-input-2" class="swal2-input" placeholder="https://cloud.mydomain.com/${encodeURIComponent(object.name.toLowerCase())}-trip-photos" value="${object.url || ''}" type="url" style="width: -webkit-fill-available;">
+    `;
+
     saResponse = await Swal.fire({
       title: `Update ${object.name}?`,
       icon: 'question',
@@ -82,16 +96,17 @@ async function clickObject(e) {
           `<input type="checkbox" id="swal2-checkbox-1" checked>` +
         `</label>` +
         `<br/>` +
-        `<label for="swal2-input-1" class="swal2-input-label">Year you visited</label>` +
-        `<input id="swal2-input-1" class="swal2-input" placeholder="${new Date().getFullYear()}" value="${object.year || ''}" type="text" style="width: -webkit-fill-available;">` +
+        `<label for="swal2-input-1" class="swal2-input-label">Date you visited</label>` +
+        `<input id="swal2-input-1" class="swal2-input" placeholder="${tMonth}-${tDay}-${tYear}" value="${object.year || ''}" type="text" style="width: -webkit-fill-available;">` +
         `<label for="swal2-input-2" class="swal2-input-label">Link to Photo Album</label>` +
-        `<input id="swal2-input-2" class="swal2-input" placeholder="https://cloud.mydomain.com/${object.name.toLowerCase()}-trip-photos" value="${object.url || ''}" type="url" style="width: -webkit-fill-available;">`,
+        `<input id="swal2-input-2" class="swal2-input" placeholder="https://cloud.mydomain.com/${encodeURIComponent(object.name.toLowerCase())}-trip-photos" value="${object.url || ''}" type="url" style="width: -webkit-fill-available;">`,
       preConfirm: () => {
-        let year = document.getElementById('swal2-input-1').value;
+        let date = document.getElementById('swal2-input-1').value;
         let url = document.getElementById('swal2-input-2').value;
-        if ((year.length > 0 && !isValidYear(year)) || year.length > 6) {
+        
+        if ((date.length > 0 && !validator.isDate(date, validatorDateOptions))) {
           Swal.showValidationMessage(
-            `Invalid Year. Year must must be a number and less than 6 characters.`
+            `Invalid Date. Date must must be formatted as MM-DD-YYYY.`
           )
         } else if ((url.length > 0 && !validator.isURL(url, validatorURLOptions)) || url.length > maxURLLength) {
           Swal.showValidationMessage(
@@ -100,7 +115,7 @@ async function clickObject(e) {
         } else {
           return {
             checkbox: document.getElementById('swal2-checkbox-1').checked,
-            year: document.getElementById('swal2-input-1').value,
+            date: document.getElementById('swal2-input-1').value,
             url: document.getElementById('swal2-input-2').value
           }
         }
@@ -121,20 +136,26 @@ async function clickObject(e) {
       }
     }
   } else if (!scratched) {
+    let today = new Date();
+    let tMonth = String(today.getMonth() + 1).padStart(2, '0');  // Months are 0-based
+    let tDay = String(today.getDate()).padStart(2, '0');  // Add leading zero if needed
+    let tYear = today.getFullYear();
+
     saResponse = await Swal.fire({
       title: `Scratch ${object.name}?`,
       icon: 'question',
       html:
-        `<label for="swal2-input-1" class="swal2-input-label">Year you visited</label>` +
-        `<input id="swal2-input-1" class="swal2-input" placeholder="${new Date().getFullYear()}" type="text" style="width: -webkit-fill-available;">` +
+        `<label for="swal2-input-1" class="swal2-input-label">Date you visited</label>` +
+        `<input id="swal2-input-1" class="swal2-input" placeholder="${tMonth}-${tDay}-${tYear}" type="text" style="width: -webkit-fill-available;">` +
         `<label for="swal2-input-2" class="swal2-input-label">Link to Photo Album</label>` +
-        `<input id="swal2-input-2" class="swal2-input" placeholder="https://cloud.mydomain.com/${object.name.toLowerCase()}-trip-photos" type="url" style="width: -webkit-fill-available;">`,
+        `<input id="swal2-input-2" class="swal2-input" placeholder="https://cloud.mydomain.com/${encodeURIComponent(object.name.toLowerCase())}-trip-photos" type="url" style="width: -webkit-fill-available;">`,
       preConfirm: () => {
-        let year = document.getElementById('swal2-input-1').value;
+        let date = document.getElementById('swal2-input-1').value;
         let url = document.getElementById('swal2-input-2').value;
-        if ((year.length > 0 && !isValidYear(year)) || year.length > 6) {
+
+        if ((date.length > 0 && !validator.isDate(date, validatorDateOptions))) {
           Swal.showValidationMessage(
-            `Invalid Year. Year must must be a number and less than 6 characters.`
+            `Invalid Date. Date must must be formatted as MM-DD-YYYY.`
           )
         } else if ((url.length > 0 && !validator.isURL(url, validatorURLOptions)) || url.length > maxURLLength) {
           Swal.showValidationMessage(
@@ -142,7 +163,7 @@ async function clickObject(e) {
           )
         } else {
           return {
-            year: document.getElementById('swal2-input-1').value,
+            date: document.getElementById('swal2-input-1').value,
             url: document.getElementById('swal2-input-2').value
           }
         }
@@ -172,8 +193,10 @@ async function clickObject(e) {
         'type': mapType,
         'code': object.code,
         'scratch': !scratched ? true : (keepScratched ? true : false),
-        'year': saResponse.value.year,
-        'url': saResponse.value.url
+        'visit': {
+          'date': saResponse.value.date,
+          'url': saResponse.value.url
+        }
       })
     });
     let jsonResponse = await rawResponse.json();
@@ -229,9 +252,3 @@ const Toast = Swal.mixin({
     toast.addEventListener('mouseleave', Swal.resumeTimer)
   }
 });
-
-function isValidYear(year) {
-  const regex = /^(0|[1-9]\d*)$/;
-
-  return regex.test(year);
-}

@@ -15,9 +15,16 @@ This changelog will be based on the syntax provided by [keep a changelog](https:
 - Authentication
   - Local
   - OAuth2
-- Multi-Visit Support
 - "Home" country tagging
-- Full date-picker rather than just "Year"
+
+## [1.3.0] - TBD
+
+### Added
+- Multi-visit support
+- Full date picker for the visit.
+  - Current four-number years will be converted to `01-01-${year}`, while two-year numbers will be converted to `01-01-20${year}`
+  - Empty years will stay empty
+- Custom color section for unscratched, scratched, or per visit
 
 ## [1.2.0] - 2024-11-26
 

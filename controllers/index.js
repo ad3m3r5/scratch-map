@@ -4,9 +4,14 @@ import validator from 'validator';
 
 import { validTypes, getConnection } from '../utils/database.js';
 
-const maxURLLength = 1024;
+const maxURLLength = 2048;
 const validatorURLOptions = {
   require_protocol: true
+};
+const validatorDateOptions = {
+  strictMode: true,
+  delimiters: ['-', '/'],
+  format: 'MM-DD-YYYY'
 };
 
 // home page
@@ -94,10 +99,10 @@ export const postScratch = (async (req, res, next) => {
 
   if (Object.keys(req.body).length !== 5) {
     // body attribute count
-    return res.status(422).json({ status: 422, message: 'Invalid attir length' }).send();
-  } else if (typeof req.body.type !== 'string' || typeof req.body.code !== 'string' || typeof req.body.scratch !== 'boolean' || typeof req.body.year !== 'string' || typeof req.body.url !== 'string') {
+    return res.status(422).json({ status: 422, message: 'Invalid attribute length' }).send();
+  } else if (typeof req.body.type !== 'string' || typeof req.body.code !== 'string' || typeof req.body.scratch !== 'boolean' || typeof req.body.date !== 'string' || typeof req.body.url !== 'string') {
     // body attribute data types
-    return res.status(422).json({ status: 422, message: 'Invalid data type' }).send();
+    return res.status(422).json({ status: 422, message: 'Invalid data types' }).send();
   } else if (req.body.type.length < 0 || req.body.type.length > 30) {
     // scratch type length
     return res.status(422).json({ status: 422, message: 'Invalid object length' }).send();
@@ -107,12 +112,12 @@ export const postScratch = (async (req, res, next) => {
   } else if (req.body.code.length < 1 || req.body.code.length > 3) {
     // country/state code length
     return res.status(422).json({ status: 422, message: 'Invalid code length' }).send();
-  } else if (req.body.year.length < 0 || req.body.year.length > 6) {
-    // year length
-    return res.status(422).json({ status: 422, message: 'Invalid year length' }).send();
-  } else if (req.body.year.length > 0 && !isValidYear(req.body.year)) {
-    // year only contains numbers
-    return res.status(422).json({ status: 422, message: 'Invalid year' }).send();
+  } else if (req.body.date.length !== 10) {
+    // date length
+    return res.status(422).json({ status: 422, message: 'Invalid date length' }).send();
+  } else if (req.body.date.length > 0 && !validator.isDate(req.body.date, validatorDateOptions)) {
+    // date only contains numbers
+    return res.status(422).json({ status: 422, message: 'Invalid date' }).send();
   } else if (req.body.url.length < 0 || req.body.url.length > maxURLLength) {
     // url length
     return res.status(422).json({ status: 422, message: 'Invalid url length' }).send();
@@ -143,14 +148,16 @@ export const postScratch = (async (req, res, next) => {
       }
       if (exists) {
         // update existing scratch
-        scratched[req.body.type][existsIndex].year = req.body.year;
+        scratched[req.body.type][existsIndex].date = req.body.date;
         scratched[req.body.type][existsIndex].url = sanitizedUrl;
       } else {
         // add new scratch
         scratched[req.body.type].push({
           'code': req.body.code.toUpperCase(),
-          'year': req.body.year || '',
-          'url': sanitizedUrl || ''
+          'visits': {
+            'date': req.body.date || '',
+            'url': sanitizedUrl || ''
+          }
         });
       }
 
@@ -180,12 +187,6 @@ export const postScratch = (async (req, res, next) => {
     });
   }
 });
-
-function isValidYear(year) {
-  const regex = /^(0|[1-9]\d*)$/;
-
-  return regex.test(year);
-}
 
 function parseTypeName(name) {
   let spaced = name.replaceAll('-', ' ');
