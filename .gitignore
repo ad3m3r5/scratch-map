@@ -1,3 +1,6 @@
+# scratch-map specific
+data/
+
 #####
 # https://raw.githubusercontent.com/github/gitignore/main/Node.gitignore
 #####
@@ -124,6 +127,7 @@ dist
 .tern-port
 
 # Stores VSCode versions used for testing VSCode extensions
+.vscode
 .vscode-test
 
 # yarn v2
@@ -132,5 +136,3 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
-
-data/

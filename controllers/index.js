@@ -1,10 +1,13 @@
 import fs from 'fs';
 import path from "path";
-import { fileURLToPath } from "url";
+import validator from 'validator';
 
 import { validTypes, getConnection } from '../utils/database.js';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const maxURLLength = 1024;
+const validatorURLOptions = {
+  require_protocol: true
+};
 
 // home page
 export const getHome = ((req, res, next) => {
@@ -46,37 +49,56 @@ export const getMap = ((req, res, next) => {
   let mapType = req.params.mapType;
 
   if (!validTypes.includes(mapType)) {
-    res.render('error', { status: '404', message: `/map/${mapType} Not Found` });
+    res.render('error', { status: '404', message: `${req.originalUrl} Not Found` });
   } else {
     let objectList = getConnection().data[mapType];
     let scratchedObjects = getConnection().data.scratched[mapType];
-  
-    let title = `Map of ${parseTypeName(mapType)}`;
-  
-    if (mapType == 'countries') title = 'World Map';
-    if (mapType == 'states') title = 'US States';
-  
+
     res.render('map', {
-      title,
+      title: parseTypeName(mapType),
       mapType,
       validTypes,
       objectList,
       scratchedObjects,
-      mapSVG: fs.readFileSync(path.join(__dirname, `../public/images/${mapType}.svg`))
+      enableShare: global.ENABLE_SHARE,
+      mapSVG: fs.readFileSync(path.join(global.__rootDir, `/public/images/${mapType}.svg`))
+    });
+  }
+});
+
+// view
+export const getView = ((req, res, next) => {
+  let mapType = req.params.mapType;
+
+  if (!validTypes.includes(mapType)) {
+    res.render('error', { status: '404', message: `${req.originalUrl} Not Found` });
+  } else {
+    let scratchedObjects = getConnection().data.scratched[mapType];
+
+    res.render('view', {
+      title: parseTypeName(mapType),
+      mapType,
+      validTypes,
+      scratchedObjects,
+      mapSVG: fs.readFileSync(path.join(global.__rootDir, `/public/images/${mapType}.svg`))
     });
   }
 });
 
 // scratch endpoint
 export const postScratch = (async (req, res, next) => {
-  console.log(req.body);
+
+  if (global.LOG_LEVEL == 'DEBUG') {
+    console.debug(req.body);
+  }
+
   if (Object.keys(req.body).length !== 5) {
     // body attribute count
-    return res.status(422).json({ status: 422, message: 'Invalid body length' }).send();
+    return res.status(422).json({ status: 422, message: 'Invalid attir length' }).send();
   } else if (typeof req.body.type !== 'string' || typeof req.body.code !== 'string' || typeof req.body.scratch !== 'boolean' || typeof req.body.year !== 'string' || typeof req.body.url !== 'string') {
     // body attribute data types
     return res.status(422).json({ status: 422, message: 'Invalid data type' }).send();
-  } else if (req.body.type.length < 0 || req.body.type.length > 20) {
+  } else if (req.body.type.length < 0 || req.body.type.length > 30) {
     // scratch type length
     return res.status(422).json({ status: 422, message: 'Invalid object length' }).send();
   } else if (!validTypes.includes(req.body.type)) {
@@ -91,17 +113,19 @@ export const postScratch = (async (req, res, next) => {
   } else if (req.body.year.length > 0 && !isValidYear(req.body.year)) {
     // year only contains numbers
     return res.status(422).json({ status: 422, message: 'Invalid year' }).send();
-  } else if (req.body.url.length < 0 || req.body.url.length > 1024) {
+  } else if (req.body.url.length < 0 || req.body.url.length > maxURLLength) {
     // url length
     return res.status(422).json({ status: 422, message: 'Invalid url length' }).send();
-  } else if (req.body.url.length > 0 && !isValidURL(req.body.url)) {
-    // url valid (has protocol defined)
+  } else if (req.body.url.length > 0 && !validator.isURL(req.body.url, validatorURLOptions)) {
+    // check URL validity
     return res.status(422).json({ status: 422, message: 'Invalid url' }).send();
   } else {
     // check that the country/state code exists
     if (!(req.body.code.toUpperCase() in getConnection().data[req.body.type])) {
       return res.status(422).json({ status: 422, message: 'Invalid object code' }).send();
     }
+
+    let sanitizedUrl = sanitizeInput(req.body.url);
 
     let scratched = getConnection().data.scratched;
 
@@ -120,13 +144,13 @@ export const postScratch = (async (req, res, next) => {
       if (exists) {
         // update existing scratch
         scratched[req.body.type][existsIndex].year = req.body.year;
-        scratched[req.body.type][existsIndex].url = req.body.url;
+        scratched[req.body.type][existsIndex].url = sanitizedUrl;
       } else {
         // add new scratch
         scratched[req.body.type].push({
           'code': req.body.code.toUpperCase(),
           'year': req.body.year || '',
-          'url': req.body.url || ''
+          'url': sanitizedUrl || ''
         });
       }
 
@@ -158,15 +182,9 @@ export const postScratch = (async (req, res, next) => {
 });
 
 function isValidYear(year) {
-  const regex = /^-?\d+\.?\d*$/;
+  const regex = /^(0|[1-9]\d*)$/;
 
   return regex.test(year);
-}
-
-function isValidURL(url) {
-  const regex = /(?:https?):\/\/(\w+:?\w*)?(\S+)(:\d+)?(\/|\/([\w#!:.?+=&%!\-\/]))?/;
-
-  return regex.test(url);
 }
 
 function parseTypeName(name) {
@@ -178,4 +196,17 @@ function parseTypeName(name) {
   }
 
   return words.join(' ');
+}
+
+function sanitizeInput(string) {
+  const map = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#x27;',
+    "/": '&#x2F;',
+  };
+  const reg = /[&<>"'/]/ig;
+  return string.replace(reg, (match)=>(map[match]));
 }

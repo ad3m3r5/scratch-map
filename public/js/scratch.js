@@ -1,4 +1,10 @@
 var objectClass = null, objectGroups = null;
+var clickingObject = false, draggingObject = false;
+
+const maxURLLength = 1024;
+const validatorURLOptions = {
+  require_protocol: true
+};
 
 if (validTypes.includes(mapType)) {
   objectClass = document.querySelector(`.entities`);
@@ -9,9 +15,30 @@ renderScratched(objectGroups);
 
 for (let i = 0; i < objectGroups.length; i++) {
   objectGroups[i].addEventListener('click', clickObject);
+
+  objectGroups[i].addEventListener('mousedown', () => {
+    clickingObject = true;
+  });
+
+  objectGroups[i].addEventListener('mousemove', () => {
+    if (clickingObject) {
+      draggingObject = true;
+    }
+  });
+
+  objectGroups[i].addEventListener('mouseup', () => {
+    clickingObject = false;
+    setTimeout(() => draggingObject = false, 10);
+  });
 }
 
 async function clickObject(e) {
+  if (draggingObject) {
+    e.preventDefault();
+    e.stopPropagation();
+    return;
+  }
+
   e.stopPropagation();
   e.preventDefault();
 
@@ -44,7 +71,7 @@ async function clickObject(e) {
 
   let saResponse = null;
   let keepScratched = null;
-  // Prompt user
+  // prompt user
   if (scratched) {
     saResponse = await Swal.fire({
       title: `Update ${object.name}?`,
@@ -58,7 +85,7 @@ async function clickObject(e) {
         `<label for="swal2-input-1" class="swal2-input-label">Year you visited</label>` +
         `<input id="swal2-input-1" class="swal2-input" placeholder="${new Date().getFullYear()}" value="${object.year || ''}" type="text" style="width: -webkit-fill-available;">` +
         `<label for="swal2-input-2" class="swal2-input-label">Link to Photo Album</label>` +
-        `<input id="swal2-input-2" class="swal2-input" placeholder="https://mycloud.com/${object.name.toLowerCase()}-trip-photos" value="${object.url || ''}" type="url" style="width: -webkit-fill-available;">`,
+        `<input id="swal2-input-2" class="swal2-input" placeholder="https://cloud.mydomain.com/${object.name.toLowerCase()}-trip-photos" value="${object.url || ''}" type="url" style="width: -webkit-fill-available;">`,
       preConfirm: () => {
         let year = document.getElementById('swal2-input-1').value;
         let url = document.getElementById('swal2-input-2').value;
@@ -66,9 +93,9 @@ async function clickObject(e) {
           Swal.showValidationMessage(
             `Invalid Year. Year must must be a number and less than 6 characters.`
           )
-        } else if ((url.length > 0 && !isValidURL(url)) || url.length > 1024) {
+        } else if ((url.length > 0 && !validator.isURL(url, validatorURLOptions)) || url.length > maxURLLength) {
           Swal.showValidationMessage(
-            `Invalid URL. URL must contain a protocol and be less than 1024 characters.`
+            `Invalid URL. URL must contain a protocol and be less than ${maxURLLength} characters.`
           )
         } else {
           return {
@@ -100,9 +127,8 @@ async function clickObject(e) {
       html:
         `<label for="swal2-input-1" class="swal2-input-label">Year you visited</label>` +
         `<input id="swal2-input-1" class="swal2-input" placeholder="${new Date().getFullYear()}" type="text" style="width: -webkit-fill-available;">` +
-        
         `<label for="swal2-input-2" class="swal2-input-label">Link to Photo Album</label>` +
-        `<input id="swal2-input-2" class="swal2-input" placeholder="https://mycloud.com/${object.name.toLowerCase()}-trip-photos" type="url" style="width: -webkit-fill-available;">`,
+        `<input id="swal2-input-2" class="swal2-input" placeholder="https://cloud.mydomain.com/${object.name.toLowerCase()}-trip-photos" type="url" style="width: -webkit-fill-available;">`,
       preConfirm: () => {
         let year = document.getElementById('swal2-input-1').value;
         let url = document.getElementById('swal2-input-2').value;
@@ -110,9 +136,9 @@ async function clickObject(e) {
           Swal.showValidationMessage(
             `Invalid Year. Year must must be a number and less than 6 characters.`
           )
-        } else if ((url.length > 0 && !isValidURL(url)) || url.length > 1024) {
+        } else if ((url.length > 0 && !validator.isURL(url, validatorURLOptions)) || url.length > maxURLLength) {
           Swal.showValidationMessage(
-            `Invalid URL. URL must contain a protocol and be less than 1024 characters.`
+            `Invalid URL. URL must contain a protocol and be less than ${maxURLLength} characters.`
           )
         } else {
           return {
@@ -133,7 +159,7 @@ async function clickObject(e) {
   if (saResponse == null) {
     Toast.fire({
       icon: 'error',
-      title: 'An unknown error has occurred' 
+      title: 'An unknown error has occurred'
     });
   } else if (saResponse.isConfirmed) {
     const rawResponse = await fetch('/scratch', {
@@ -173,11 +199,11 @@ async function clickObject(e) {
         title: jsonResponse.message
       });
     }
-    
+
   }
 }
 
-function renderScratched(objects) {  
+function renderScratched(objects) {
   for (let i = 0; i < objects.length; i++) {
     objects[i].classList.remove('scratched');
   }
@@ -205,13 +231,7 @@ const Toast = Swal.mixin({
 });
 
 function isValidYear(year) {
-  const regex = /^-?\d+\.?\d*$/;
+  const regex = /^(0|[1-9]\d*)$/;
 
   return regex.test(year);
-}
-
-function isValidURL(url) {
-  const regex = /(?:https?):\/\/(\w+:?\w*)?(\S+)(:\d+)?(\/|\/([\w#!:.?+=&%!\-\/]))?/;
-
-  return regex.test(url);
 }
