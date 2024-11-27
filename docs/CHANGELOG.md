@@ -6,7 +6,7 @@ This changelog will be based on the syntax provided by [keep a changelog](https:
   - [README](../README.md)
   - Changes
     - [Unreleased](#unreleased---tbd)
-    - [1.2.0](#120---tbd)
+    - [1.2.0](#120---2024-11-26)
     - [1.1.12](#1112---2023-11-23)
 
 ## [Unreleased] - TBD
@@ -19,7 +19,7 @@ This changelog will be based on the syntax provided by [keep a changelog](https:
 - "Home" country tagging
 - Full date-picker rather than just "Year"
 
-## [1.2.0] - TBD
+## [1.2.0] - 2024-11-26
 
 This released includes a breaking change noted below.
 
@@ -35,6 +35,7 @@ This released includes a breaking change noted below.
 ### Changed
 - BREAKING: Renamed `DBLOCATION` environment variable to `DATA_DIR`
   - Update your `docker run` command, `compose.yaml` file, or other applications environment variable locations
+  - Although it is labeled as breaking, there is currently a remap for backwards compatibility
 - Database attributes `countries` and `states` have been changed to `world` and `united-states-of-america`
   - The db.json file should be automatically updated for you, including the db version label
 - Moved from `npm` to `yarn` due to performance inconsistencies

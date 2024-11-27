@@ -7,7 +7,7 @@ const localDataDir = path.join(__rootDir, '/data');
 
 global.ADDRESS = process.env.ADDRESS || '0.0.0.0';
 global.PORT = process.env.PORT || 3000;
-global.DATA_DIR = process.env.DATA_DIR || localDataDir;
+global.DATA_DIR = process.env.DATA_DIR || process.env.DBLOCATION || localDataDir;
 
 // allow LOG_LEVEL to be any case
 if ('LOG_LEVEL' in process.env) {
