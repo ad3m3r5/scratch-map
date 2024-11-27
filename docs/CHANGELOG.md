@@ -6,6 +6,7 @@ This changelog will be based on the syntax provided by [keep a changelog](https:
   - [README](../README.md)
   - Changes
     - [Unreleased](#unreleased---tbd)
+    - [1.2.1](#121---2024-11-26)
     - [1.2.0](#120---2024-11-26)
     - [1.1.12](#1112---2023-11-23)
 
@@ -19,9 +20,14 @@ This changelog will be based on the syntax provided by [keep a changelog](https:
 - "Home" country tagging
 - Full date-picker rather than just "Year"
 
-## [1.2.0] - 2024-11-26
+## [1.2.1] - 2024-11-26
 
 This released includes a breaking change noted below.
+
+## [1.2.0] - 2024-11-26
+
+### Fixed
+- Updated validator.js to load locally
 
 ### Added
 - View-only page using `/view/:map` URL path
