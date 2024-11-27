@@ -59,6 +59,11 @@ async function clickObject(e) {
 
   e.stopPropagation();
   e.preventDefault();
+  
+  let today = new Date();
+  let tMonth = String(today.getMonth() + 1).padStart(2, '0');
+  let tDay = String(today.getDate()).padStart(2, '0');
+  let tYear = today.getFullYear();
 
   let object = {
     code: '',
@@ -89,11 +94,6 @@ async function clickObject(e) {
   let keepScratched = null;
   // prompt user
   if (scratched) {
-    let today = new Date();
-    let tMonth = String(today.getMonth() + 1).padStart(2, '0');  // Months are 0-based
-    let tDay = String(today.getDate()).padStart(2, '0');  // Add leading zero if needed
-    let tYear = today.getFullYear();
-
     let visitEntry = `
       <input id="swal2-input-1" class="swal2-input" placeholder="${tMonth}-${tDay}-${tYear}" value="${object.year || ''}" type="text" style="width: -webkit-fill-available;">
       <label for="swal2-input-2" class="swal2-input-label">Link to Photo Album</label>
@@ -149,11 +149,6 @@ async function clickObject(e) {
       }
     }
   } else if (!scratched) {
-    let today = new Date();
-    let tMonth = String(today.getMonth() + 1).padStart(2, '0');  // Months are 0-based
-    let tDay = String(today.getDate()).padStart(2, '0');  // Add leading zero if needed
-    let tYear = today.getFullYear();
-
     saResponse = await Swal.fire({
       title: `Scratch ${object.name}?`,
       icon: 'question',
