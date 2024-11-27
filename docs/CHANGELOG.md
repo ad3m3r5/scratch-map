@@ -22,12 +22,12 @@ This changelog will be based on the syntax provided by [keep a changelog](https:
 
 ## [1.2.1] - 2024-11-26
 
-This released includes a breaking change noted below.
+### Fixed
+- Updated validator.js to load locally
 
 ## [1.2.0] - 2024-11-26
 
-### Fixed
-- Updated validator.js to load locally
+This released includes a breaking change noted below.
 
 ### Added
 - View-only page using `/view/:map` URL path
