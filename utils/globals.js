@@ -12,6 +12,7 @@ global.DATA_DIR = process.env.DATA_DIR || process.env.DBLOCATION || localDataDir
 // colors
 global.COLOR_UNSCRATCHED = process.env.COLOR_UNSCRATCHED || '#cca11f';
 global.COLOR_SCRATCHED = process.env.COLOR_SCRATCHED || '#c2c2c2';
+global.COLOR_TEXT = process.env.COLOR_SCRATCHED || '#ffffff';
 
 // allow LOG_LEVEL to be any case
 if ('LOG_LEVEL' in process.env) {
