@@ -90,3 +90,6 @@
 ### Icons
 - Share
   - Source: https://upload.wikimedia.org/wikipedia/commons/5/58/Sharethis-grey.svg
+
+- Trash Can
+  - Source: https://upload.wikimedia.org/wikipedia/commons/7/7a/Trash_%2889060%29_-_The_Noun_Project.svg

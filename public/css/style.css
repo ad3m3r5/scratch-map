@@ -344,9 +344,27 @@ html, body {
   }
 }
 
-/* SweetAlert2 */
+/* SweetAlert2, scratch Pop-up */
 .swal2-popup.swal2-toast.swal2-show {
   top: 65px !important;
+}
+
+#visit-table {
+  width: 100%
+}
+
+#scratch-delete-icon {
+  width: 45px;
+  height: 45px;
+}
+
+#scratch-delete-icon > button {
+  width: 100%;
+  height: 100%;
+  background-color: #fc6f53;
+  border: 1px solid silver;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 #air-datepicker-global-container {
