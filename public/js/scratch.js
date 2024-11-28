@@ -386,20 +386,24 @@ function addScratchVisit(e, object) {
   readSwalVisits();
 
   let newVisits = readSwalVisits();
+
   let lastElement = newVisits.length - 1;
 
-  if (newVisits[lastElement].date.length < 1 && newVisits[lastElement].url.length < 1) {
-    alert("Please add one visit at a time");
-  } else {
-    newVisits.push({
-      date: '',
-      url: ''
-    });
-  
-    object.visits = newVisits;
-  
-    reloadSwalVisits(object);
+  if (newVisits.length > 0) {
+    if (newVisits[lastElement].date.length < 1 && newVisits[lastElement].url.length < 1) {
+      alert("Please add one visit at a time");
+      return;
+    }
   }
+
+  newVisits.push({
+    date: '',
+    url: ''
+  });
+
+  object.visits = newVisits;
+
+  reloadSwalVisits(object);
 }
 
 function deleteScratchVisit(e, object, visit, index) {
