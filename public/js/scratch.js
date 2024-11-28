@@ -119,11 +119,11 @@ async function clickObject(e) {
         
         if ((date.length > 0 && !validator.isDate(date, validatorDateOptions))) {
           Swal.showValidationMessage(
-            `Invalid Date. Date must must be formatted as MM-DD-YYYY.`
+            `Invalid Date - must be formatted as MM-DD-YYYY.`
           )
         } else if ((url.length > 0 && !validator.isURL(url, validatorURLOptions)) || url.length > maxURLLength) {
           Swal.showValidationMessage(
-            `Invalid URL. URL must contain a protocol and be less than ${maxURLLength} characters.`
+            `Invalid URL - must contain a protocol and be less than ${maxURLLength} characters.`
           )
         } else {
           return {
@@ -170,11 +170,11 @@ async function clickObject(e) {
 
         if ((date.length > 0 && !validator.isDate(date, validatorDateOptions))) {
           Swal.showValidationMessage(
-            `Invalid Date. Date must must be formatted as MM-DD-YYYY.`
+            `Invalid Date - must be formatted as MM-DD-YYYY.`
           )
         } else if ((url.length > 0 && !validator.isURL(url, validatorURLOptions)) || url.length > maxURLLength) {
           Swal.showValidationMessage(
-            `Invalid URL. URL must contain a protocol and be less than ${maxURLLength} characters.`
+            `Invalid URL - must contain a protocol and be less than ${maxURLLength} characters.`
           )
         } else {
           return {
