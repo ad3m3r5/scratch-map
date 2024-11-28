@@ -82,6 +82,8 @@
 - [air-datepicker](https://github.com/t1m0n/air-datepicker)
   - Scratch date selection
 
+- [Coloris](https://github.com/mdbassit/Coloris)
+  - Scratch color picker
 
 ### Fonts
 - [Roboto](https://fonts.google.com/specimen/Roboto)
