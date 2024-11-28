@@ -35,6 +35,7 @@ This changelog will be based on the syntax provided by [keep a changelog](https:
   - The color must be provided as a valid CSS color format, such as `#ff0000`, `rgb(255, 0, 0)`, `red`, etc
   - The share button and text will be color matched to the unscratched color and text color
 - Auto-backup databse on version migration
+- Favicon changes color with preferred browser theme - dark/light
 
 ## [1.2.2] - 2024-11-27
 

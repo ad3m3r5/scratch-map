@@ -4,10 +4,25 @@ html
     title#title #{title}
     meta(charset='utf-8')
     meta(name='viewport' content='width=device-width, initial-scale=1.0')
-    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+    <link id="favicon" rel="icon" type="image/x-icon" href="/images/favicon_dark_16x16.ico">
 
     style
       include ../public/css/style.css
+    
+    script.
+      function updateFavicon() {
+        const darkModeFavicon = '/images/favicon_light_16x16.ico';
+        const lightModeFavicon = '/images/favicon_dark_16x16.ico';
+        const favicon = document.getElementById('favicon');
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          favicon.href = darkModeFavicon;
+        } else {
+          favicon.href = lightModeFavicon;
+        }
+      }
+      updateFavicon();
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', updateFavicon);
+
 
   body
     include includes/navbar.pug
