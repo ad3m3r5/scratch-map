@@ -28,6 +28,7 @@ This changelog will be based on the syntax provided by [keep a changelog](https:
   - Current four-number years will be converted to `01-01-${year}`, while two-year numbers will be converted to `01-01-20${year}`
   - Empty years will stay empty
 - Custom color section for unscratched, scratched, or per visit
+  - defaults: unscratched `#cca11f`, scratched `#c2c2c2`
 - Auto-backup databse on version migration
 
 ## [1.2.2] - 2024-11-27

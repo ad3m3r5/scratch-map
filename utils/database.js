@@ -7,10 +7,6 @@ let dbFile;
 
 const defaultData = {
   version: "1.3",
-  colors: {
-    unscratched: "",
-    scratched: ""
-  },
   scratched: { }
 };
 
@@ -93,9 +89,6 @@ function checkDBVersion() {
 
     let dbBackupFile = path.join(global.DATA_DIR, '/db.v1.2.backup');
     fs.copyFileSync(dbFile, dbBackupFile);
-
-    // add colors
-    db.data.colors = defaultData.colors;
 
     // move individual visit to array
     Object.keys(db.data.scratched).forEach(key => {
