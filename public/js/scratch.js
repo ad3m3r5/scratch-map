@@ -199,35 +199,50 @@ async function clickObject(e) {
       title: `Scratch ${object.name}?`,
       icon: 'question',
       html:
-        `<label for="swal2-input-1" class="swal2-input-label">Date you visited</label>` +
-        `<input id="swal2-input-1" class="swal2-input" placeholder="${tMonth}-${tDay}-${tYear}" type="text" style="width: -webkit-fill-available;">` +
-        `<label for="swal2-input-2" class="swal2-input-label">Link to Photo Album</label>` +
-        `<input id="swal2-input-2" class="swal2-input" placeholder="https://cloud.mydomain.com/${encodeURIComponent(object.name.toLowerCase())}-trip-photos" type="url" style="width: -webkit-fill-available;">`,
+        `<label for="swal2-input-date" class="swal2-input-label">Date you visited</label>` +
+        `<input id="swal2-input-date" class="swal2-input" placeholder="${tMonth}-${tDay}-${tYear}" type="text" style="width: -webkit-fill-available;">` +
+        `<label for="swal2-input-url" class="swal2-input-label">Link to Photo Album</label>` +
+        `<input id="swal2-input-url" class="swal2-input" placeholder="https://cloud.mydomain.com/${encodeURIComponent(object.name.toLowerCase())}-trip-photos" type="url" style="width: -webkit-fill-available;">`,
       didOpen: () => {
-        new AirDatepicker('#swal2-input-1', {
+        new AirDatepicker('#swal2-input-date', {
           locale: datePickerLocale,
           buttons: [ 'clear' ],
           autoClose: true
         });
       },
       preConfirm: () => {
-        let date = document.getElementById('swal2-input-1').value;
-        let url = document.getElementById('swal2-input-2').value;
+        let dateInput = document.getElementById('swal2-input-date');
+        let urlInput = document.getElementById('swal2-input-url');
+
+        let date = dateInput.value;
+        let url = urlInput.value;
+
+        let invalidData = false;
 
         if ((date.length > 0 && !validator.isDate(date, validatorDateOptions))) {
+          invalidData = true;
+          dateInput.style.outline = '2px solid red';
+        } else {
+          dateInput.style.outline = '';
+        }
+        
+        if ((url.length > 0 && !validator.isURL(url, validatorURLOptions)) || url.length > maxURLLength) {
+          invalidData = true;
+          urlInput.style.outline = '2px solid red';
+        } else {
+          urlInput.style.outline = '';
+        }
+
+        if (invalidData) {
           Swal.showValidationMessage(
-            `Invalid Date - must be formatted as MM-DD-YYYY.`
-          )
-        } else if ((url.length > 0 && !validator.isURL(url, validatorURLOptions)) || url.length > maxURLLength) {
-          Swal.showValidationMessage(
-            `Invalid URL - must contain a protocol and be less than ${maxURLLength} characters.`
+            `Please fix the outlined errors. Dates must be formatted as MM-DD-YYYY, and URLs must contain a protocol and be less than ${maxURLLength} characters.`
           )
         } else {
           return {
-            visits: {
+            visits: [{
               date: date,
               url: url
-            }
+            }]
           }
         }
       },
@@ -391,7 +406,7 @@ function addScratchVisit(e, object) {
 
   if (newVisits.length > 0) {
     if (newVisits[lastElement].date.length < 1 && newVisits[lastElement].url.length < 1) {
-      alert("Please add one visit at a time");
+      alert("Please complete the previous visit before adding another");
       return;
     }
   }

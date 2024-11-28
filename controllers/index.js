@@ -142,12 +142,10 @@ export const postScratch = (async (req, res, next) => {
           return res.status(422).json({ status: 422, message: 'Invalid url' }).send();
         } else {
           // sanitize visit URLs
-
           sanitizedVisits.push({
             date: visit.date || '',
             url: sanitizeInput(visit.url) || ''
-          })
-
+          });
         }
       }
     }
@@ -166,6 +164,7 @@ export const postScratch = (async (req, res, next) => {
           existsIndex = i;
         }
       }
+
       if (exists) {
         // update existing scratch
         scratched[req.body.type][existsIndex].visits = sanitizedVisits;

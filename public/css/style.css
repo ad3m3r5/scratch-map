@@ -349,6 +349,13 @@ html, body {
   top: 65px !important;
 }
 
+#swal2-validation-message {
+  width: 90%;
+  margin: 0 auto;
+  margin-top: 20px;
+  border-radius: 5px;
+}
+
 #visit-table {
   width: 100%
 }
