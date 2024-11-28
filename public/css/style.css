@@ -164,6 +164,7 @@ html, body {
   background-color: #cca11f;
   border: none;
   border-radius: 10px;
+  cursor: pointer;
 }
 #share-text {
   color: white;
