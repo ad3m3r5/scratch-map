@@ -6,6 +6,7 @@ This changelog will be based on the syntax provided by [keep a changelog](https:
   - [README](../README.md)
   - Changes
     - [Unreleased](#unreleased---tbd)
+    - [1.3.0](#130---tbd)
     - [1.2.2](#122---2024-11-27)
     - [1.2.1](#121---2024-11-26)
     - [1.2.0](#120---2024-11-26)
