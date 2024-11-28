@@ -313,6 +313,22 @@ function renderScratched(objects) {
     for (let j = 0; j < objects.length; j++) {
       if (scratchedObjects[i].code.toUpperCase() == objects[j].id.toUpperCase()) {
         objects[j].classList.add('scratched');
+        
+        if (scratchedObjects[i].color && scratchedObjects[i].color.length > 0) {
+          let customColor = scratchedObjects[i].color;
+
+          let excludedClasses = ["label-connector", "label-text"]
+          
+          let paths = objects[j].querySelectorAll('path');
+
+          let filtered = Array.from(paths).filter(path =>
+            !excludedClasses.some(excludedClass => path.classList.contains(excludedClass))
+          );
+
+          filtered.forEach((path, index) => {
+            path.style.fill = customColor;
+          });
+        }
       }
     }
   }
