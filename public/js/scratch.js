@@ -102,6 +102,12 @@ async function clickObject(e) {
           <span class="swal2-label">Scratched: </span>
           <input type="checkbox" id="swal2-checkbox-1" checked>
         </label>
+
+        <div id="swal2-input-color-div" class="fill">
+          <label for="swal2-input-color" class="swal2-input-label" style="display: inline-block;">Color for Scratch: </label>
+          <input id="swal2-input-color" class="full" value="${colors.scratched || '#c2c2c2'}" type="text" data-coloris>
+        </div>
+
         <br/>
         <table id="visit-table">
           <thead>
@@ -139,6 +145,16 @@ async function clickObject(e) {
               dateElement.setAttribute('value', formattedDate);
             }
           });
+        });
+
+        Coloris({
+          el: '#swal2-input-color',
+          theme: 'default',
+          themeMode: 'auto',
+          format: 'hex',
+          alpha: false,
+          clearButton: true,
+          closeButton: true,
         });
       },
       preConfirm: () => {
@@ -198,16 +214,33 @@ async function clickObject(e) {
     saResponse = await Swal.fire({
       title: `Scratch ${object.name}?`,
       icon: 'question',
-      html:
-        `<label for="swal2-input-date" class="swal2-input-label">Date you visited</label>` +
-        `<input id="swal2-input-date" class="swal2-input" placeholder="${tMonth}-${tDay}-${tYear}" type="text" style="width: -webkit-fill-available;">` +
-        `<label for="swal2-input-url" class="swal2-input-label">Link to Photo Album</label>` +
-        `<input id="swal2-input-url" class="swal2-input" placeholder="https://cloud.mydomain.com/${encodeURIComponent(object.name.toLowerCase())}-trip-photos" type="url" style="width: -webkit-fill-available;">`,
+      html: `
+        <div id="swal2-input-color-div" class="fill">
+          <label for="swal2-input-color" class="swal2-input-label" style="display: inline-block;">Color for Scratch: </label>
+          <input id="swal2-input-color" class="full" value="${colors.scratched || '#c2c2c2'}" type="text" data-coloris>
+        </div>
+
+        <label for="swal2-input-date" class="swal2-input-label">Date you visited</label>
+        <input id="swal2-input-date" class="swal2-input" placeholder="${tMonth}-${tDay}-${tYear}" type="text" style="width: -webkit-fill-available;">
+
+        <label for="swal2-input-url" class="swal2-input-label">Link to Photo Album</label>
+        <input id="swal2-input-url" class="swal2-input" placeholder="https://cloud.mydomain.com/${encodeURIComponent(object.name.toLowerCase())}-trip-photos" type="url" style="width: -webkit-fill-available;">
+      `,
       didOpen: () => {
         new AirDatepicker('#swal2-input-date', {
           locale: datePickerLocale,
           buttons: [ 'clear' ],
           autoClose: true
+        });
+
+        Coloris({
+          el: '#swal2-input-color',
+          theme: 'default',
+          themeMode: 'auto',
+          format: 'hex',
+          alpha: false,
+          clearButton: true,
+          closeButton: true,
         });
       },
       preConfirm: () => {
@@ -347,7 +380,7 @@ function renderSwalVisits(object) {
       <tr id="visit-row-${index}">
         <td>
           <div>
-            <input id="swal2-input-${index}-date" class="swal2-input" placeholder="${tMonth}-${tDay}-${tYear}" value="${visit.date || ''}" type="text" style="width: 100%; margin: 0">
+            <input id="swal2-input-${index}-date" class="swal2-input" placeholder="${tMonth}-${tDay}-${tYear}" value="${visit.date || ''}" type="text" style="width: 100%; margin: 0; max-width: 125px;">
           </div>
         </td>
         <td>

@@ -378,3 +378,31 @@ html, body {
   /* SweetAlert2 default is 1060 */
   z-index: 1100;
 }
+
+#clr-picker {
+  /* SweetAlert2 default is 1060 */
+  z-index: 1100;
+}
+
+div .clr-field {
+  margin-top: 15px;
+}
+
+#swal2-input-color-div .clr-field button {
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.clr-field > input {
+  height: 45px;
+  width: 45px;
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.clr-field > input:focus {
+  outline: none;
+}
