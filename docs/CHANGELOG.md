@@ -6,6 +6,7 @@ This changelog will be based on the syntax provided by [keep a changelog](https:
   - [README](../README.md)
   - Changes
     - [Unreleased](#unreleased---tbd)
+    - [1.2.2](#122---2024-11-27)
     - [1.2.1](#121---2024-11-26)
     - [1.2.0](#120---2024-11-26)
     - [1.1.12](#1112---2023-11-23)
@@ -19,6 +20,11 @@ This changelog will be based on the syntax provided by [keep a changelog](https:
 - Multi-Visit Support
 - "Home" country tagging
 - Full date-picker rather than just "Year"
+
+## [1.2.2] - 2024-11-27
+
+### Fixed
+- Reordered imports on `server.js` for `dotenv` to work properly
 
 ## [1.2.1] - 2024-11-26
 
