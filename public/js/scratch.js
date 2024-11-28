@@ -91,11 +91,11 @@ async function clickObject(e) {
         let url = document.getElementById('swal2-input-2').value;
         if ((year.length > 0 && !isValidYear(year)) || year.length > 6) {
           Swal.showValidationMessage(
-            `Invalid Year. Year must must be a number and less than 6 characters.`
+            `Invalid Year - must be a number and less than 6 characters.`
           )
         } else if ((url.length > 0 && !validator.isURL(url, validatorURLOptions)) || url.length > maxURLLength) {
           Swal.showValidationMessage(
-            `Invalid URL. URL must contain a protocol and be less than ${maxURLLength} characters.`
+            `Invalid URL - must contain a protocol and be less than ${maxURLLength} characters.`
           )
         } else {
           return {
@@ -134,11 +134,11 @@ async function clickObject(e) {
         let url = document.getElementById('swal2-input-2').value;
         if ((year.length > 0 && !isValidYear(year)) || year.length > 6) {
           Swal.showValidationMessage(
-            `Invalid Year. Year must must be a number and less than 6 characters.`
+            `Invalid Year - must be a number and less than 6 characters.`
           )
         } else if ((url.length > 0 && !validator.isURL(url, validatorURLOptions)) || url.length > maxURLLength) {
           Swal.showValidationMessage(
-            `Invalid URL. URL must contain a protocol and be less than ${maxURLLength} characters.`
+            `Invalid URL - must contain a protocol and be less than ${maxURLLength} characters.`
           )
         } else {
           return {

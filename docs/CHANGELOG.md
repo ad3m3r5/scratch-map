@@ -25,6 +25,7 @@ This changelog will be based on the syntax provided by [keep a changelog](https:
 
 ### Fixed
 - Reordered imports on `server.js` for `dotenv` to work properly
+- Removed duplicate typo in `scratch.js`
 
 ## [1.2.1] - 2024-11-26
 
