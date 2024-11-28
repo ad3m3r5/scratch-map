@@ -38,7 +38,7 @@
 .entities g .label-box {
   fill:#cca11f;
   fill-opacity:1;
-  stroke:#ffffff;
+/*  stroke:#ffffff; */
   stroke-width:1.25;
   stroke-miterlimit:4;
   stroke-opacity:1;

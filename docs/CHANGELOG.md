@@ -30,9 +30,10 @@ This changelog will be based on the syntax provided by [keep a changelog](https:
   - Current four-number years will be converted to `01-01-${year}`, while two-year numbers will be converted to `01-01-20${year}`
   - Empty years will stay empty
 - Custom color section for unscratched, scratched, or per visit
-  - defaults: unscratched `#cca11f`, scratched `#c2c2c2`, text: `#ffffff`
-  - The scratched and unscratched values can be overwritten with environment variables `COLOR_UNSCRATCHED`, `COLOR_SCRATCHED`, and `COLOR_TEXT`. The must be valid hex codes starting with `#`
-  - The share button will be color matched to the unscratched color
+  - Defaults: unscratched `#cca11f`, scratched `#c2c2c2`, text: `#ffffff`
+  - Available variables: `COLOR_UNSCRATCHED`, `COLOR_UNSCRATCHED_HOVER`, `COLOR_SCRATCHED`, `COLOR_TEXT`, and `COLOR_OUTLINES`
+  - The color must be provided as a valid CSS color format, such as `#ff0000`, `rgb(255, 0, 0)`, `red`, etc
+  - The share button and text will be color matched to the unscratched color and text color
 - Auto-backup databse on version migration
 
 ## [1.2.2] - 2024-11-27

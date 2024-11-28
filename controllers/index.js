@@ -66,6 +66,13 @@ export const getMap = ((req, res, next) => {
       objectList,
       scratchedObjects,
       enableShare: global.ENABLE_SHARE,
+      colors: {
+        unscratched: global.COLOR_UNSCRATCHED,
+        unscratched_hover: global.COLOR_UNSCRATCHED_HOVER,
+        scratched: global.COLOR_SCRATCHED,
+        text: global.COLOR_TEXT,
+        outlines: global.COLOR_OUTLINES
+      },
       mapSVG: fs.readFileSync(path.join(global.__rootDir, `/public/images/${mapType}.svg`))
     });
   }
@@ -85,6 +92,13 @@ export const getView = ((req, res, next) => {
       mapType,
       validTypes,
       scratchedObjects,
+      colors: {
+        unscratched: global.COLOR_UNSCRATCHED,
+        unscratched_hover: global.COLOR_UNSCRATCHED_HOVER,
+        scratched: global.COLOR_SCRATCHED,
+        text: global.COLOR_TEXT,
+        outlines: global.COLOR_OUTLINES
+      },
       mapSVG: fs.readFileSync(path.join(global.__rootDir, `/public/images/${mapType}.svg`))
     });
   }
