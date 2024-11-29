@@ -371,7 +371,7 @@ html, body {
 
 .visit-section-field label {
   display: flex;
-  margin: 8px 5px 8px 0px;
+  margin: 8px 0px;
   text-align: left;
 }
 
@@ -383,7 +383,7 @@ html, body {
 }
 
 .visit-date-label {
-  min-width: 50px;
+  min-width: 40px;
 }
 
 .visit-url-label {
