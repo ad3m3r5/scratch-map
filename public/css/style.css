@@ -379,6 +379,16 @@ html, body {
   z-index: 1100;
 }
 
+.air-datepicker {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
+
 #clr-picker {
   /* SweetAlert2 default is 1060 */
   z-index: 1100;

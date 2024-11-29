@@ -154,7 +154,7 @@ export const postScratch = (async (req, res, next) => {
         let visit = req.body.visits[i];
 
         // date validity
-        if (visit.date.length > 0 && !validator.isDate(visit.date, validatorDateOptions)) {
+        if (visit.date.length > 0 && !isValidDate(visit.date, validatorDateOptions)) {
           return res.status(422).json({ status: 422, message: 'Invalid date' }).send();
           // url length
         } else if (visit.url.length < 0 || visit.url.length > maxURLLength) {
@@ -249,4 +249,23 @@ function sanitizeInput(string) {
   };
   const reg = /[&<>"'/]/ig;
   return string.replace(reg, (match)=>(map[match]));
+}
+
+function isValidDate(date) {
+  let isValid = true;
+
+  if (date.length == 10) {
+    isValid = validator.isDate(date, validatorDateOptions)
+  } else if (date.length == 23) {
+    let dates = date.split(" - ");
+    dates.forEach((singleDate) => {
+      if (!validator.isDate(singleDate, validatorDateOptions)) {
+        isValid = false;
+      }
+    });
+  } else {
+    isValid = false;
+  }
+
+  return isValid;
 }

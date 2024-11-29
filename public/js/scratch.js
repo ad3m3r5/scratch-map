@@ -24,6 +24,45 @@ const datePickerLocale = {
   firstDay: 0
 };
 
+const dpCloseButton = {
+  content: 'Close',
+  onClick: (dp) => {
+    dp.hide()
+  }
+}
+
+const dpSingleButton = {
+  content: 'Single Date',
+  onClick: (dp) => {
+    dp.clear({ silent: true });
+    dp.update({
+      buttons: [ 'clear', dpRangeButton, dpCloseButton ],
+      autoClose: false,
+      multipleDates: false,
+      multipleDatesSeparator: ' - ',
+      range: false,
+      dynamicRange: false
+    });
+    dp.clear({ silent: true });
+  }
+}
+
+const dpRangeButton = {
+  content: 'Date Range',
+  onClick: (dp) => {
+    dp.clear({ silent: true });
+    dp.update({
+      buttons: [ 'clear', dpSingleButton, dpCloseButton ],
+      autoClose: false,
+      multipleDates: false,
+      multipleDatesSeparator: ' - ',
+      range: true,
+      dynamicRange: true
+    });
+    dp.clear({ silent: true });
+  }
+}
+
 if (validTypes.includes(mapType)) {
   objectClass = document.querySelector(`.entities`);
   objectGroups = objectClass.querySelectorAll(':scope > g');
@@ -135,16 +174,28 @@ async function clickObject(e) {
             deleteScratchVisit(e, object, visit, index);
           });
 
-          new AirDatepicker(`#swal2-input-${index}-date`, {
-            locale: datePickerLocale,
-            buttons: [ 'clear' ],
-            autoClose: true,
-            onSelect: ({date, formattedDate, datepicker}) => {
-              let dateElement = document.getElementById(`swal2-input-${index}-date`);
-              dateElement.value = formattedDate;
-              dateElement.setAttribute('value', formattedDate);
-            }
-          });
+          if (visit.date.length == 23) {
+            new AirDatepicker(`#swal2-input-${index}-date`, {
+              locale: datePickerLocale,
+              buttons: [ 'clear', dpSingleButton, dpCloseButton ],
+              autoClose: false,
+              multipleDates: false,
+              multipleDatesSeparator: ' - ',
+              range: true,
+              dynamicRange: true,
+              selectedDates: visit.date.split(" - ")
+            });
+          } else {
+            new AirDatepicker(`#swal2-input-${index}-date`, {
+              locale: datePickerLocale,
+              buttons: [ 'clear', dpRangeButton, dpCloseButton ],
+              autoClose: false,
+              multipleDates: false,
+              multipleDatesSeparator: ' - ',
+              range: false,
+              dynamicRange: false
+            });
+          }
         });
 
         Coloris({
@@ -178,7 +229,7 @@ async function clickObject(e) {
           let date = visit.date;
           let url = visit.url;
 
-          if ((date.length > 0 && !validator.isDate(date, validatorDateOptions))) {
+          if ((date.length > 0 && !isValidDate(date, validatorDateOptions))) {
             invalidData = true;
             dateInput.style.outline = '2px solid red';
           } else {
@@ -241,8 +292,12 @@ async function clickObject(e) {
       didOpen: () => {
         new AirDatepicker('#swal2-input-date', {
           locale: datePickerLocale,
-          buttons: [ 'clear' ],
-          autoClose: true
+          buttons: [ 'clear', dpRangeButton, dpCloseButton ],
+          autoClose: false,
+          multipleDates: false,
+          multipleDatesSeparator: ' - ',
+          range: false,
+          dynamicRange: false
         });
 
         Coloris({
@@ -273,7 +328,7 @@ async function clickObject(e) {
           return false;
         }
 
-        if ((date.length > 0 && !validator.isDate(date, validatorDateOptions))) {
+        if ((date.length > 0 && !isValidDate(date, validatorDateOptions))) {
           invalidData = true;
           dateInput.style.outline = '2px solid red';
         } else {
@@ -452,16 +507,28 @@ function reloadSwalVisits(object) {
       deleteScratchVisit(e, object, visit, index);
     });
 
-    new AirDatepicker(`#swal2-input-${index}-date`, {
-      locale: datePickerLocale,
-      buttons: [ 'clear' ],
-      autoClose: true,
-      onSelect: ({date, formattedDate, datepicker}) => {
-        let dateElement = document.getElementById(`swal2-input-${index}-date`);
-        dateElement.value = formattedDate;
-        dateElement.setAttribute('value', formattedDate);
-      }
-    });
+    if (visit.date.length == 23) {
+      new AirDatepicker(`#swal2-input-${index}-date`, {
+        locale: datePickerLocale,
+        buttons: [ 'clear', dpSingleButton, dpCloseButton ],
+        autoClose: false,
+        multipleDates: false,
+        multipleDatesSeparator: ' - ',
+        range: true,
+        dynamicRange: true,
+        selectedDates: visit.date.split(" - ")
+      });
+    } else {
+      new AirDatepicker(`#swal2-input-${index}-date`, {
+        locale: datePickerLocale,
+        buttons: [ 'clear', dpRangeButton, dpCloseButton ],
+        autoClose: false,
+        multipleDates: false,
+        multipleDatesSeparator: ' - ',
+        range: false,
+        dynamicRange: false
+      });
+    }
   });
 }
 
@@ -496,14 +563,11 @@ function deleteScratchVisit(e, object, visit, index) {
   e.preventDefault();
   e.stopPropagation();
 
-  //let target = e.target;
-  //let closestTr = target.closest('tr');
   let visitDate = document.getElementById(`swal2-input-${index}-date`);
 
   let result = confirm(`Are you sure you want to delete the visit for ${visitDate.value}?`);
 
   if (result) {
-    //closestTr.remove();
     let newVisits = object.visits;
     newVisits.splice(index, 1);
     object.visits = newVisits;
@@ -524,3 +588,22 @@ const Toast = Swal.mixin({
     toast.addEventListener('mouseleave', Swal.resumeTimer)
   }
 });
+
+function isValidDate(date) {
+  let isValid = true;
+
+  if (date.length == 10) {
+    isValid = validator.isDate(date, validatorDateOptions)
+  } else if (date.length == 23) {
+    let dates = date.split(" - ");
+    dates.forEach((singleDate) => {
+      if (!validator.isDate(singleDate, validatorDateOptions)) {
+        isValid = false;
+      }
+    });
+  } else {
+    isValid = false;
+  }
+
+  return isValid;
+}
