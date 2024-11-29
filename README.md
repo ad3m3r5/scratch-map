@@ -77,7 +77,13 @@
   - Scratch prompts/pop-ups
 
 - [validator](https://github.com/validatorjs/validator.js)
-  - URL validation
+  - URL and date validation
+
+- [air-datepicker](https://github.com/t1m0n/air-datepicker)
+  - Scratch date selection
+
+- [Coloris](https://github.com/mdbassit/Coloris)
+  - Scratch color picker
 
 ### Fonts
 - [Roboto](https://fonts.google.com/specimen/Roboto)
@@ -86,3 +92,6 @@
 ### Icons
 - Share
   - Source: https://upload.wikimedia.org/wikipedia/commons/5/58/Sharethis-grey.svg
+
+- Trash Can
+  - Source: https://upload.wikimedia.org/wikipedia/commons/7/7a/Trash_%2889060%29_-_The_Noun_Project.svg

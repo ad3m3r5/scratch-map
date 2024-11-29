@@ -38,14 +38,13 @@ block content
               table.section-table
                 tr
                   th Name
-                  th Year
-                  th Link
+                  th Visits
+                  th Latest Visit
                 each val in scratchedLists[validTypes[i]]
                   tr
                     td #{val.name}
-                    td #{val.year}
-                    td
-                      a(href=val.url target='_blank') #{val.url}
+                    td #{val.visits.length}
+                    td #{val.visits[val.visits.length - 1].date}
         - if (validTypes[i+1] !== undefined)
             div.section-column
               button.section-collapsible-button
@@ -67,14 +66,13 @@ block content
                   table.section-table
                     tr
                       th Name
-                      th Year
-                      th Link
+                      th Visits
+                      th Latest Visit
                     each val in scratchedLists[validTypes[i+1]]
                       tr
                         td #{val.name}
-                        td #{val.year}
-                        td
-                          a(href=val.url target='_blank') #{val.url}
+                        td #{val.visits.length}
+                        td #{val.visits[val.visits.length - 1].date}
 
   script.
     var collapsibles = document.querySelectorAll('.section-collapsible-button');

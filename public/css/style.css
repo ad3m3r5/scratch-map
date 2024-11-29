@@ -164,6 +164,7 @@ html, body {
   background-color: #cca11f;
   border: none;
   border-radius: 10px;
+  cursor: pointer;
 }
 #share-text {
   color: white;
@@ -343,7 +344,109 @@ html, body {
   }
 }
 
-/* SweetAlert2 */
+/* SweetAlert2, scratch Pop-up */
 .swal2-popup.swal2-toast.swal2-show {
   top: 65px !important;
+}
+
+#swal2-validation-message {
+  width: 90%;
+  margin: 0 auto;
+  margin-top: 20px;
+  border-radius: 5px;
+}
+
+.visit-section {
+  border: 1px solid lightgrey;
+  border-radius: 10px;
+  padding: 15px 15px;
+  margin-bottom: 15px;
+}
+
+.visit-section-field {
+  display: flex;
+  margin-bottom: 10px;
+  gap: 10px;
+}
+
+.visit-section-field label {
+  display: flex;
+  margin: 8px 5px 8px 0px;
+  text-align: left;
+}
+
+.visit-section-field input {
+  display: flex;
+  width: 100%;
+  margin: 0;
+  max-height: 35px;
+}
+
+.visit-date-label {
+  min-width: 50px;
+}
+
+.visit-url-label {
+  min-width: 85px;
+}
+
+#scratch-delete-icon {
+  display: flex;
+  width: 35px;
+  height: 35px;
+  min-width: 35px;
+  min-height: 35px;
+  margin: 0 auto;
+}
+
+#scratch-delete-icon > button {
+  width: 100%;
+  height: 100%;
+  background-color: #fc6f53;
+  border: 1px solid silver;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#air-datepicker-global-container {
+  /* SweetAlert2 default is 1060 */
+  z-index: 1100;
+}
+
+.air-datepicker {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
+
+#clr-picker {
+  /* SweetAlert2 default is 1060 */
+  z-index: 1100;
+}
+
+div .clr-field {
+  margin-top: 15px;
+}
+
+#swal2-input-color-div .clr-field button {
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.clr-field > input {
+  height: 35px;
+  width: 35px;
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.clr-field > input:focus {
+  outline: none;
 }

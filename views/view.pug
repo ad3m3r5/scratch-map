@@ -20,6 +20,53 @@ block content
     var mapType = !{JSON.stringify(mapType)};
     var validTypes = !{JSON.stringify(validTypes)};
     var scratchedObjects = !{JSON.stringify(scratchedObjects)};
+    var colors = !{JSON.stringify(colors)};
+  
+  //- custom colors
+  style
+    //- unscratched
+    | .entities g path:not(.label-connector):not(.label-text) {
+    |   fill: #{colors.unscratched};
+    | }
+    | .entities g.not-scratched path {
+    |   fill: #{colors.unscratched};
+    | }
+    | .entities g .label-box {
+    |   fill: #{colors.unscratched};
+    | }
+    | .entities g.not-scratched .label-box {
+    |   fill: #{colors.unscratched};
+    | }
+    //- unscratched hover
+    | .entities g:hover, .entities g path:hover:not(.label-connector):not(.label-text),
+    | .entities g:hover path:not(.label-connector):not(.label-text) {
+    |   fill: #{colors.unscratched_hover};
+    | }
+    | .entities g:hover > .label-box {
+    |   fill: #{colors.unscratched_hover};
+    | }
+    //- scratched
+    | .entities g.scratched path:not(.label-connector):not(.label-text) {
+    |   fill: #{colors.scratched};
+    | }
+    | .entities g.scratched:hover, .entities g.scratched path:hover:not(.label-connector):not(.label-text),
+    | .entities g.scratched:hover path:not(.label-connector):not(.label-text) {
+    |   fill: #{colors.scratched};
+    | }
+    | .entities g.scratched .label-box {
+    |   fill: #{colors.scratched};
+    | }
+    | entities g.scratched:hover > rect {
+    |   fill: #{colors.scratched};
+    | }
+    //- text
+    | .entities g .label-text, .entities g .label-text path {
+    |   fill: #{colors.text};
+    | }
+    //- outlines
+    | .entities g path:not(.label-connector):not(.label-text) {
+    |   stroke: #{colors.outlines};
+    | }
 
   h1#title #{title}
 

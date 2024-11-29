@@ -4,9 +4,14 @@ import validator from 'validator';
 
 import { validTypes, getConnection } from '../utils/database.js';
 
-const maxURLLength = 1024;
+const maxURLLength = 2048;
 const validatorURLOptions = {
   require_protocol: true
+};
+const validatorDateOptions = {
+  strictMode: true,
+  delimiters: ['-', '/'],
+  format: 'MM-DD-YYYY'
 };
 
 // home page
@@ -61,6 +66,15 @@ export const getMap = ((req, res, next) => {
       objectList,
       scratchedObjects,
       enableShare: global.ENABLE_SHARE,
+      colors: {
+        unscratched: global.COLOR_UNSCRATCHED,
+        unscratched_hover: global.COLOR_UNSCRATCHED_HOVER,
+        scratched: global.COLOR_SCRATCHED,
+        text: global.COLOR_TEXT,
+        outlines: global.COLOR_OUTLINES,
+        share: global.COLOR_SHARE,
+        share_text: global.COLOR_SHARE_TEXT
+      },
       mapSVG: fs.readFileSync(path.join(global.__rootDir, `/public/images/${mapType}.svg`))
     });
   }
@@ -80,6 +94,15 @@ export const getView = ((req, res, next) => {
       mapType,
       validTypes,
       scratchedObjects,
+      colors: {
+        unscratched: global.COLOR_UNSCRATCHED,
+        unscratched_hover: global.COLOR_UNSCRATCHED_HOVER,
+        scratched: global.COLOR_SCRATCHED,
+        text: global.COLOR_TEXT,
+        outlines: global.COLOR_OUTLINES,
+        share: global.COLOR_SHARE,
+        share_text: global.COLOR_SHARE_TEXT
+      },
       mapSVG: fs.readFileSync(path.join(global.__rootDir, `/public/images/${mapType}.svg`))
     });
   }
@@ -92,40 +115,62 @@ export const postScratch = (async (req, res, next) => {
     console.debug(req.body);
   }
 
-  if (Object.keys(req.body).length !== 5) {
-    // body attribute count
-    return res.status(422).json({ status: 422, message: 'Invalid attir length' }).send();
-  } else if (typeof req.body.type !== 'string' || typeof req.body.code !== 'string' || typeof req.body.scratch !== 'boolean' || typeof req.body.year !== 'string' || typeof req.body.url !== 'string') {
-    // body attribute data types
-    return res.status(422).json({ status: 422, message: 'Invalid data type' }).send();
-  } else if (req.body.type.length < 0 || req.body.type.length > 30) {
-    // scratch type length
-    return res.status(422).json({ status: 422, message: 'Invalid object length' }).send();
-  } else if (!validTypes.includes(req.body.type)) {
-    // scratch type
-    return res.status(422).json({ status: 422, message: 'Invalid object type' }).send();
-  } else if (req.body.code.length < 1 || req.body.code.length > 3) {
-    // country/state code length
-    return res.status(422).json({ status: 422, message: 'Invalid code length' }).send();
-  } else if (req.body.year.length < 0 || req.body.year.length > 6) {
-    // year length
-    return res.status(422).json({ status: 422, message: 'Invalid year length' }).send();
-  } else if (req.body.year.length > 0 && !isValidYear(req.body.year)) {
-    // year only contains numbers
-    return res.status(422).json({ status: 422, message: 'Invalid year' }).send();
-  } else if (req.body.url.length < 0 || req.body.url.length > maxURLLength) {
-    // url length
-    return res.status(422).json({ status: 422, message: 'Invalid url length' }).send();
-  } else if (req.body.url.length > 0 && !validator.isURL(req.body.url, validatorURLOptions)) {
-    // check URL validity
-    return res.status(422).json({ status: 422, message: 'Invalid url' }).send();
-  } else {
-    // check that the country/state code exists
-    if (!(req.body.code.toUpperCase() in getConnection().data[req.body.type])) {
-      return res.status(422).json({ status: 422, message: 'Invalid object code' }).send();
-    }
+  // Expected
+  //  type: map type/name, string
+  //  code: entity code, string
+  //  scratch: entity scratched, boolean
+  //  color: custom scratch color
+  //  visits: array of visits, object
+  //    date: visit date, string
+  //    url: url to photo album, string
 
-    let sanitizedUrl = sanitizeInput(req.body.url);
+  // body attribute count
+  if (Object.keys(req.body).length !== 5) {
+    return res.status(422).json({ status: 422, message: 'Invalid attribute length' }).send();
+    // body attribute data types
+  } else if (typeof req.body.type !== 'string' || typeof req.body.code !== 'string' || typeof req.body.scratch !== 'boolean' || typeof req.body.visits !== 'object' || typeof req.body.color !== 'string' ) {
+    return res.status(422).json({ status: 422, message: 'Invalid data types' }).send();
+    // scratch type length
+  } else if (req.body.type.length < 0 || req.body.type.length > 30) {
+    return res.status(422).json({ status: 422, message: 'Invalid object length' }).send();
+    // scratch type
+  } else if (!validTypes.includes(req.body.type)) {
+    return res.status(422).json({ status: 422, message: 'Invalid object type' }).send();
+    // country/state code length
+  } else if (req.body.code.length < 1 || req.body.code.length > 3) {
+    return res.status(422).json({ status: 422, message: 'Invalid code length' }).send();
+    // check that the country/state code exists
+  } else if (!(req.body.code.toUpperCase() in getConnection().data[req.body.type])) {
+    return res.status(422).json({ status: 422, message: 'Invalid object code' }).send();
+    // invalid scratch color
+  } else if (req.body.color.length > 0 && !validator.isHexColor(req.body.color)) {
+    return res.status(422).json({ status: 422, message: 'Invalid hex color code' }).send();
+  } else {
+    let sanitizedVisits = [];
+
+    // check each visits attributes
+    if (req.body.visits.length > 0) {
+      for (let i = 0; i < req.body.visits.length; i++) {
+        let visit = req.body.visits[i];
+
+        // date validity
+        if (visit.date.length > 0 && !isValidDate(visit.date, validatorDateOptions)) {
+          return res.status(422).json({ status: 422, message: 'Invalid date' }).send();
+          // url length
+        } else if (visit.url.length < 0 || visit.url.length > maxURLLength) {
+          return res.status(422).json({ status: 422, message: 'Invalid url length' }).send();
+          // url validity
+        } else if (visit.url.length > 0 && !validator.isURL(visit.url, validatorURLOptions)) {
+          return res.status(422).json({ status: 422, message: 'Invalid url' }).send();
+        } else {
+          // sanitize visit URLs
+          sanitizedVisits.push({
+            date: visit.date || '',
+            url: sanitizeInput(visit.url) || ''
+          });
+        }
+      }
+    }
 
     let scratched = getConnection().data.scratched;
 
@@ -141,16 +186,17 @@ export const postScratch = (async (req, res, next) => {
           existsIndex = i;
         }
       }
+
       if (exists) {
         // update existing scratch
-        scratched[req.body.type][existsIndex].year = req.body.year;
-        scratched[req.body.type][existsIndex].url = sanitizedUrl;
+        scratched[req.body.type][existsIndex].color = req.body.color.toUpperCase();
+        scratched[req.body.type][existsIndex].visits = sanitizedVisits;
       } else {
         // add new scratch
         scratched[req.body.type].push({
-          'code': req.body.code.toUpperCase(),
-          'year': req.body.year || '',
-          'url': sanitizedUrl || ''
+          code: req.body.code.toUpperCase(),
+          color: req.body.color.toUpperCase(),
+          visits: sanitizedVisits
         });
       }
 
@@ -181,12 +227,6 @@ export const postScratch = (async (req, res, next) => {
   }
 });
 
-function isValidYear(year) {
-  const regex = /^(0|[1-9]\d*)$/;
-
-  return regex.test(year);
-}
-
 function parseTypeName(name) {
   let spaced = name.replaceAll('-', ' ');
   let words = spaced.split(' ');
@@ -209,4 +249,23 @@ function sanitizeInput(string) {
   };
   const reg = /[&<>"'/]/ig;
   return string.replace(reg, (match)=>(map[match]));
+}
+
+function isValidDate(date) {
+  let isValid = true;
+
+  if (date.length == 10) {
+    isValid = validator.isDate(date, validatorDateOptions)
+  } else if (date.length == 23) {
+    let dates = date.split(" - ");
+    dates.forEach((singleDate) => {
+      if (!validator.isDate(singleDate, validatorDateOptions)) {
+        isValid = false;
+      }
+    });
+  } else {
+    isValid = false;
+  }
+
+  return isValid;
 }

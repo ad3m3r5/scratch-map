@@ -4,6 +4,12 @@ block content
   link(rel='stylesheet', href='/css/sweetalert2.11.14.5.min.css')
   script(src='/js/sweetalert2.all.11.14.5.min.js', type='text/javascript')
 
+  link(rel='stylesheet', href='/css/air-datepicker.3.5.3.min.css')
+  script(src='/js/air-datepicker.3.5.3.min.js', type='text/javascript')
+
+  link(rel='stylesheet', href='/css/coloris.0.24.0.min.css')
+  script(src='/js/coloris.0.24.0min.js', type='text/javascript')
+
   script(src='/js/validator.13.12.0.min.js', type='text/javascript')
 
   style
@@ -15,6 +21,63 @@ block content
     var objectList = !{JSON.stringify(objectList)};
     var scratchedObjects = !{JSON.stringify(scratchedObjects)};
     var enableShare = !{JSON.stringify(enableShare)};
+    var colors = !{JSON.stringify(colors)};
+  
+  //- custom colors
+  style
+    //- unscratched
+    | .entities g path:not(.label-connector):not(.label-text) {
+    |   fill: #{colors.unscratched};
+    | }
+    | .entities g.not-scratched path {
+    |   fill: #{colors.unscratched};
+    | }
+    | .entities g .label-box {
+    |   fill: #{colors.unscratched};
+    | }
+    | .entities g.not-scratched .label-box {
+    |   fill: #{colors.unscratched};
+    | }
+    //- unscratched hover
+    | .entities g:hover, .entities g path:hover:not(.label-connector):not(.label-text),
+    | .entities g:hover path:not(.label-connector):not(.label-text) {
+    |   fill: #{colors.unscratched_hover};
+    | }
+    | .entities g:hover > .label-box {
+    |   fill: #{colors.unscratched_hover};
+    | }
+    //- scratched
+    | .entities g.scratched path:not(.label-connector):not(.label-text) {
+    |   fill: #{colors.scratched};
+    | }
+    | .entities g.scratched:hover, .entities g.scratched path:hover:not(.label-connector):not(.label-text),
+    | .entities g.scratched:hover path:not(.label-connector):not(.label-text) {
+    |   fill: #{colors.scratched};
+    | }
+    | .entities g.scratched .label-box {
+    |   fill: #{colors.scratched};
+    | }
+    | entities g.scratched:hover > rect {
+    |   fill: #{colors.scratched};
+    | }
+    //- text
+    | .entities g .label-text, .entities g .label-text path {
+    |   fill: #{colors.text};
+    | }
+    //- outlines
+    | .entities g path:not(.label-connector):not(.label-text) {
+    |   stroke: #{colors.outlines};
+    | }
+    //- share button
+    | #share-button {
+    |   background-color: #{colors.share};
+    | }
+    | #share-text {
+    |   color: #{colors.share_text};
+    | }
+    | #share-icon {
+    |   fill: #{colors.share_text};
+    | }
 
   h1#title #{title}
 

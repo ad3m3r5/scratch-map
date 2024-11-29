@@ -3,9 +3,10 @@ import path from "path";
 import { JSONFileSyncPreset } from 'lowdb/node'
 
 let db;
+let dbFile;
 
 const defaultData = {
-  version: "1.2",
+  version: "1.3",
   scratched: { }
 };
 
@@ -22,7 +23,7 @@ export const createConnection = async () => {
     fs.mkdirSync(global.DATA_DIR, { recursive: true });
   }
 
-  const dbFile = path.join(global.DATA_DIR, '/db.json');
+  dbFile = path.join(global.DATA_DIR, '/db.json');
 
   db = JSONFileSyncPreset(dbFile, defaultData);
 
@@ -42,12 +43,23 @@ export const getConnection = () => db;
 function checkDBVersion() {
   // add version for <none> or v1
   if (!db.data.hasOwnProperty('version')) {
+    if (global.LOG_LEVEL == 'DEBUG') console.debug(`Migrating to DB Version 1.0\n`);
+
+    let dbBackupFile = path.join(global.DATA_DIR, '/db.v1.backup');
+    fs.copyFileSync(dbFile, dbBackupFile);
+
     db.data.version = '1.0';
   } else {
-    if (global.LOG_LEVEL == 'DEBUG') console.debug(`Current DB version: ${db.data.version}\n`)
+    if (global.LOG_LEVEL == 'DEBUG') console.debug(`Current DB version: ${db.data.version}\n`);
   }
 
+  // migrate to db version 1.2
   if (db.data.version == '1.0') {
+    if (global.LOG_LEVEL == 'DEBUG') console.debug(`Migrating to DB Version 1.2\n`);
+
+    let dbBackupFile = path.join(global.DATA_DIR, '/db.v1.0.backup');
+    fs.copyFileSync(dbFile, dbBackupFile);
+
     // rename: countries
     if (db.data.scratched.hasOwnProperty('countries')) {
       db.data.scratched.world = db.data.scratched.countries;
@@ -70,6 +82,31 @@ function checkDBVersion() {
     // bump version
     db.data.version = '1.2';
   }
+
+  // migrate to db version 1.3
+  if (db.data.version == '1.2') {
+    if (global.LOG_LEVEL == 'DEBUG') console.debug(`Migrating to DB Version 1.3\n`);
+
+    let dbBackupFile = path.join(global.DATA_DIR, '/db.v1.2.backup');
+    fs.copyFileSync(dbFile, dbBackupFile);
+
+    // move individual visit to array
+    Object.keys(db.data.scratched).forEach(key => {
+      if (db.data.scratched[key].length > 0) {
+        db.data.scratched[key].forEach((visit, index) => {
+          if (visit.hasOwnProperty('year') || visit.hasOwnProperty('url')) {
+            let newVisit = { date: convertYear(visit.year), url: visit.url };
+            db.data.scratched[key][index].visits = [ newVisit ];
+            delete db.data.scratched[key][index].year;
+            delete db.data.scratched[key][index].url;
+          }
+        });
+      }
+    });
+
+    // bump version
+    db.data.version = '1.3';
+  }
 }
 
 function updateDBMaps() {
@@ -86,4 +123,15 @@ function updateDBMaps() {
       db.data[type] = importedType;
     }
   });
+}
+
+function convertYear(year) {
+  if (year.length == 0) {
+    return ``;
+  }
+  if (year.length == 2) {
+    return `01-01-20${year}`;
+  } else {
+    return `01-01-${year}`;
+  }
 }

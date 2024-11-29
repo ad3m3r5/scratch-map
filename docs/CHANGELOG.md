@@ -6,6 +6,7 @@ This changelog will be based on the syntax provided by [keep a changelog](https:
   - [README](../README.md)
   - Changes
     - [Unreleased](#unreleased---tbd)
+    - [1.3.0](#130---tbd)
     - [1.2.2](#122---2024-11-27)
     - [1.2.1](#121---2024-11-26)
     - [1.2.0](#120---2024-11-26)
@@ -17,9 +18,23 @@ This changelog will be based on the syntax provided by [keep a changelog](https:
 - Authentication
   - Local
   - OAuth2
-- Multi-Visit Support
 - "Home" country tagging
-- Full date-picker rather than just "Year"
+
+## [1.3.0] - TBD
+
+### Added
+- Multi-visit support
+  - In the scratch interface on the map page, you can add and remove visits from each scratched location
+  - The initial scratch only allows for one entry. It can then be edited to have multiple visits
+- Full date picker for the visit
+  - Current four-number years will be converted to `01-01-${year}`, while two-year numbers will be converted to `01-01-20${year}`
+  - Empty years will stay empty
+- Custom color section for unscratched, unscratched hover, scratched, text, outlines, or per location
+  - Defaults: unscratched `#cca11f`, scratched `#c2c2c2`, text: `#ffffff`
+  - Variables: `COLOR_UNSCRATCHED`, `COLOR_UNSCRATCHED_HOVER`, `COLOR_SCRATCHED`, `COLOR_TEXT`, and `COLOR_OUTLINES`, `COLOR_SHARE`, `COLOR_SHARE_TEXT`
+  - The color must be provided as a valid CSS color format, such as `#ff0000`, `rgb(255, 0, 0)`, `red`, etc. Hex is preferred to match what is used in other places
+- Auto-backup databse on version migration
+- Favicon changes color with preferred browser theme - dark/light
 
 ## [1.2.2] - 2024-11-27
 
