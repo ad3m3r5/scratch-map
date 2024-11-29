@@ -148,18 +148,13 @@ async function clickObject(e) {
         </div>
 
         <br/>
-        <table id="visit-table">
-          <thead>
-            <tr>
-              <th>Date</th>
-              <th>URL</th>
-            </tr>
-          </thead>
-          <tbody id="visit-table-body">
-            ${renderSwalVisits(object)}
-          </tbody>
-        </table>
+
+        <div id="visit-section-wrapper">
+          ${renderSwalVisits(object)}
+        </div>
+
         <br/>
+
         <button id="scratch-add-button" class="swal2-confirm swal2-styled swal2-default-outline">Add Visit</button>
       `,
       didOpen: () => {
@@ -284,10 +279,10 @@ async function clickObject(e) {
         </div>
 
         <label for="swal2-input-date" class="swal2-input-label">Date you visited</label>
-        <input id="swal2-input-date" class="swal2-input" placeholder="${tMonth}-${tDay}-${tYear}" type="text" style="width: -webkit-fill-available;">
+        <input id="swal2-input-date" class="swal2-input" placeholder="${tMonth}-${tDay}-${tYear}" type="text">
 
         <label for="swal2-input-url" class="swal2-input-label">Link to Photo Album</label>
-        <input id="swal2-input-url" class="swal2-input" placeholder="https://cloud.mydomain.com/${encodeURIComponent(object.name.toLowerCase())}-trip-photos" type="url" style="width: -webkit-fill-available;">
+        <input id="swal2-input-url" class="swal2-input" placeholder="https://cloud.mydomain.com/${encodeURIComponent(object.name.toLowerCase())}-trip-photos" type="url">
       `,
       didOpen: () => {
         new AirDatepicker('#swal2-input-date', {
@@ -454,25 +449,23 @@ function renderSwalVisits(object) {
 
   object.visits.forEach((visit, index) => {
     html = html + `
-      <tr id="visit-row-${index}">
-        <td>
-          <div>
-            <input id="swal2-input-${index}-date" class="swal2-input" placeholder="${tMonth}-${tDay}-${tYear}" value="${visit.date || ''}" type="text" style="width: 100%; margin: 0; max-width: 125px;">
-          </div>
-        </td>
-        <td>
-          <div>
-            <input id="swal2-input-${index}-url" class="swal2-input" placeholder="https://cloud.mydomain.com/${encodeURIComponent(object.name.toLowerCase())}-trip-photos" value="${visit.url || ''}" type="url" style="width: 100%; margin: 0">
-          </div>
-        </td>
-        <td>
+      <div class="visit-section">
+        <div class="visit-section-field">
+          <label for="swal2-input-${index}-date" class="swal2-input-label visit-date-label">Date: </label>
+          <input id="swal2-input-${index}-date" class="swal2-input" type="text" placeholder="${tMonth}-${tDay}-${tYear}" value="${visit.date || ''}">
+        </div>
+
+        <div class="visit-section-field">
+          <label for="swal2-input-${index}-url" class="swal2-input-label visit-url-label">Photo URL: </label>
+          <input id="swal2-input-${index}-url" class="swal2-input" type="url" placeholder="https://cloud.mydomain.com/${encodeURIComponent(object.name.toLowerCase())}-trip-photos" value="${visit.url || ''}">
+
           <div id="scratch-delete-icon">
             <button id="scratch-delete-button-${index}">
               <img src="../images/trash.svg" alt="Delete" />
             </button>
           </div>
-        </td>
-      </tr>        
+        </div>
+      </div>
     `;
   });
 
@@ -480,12 +473,13 @@ function renderSwalVisits(object) {
 }
 
 function readSwalVisits() {
-  let visits = document.querySelectorAll('#visit-table-body tr');
+  let visits = document.querySelectorAll('#visit-section-wrapper .visit-section');
+  console.log(visits)
 
   let newVisits = [];
 
   visits.forEach((visit, index) => {
-    let inputs = visit.querySelectorAll('td input');
+    let inputs = visit.querySelectorAll('input');
 
     newVisits.push({
       date: inputs[0].value,
@@ -498,8 +492,8 @@ function readSwalVisits() {
 
 function reloadSwalVisits(object) {
   let newVisitsHtml = renderSwalVisits(object);
-  let tbody = document.getElementById('visit-table-body');
-  tbody.innerHTML = newVisitsHtml;
+  let visitBody = document.getElementById('visit-section-wrapper');
+  visitBody.innerHTML = newVisitsHtml;
 
   object.visits.forEach((visit, index) => {
     let deleteVisitButton = document.getElementById(`scratch-delete-button-${index}`);

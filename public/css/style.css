@@ -356,13 +356,47 @@ html, body {
   border-radius: 5px;
 }
 
-#visit-table {
-  width: 100%
+.visit-section {
+  border: 1px solid lightgrey;
+  border-radius: 10px;
+  padding: 15px 15px;
+  margin-bottom: 15px;
+}
+
+.visit-section-field {
+  display: flex;
+  margin-bottom: 10px;
+  gap: 10px;
+}
+
+.visit-section-field label {
+  display: flex;
+  margin: 8px 5px 8px 0px;
+  text-align: left;
+}
+
+.visit-section-field input {
+  display: flex;
+  width: 100%;
+  margin: 0;
+  max-height: 35px;
+}
+
+.visit-date-label {
+  min-width: 50px;
+}
+
+.visit-url-label {
+  min-width: 85px;
 }
 
 #scratch-delete-icon {
-  width: 45px;
-  height: 45px;
+  display: flex;
+  width: 35px;
+  height: 35px;
+  min-width: 35px;
+  min-height: 35px;
+  margin: 0 auto;
 }
 
 #scratch-delete-icon > button {
@@ -406,8 +440,8 @@ div .clr-field {
 }
 
 .clr-field > input {
-  height: 45px;
-  width: 45px;
+  height: 35px;
+  width: 35px;
   border: none;
   outline: none;
   border-radius: 5px;
