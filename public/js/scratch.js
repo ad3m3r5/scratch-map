@@ -143,7 +143,7 @@ async function clickObject(e) {
         </label>
 
         <div id="swal2-input-color-div" class="fill">
-          <label for="swal2-input-color" class="swal2-input-label" style="display: inline-block;">Color for Scratch: </label>
+          <label for="swal2-input-color" class="swal2-input-label" style="display: inline-block;">Scratch color: </label>
           <input id="swal2-input-color" class="full" value="${colors.scratched || '#c2c2c2'}" type="text" data-coloris>
         </div>
 
@@ -274,7 +274,7 @@ async function clickObject(e) {
       icon: 'question',
       html: `
         <div id="swal2-input-color-div" class="fill">
-          <label for="swal2-input-color" class="swal2-input-label" style="display: inline-block;">Color for Scratch: </label>
+          <label for="swal2-input-color" class="swal2-input-label" style="display: inline-block;">Scratch color: </label>
           <input id="swal2-input-color" class="full" value="${colors.scratched || '#c2c2c2'}" type="text" data-coloris>
         </div>
 
