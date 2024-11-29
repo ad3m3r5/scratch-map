@@ -318,14 +318,6 @@ async function clickObject(e) {
 
         if (!validator.isHexColor(color)) {
           Swal.showValidationMessage(
-<<<<<<< HEAD
-            `Invalid Year - must be a number and less than 6 characters.`
-          )
-        } else if ((url.length > 0 && !validator.isURL(url, validatorURLOptions)) || url.length > maxURLLength) {
-          Swal.showValidationMessage(
-            `Invalid URL - must contain a protocol and be less than ${maxURLLength} characters.`
-          )
-=======
             `Invalid color code. Must be in the format "#c2c2c2"`
           );
           return false;
@@ -334,7 +326,6 @@ async function clickObject(e) {
         if ((date.length > 0 && !isValidDate(date, validatorDateOptions))) {
           invalidData = true;
           dateInput.style.outline = '2px solid red';
->>>>>>> feature/multivisit
         } else {
           dateInput.style.outline = '';
         }
