@@ -90,10 +90,10 @@ async function clickObject(e) {
 
   let saResponse = null;
   let keepScratched = null;
-  // prompt user
-  if (scratched) {
-    let visitHtml = renderSwalVisits(object);
 
+  // prompt user
+    // existing scratch
+  if (scratched) {
     saResponse = await Swal.fire({
       title: `Update ${object.name}?`,
       icon: 'question',
@@ -117,7 +117,7 @@ async function clickObject(e) {
             </tr>
           </thead>
           <tbody id="visit-table-body">
-            ${visitHtml}
+            ${renderSwalVisits(object)}
           </tbody>
         </table>
         <br/>
@@ -159,15 +159,24 @@ async function clickObject(e) {
       },
       preConfirm: () => {
         let newVisits = readSwalVisits();
+        let colorInput = document.getElementById('swal2-input-color');
+        let color = colorInput.value;
 
         let invalidData = false;
 
-        newVisits.forEach((visit, index) => {
-          let date = visit.date;
-          let url = visit.url;
+        if (!validator.isHexColor(color)) {
+          Swal.showValidationMessage(
+            `Invalid color code. Must be in the format "#c2c2c2"`
+          );
+          return false;
+        }
 
+        newVisits.forEach((visit, index) => {
           let dateInput = document.getElementById(`swal2-input-${index}-date`);
           let urlInput = document.getElementById(`swal2-input-${index}-date`);
+
+          let date = visit.date;
+          let url = visit.url;
 
           if ((date.length > 0 && !validator.isDate(date, validatorDateOptions))) {
             invalidData = true;
@@ -187,12 +196,14 @@ async function clickObject(e) {
         if (invalidData) {
           Swal.showValidationMessage(
             `Please fix the outlined errors. Dates must be formatted as MM-DD-YYYY, and URLs must contain a protocol and be less than ${maxURLLength} characters.`
-          )
-        } else {
-          return {
-            checkbox: document.getElementById('swal2-checkbox-1').checked,
-            visits: newVisits
-          }
+          );
+          return false;
+        }
+
+        return {
+          checkbox: document.getElementById('swal2-checkbox-1').checked,
+          color: color,
+          visits: newVisits
         }
       },
       showConfirmButton: true,
@@ -210,6 +221,7 @@ async function clickObject(e) {
         keepScratched = false;
       }
     }
+    // new scratch
   } else if (!scratched) {
     saResponse = await Swal.fire({
       title: `Scratch ${object.name}?`,
@@ -244,13 +256,22 @@ async function clickObject(e) {
         });
       },
       preConfirm: () => {
+        let colorInput = document.getElementById('swal2-input-color');
         let dateInput = document.getElementById('swal2-input-date');
         let urlInput = document.getElementById('swal2-input-url');
 
+        let color = colorInput.value;
         let date = dateInput.value;
         let url = urlInput.value;
 
         let invalidData = false;
+
+        if (!validator.isHexColor(color)) {
+          Swal.showValidationMessage(
+            `Invalid color code. Must be in the format "#c2c2c2"`
+          );
+          return false;
+        }
 
         if ((date.length > 0 && !validator.isDate(date, validatorDateOptions))) {
           invalidData = true;
@@ -269,14 +290,16 @@ async function clickObject(e) {
         if (invalidData) {
           Swal.showValidationMessage(
             `Please fix the outlined errors. Dates must be formatted as MM-DD-YYYY, and URLs must contain a protocol and be less than ${maxURLLength} characters.`
-          )
-        } else {
-          return {
-            visits: [{
-              date: date,
-              url: url
-            }]
-          }
+          );
+          return false;
+        }
+
+        return {
+          color,
+          visits: [{
+            date: date,
+            url: url
+          }]
         }
       },
       showConfirmButton: true,
@@ -294,8 +317,6 @@ async function clickObject(e) {
       title: 'An unknown error has occurred'
     });
   } else if (saResponse.isConfirmed) {
-    let newVisits = saResponse.value.visits;
-
     const rawResponse = await fetch('/scratch', {
       method: 'POST',
       headers: {
@@ -304,9 +325,10 @@ async function clickObject(e) {
       },
       body: JSON.stringify({
         'type': mapType,
-        'code': object.code,
+        'code': object.code.toUpperCase(),
         'scratch': !scratched ? true : (keepScratched ? true : false),
-        'visits': newVisits
+        'color': saResponse.value.color.toUpperCase(),
+        'visits': saResponse.value.visits
       })
     });
 
@@ -455,7 +477,7 @@ function addScratchVisit(e, object) {
 
   if (newVisits.length > 0) {
     if (newVisits[lastElement].date.length < 1 && newVisits[lastElement].url.length < 1) {
-      alert("Please complete the previous visit before adding another");
+      alert("Please add a date or URL to the previous visit before adding another");
       return;
     }
   }

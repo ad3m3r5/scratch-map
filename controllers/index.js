@@ -71,7 +71,9 @@ export const getMap = ((req, res, next) => {
         unscratched_hover: global.COLOR_UNSCRATCHED_HOVER,
         scratched: global.COLOR_SCRATCHED,
         text: global.COLOR_TEXT,
-        outlines: global.COLOR_OUTLINES
+        outlines: global.COLOR_OUTLINES,
+        share: global.COLOR_SHARE,
+        share_text: global.COLOR_SHARE_TEXT
       },
       mapSVG: fs.readFileSync(path.join(global.__rootDir, `/public/images/${mapType}.svg`))
     });
@@ -97,7 +99,9 @@ export const getView = ((req, res, next) => {
         unscratched_hover: global.COLOR_UNSCRATCHED_HOVER,
         scratched: global.COLOR_SCRATCHED,
         text: global.COLOR_TEXT,
-        outlines: global.COLOR_OUTLINES
+        outlines: global.COLOR_OUTLINES,
+        share: global.COLOR_SHARE,
+        share_text: global.COLOR_SHARE_TEXT
       },
       mapSVG: fs.readFileSync(path.join(global.__rootDir, `/public/images/${mapType}.svg`))
     });
@@ -115,15 +119,16 @@ export const postScratch = (async (req, res, next) => {
   //  type: map type/name, string
   //  code: entity code, string
   //  scratch: entity scratched, boolean
+  //  color: custom scratch color
   //  visits: array of visits, object
   //    date: visit date, string
   //    url: url to photo album, string
 
   // body attribute count
-  if (Object.keys(req.body).length !== 4) {
+  if (Object.keys(req.body).length !== 5) {
     return res.status(422).json({ status: 422, message: 'Invalid attribute length' }).send();
     // body attribute data types
-  } else if (typeof req.body.type !== 'string' || typeof req.body.code !== 'string' || typeof req.body.scratch !== 'boolean' || typeof req.body.visits !== 'object') {
+  } else if (typeof req.body.type !== 'string' || typeof req.body.code !== 'string' || typeof req.body.scratch !== 'boolean' || typeof req.body.visits !== 'object' || typeof req.body.color !== 'string' ) {
     return res.status(422).json({ status: 422, message: 'Invalid data types' }).send();
     // scratch type length
   } else if (req.body.type.length < 0 || req.body.type.length > 30) {
@@ -137,6 +142,9 @@ export const postScratch = (async (req, res, next) => {
     // check that the country/state code exists
   } else if (!(req.body.code.toUpperCase() in getConnection().data[req.body.type])) {
     return res.status(422).json({ status: 422, message: 'Invalid object code' }).send();
+    // invalid scratch color
+  } else if (req.body.color.length > 0 && !validator.isHexColor(req.body.color)) {
+    return res.status(422).json({ status: 422, message: 'Invalid hex color code' }).send();
   } else {
     let sanitizedVisits = [];
 
@@ -181,11 +189,13 @@ export const postScratch = (async (req, res, next) => {
 
       if (exists) {
         // update existing scratch
+        scratched[req.body.type][existsIndex].color = req.body.color.toUpperCase();
         scratched[req.body.type][existsIndex].visits = sanitizedVisits;
       } else {
         // add new scratch
         scratched[req.body.type].push({
           code: req.body.code.toUpperCase(),
+          color: req.body.color.toUpperCase(),
           visits: sanitizedVisits
         });
       }
