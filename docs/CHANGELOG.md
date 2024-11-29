@@ -31,9 +31,8 @@ This changelog will be based on the syntax provided by [keep a changelog](https:
   - Empty years will stay empty
 - Custom color section for unscratched, unscratched hover, scratched, text, outlines, or per location
   - Defaults: unscratched `#cca11f`, scratched `#c2c2c2`, text: `#ffffff`
-  - Variables: `COLOR_UNSCRATCHED`, `COLOR_UNSCRATCHED_HOVER`, `COLOR_SCRATCHED`, `COLOR_TEXT`, and `COLOR_OUTLINES`
-  - The color must be provided as a valid CSS color format, such as `#ff0000`, `rgb(255, 0, 0)`, `red`, etc
-  - The share button and text will be color matched to the unscratched color and text color
+  - Variables: `COLOR_UNSCRATCHED`, `COLOR_UNSCRATCHED_HOVER`, `COLOR_SCRATCHED`, `COLOR_TEXT`, and `COLOR_OUTLINES`, `COLOR_SHARE`, `COLOR_SHARE_TEXT`
+  - The color must be provided as a valid CSS color format, such as `#ff0000`, `rgb(255, 0, 0)`, `red`, etc. Hex is preferred to match what is used in other places
 - Auto-backup databse on version migration
 - Favicon changes color with preferred browser theme - dark/light
 

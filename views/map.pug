@@ -38,9 +38,6 @@ block content
     | .entities g.not-scratched .label-box {
     |   fill: #{colors.unscratched};
     | }
-    | #share-button {
-    |   background-color: #{colors.unscratched};
-    | }
     //- unscratched hover
     | .entities g:hover, .entities g path:hover:not(.label-connector):not(.label-text),
     | .entities g:hover path:not(.label-connector):not(.label-text) {
@@ -71,11 +68,15 @@ block content
     | .entities g path:not(.label-connector):not(.label-text) {
     |   stroke: #{colors.outlines};
     | }
+    //- share button
+    | #share-button {
+    |   background-color: #{colors.share};
+    | }
     | #share-text {
-    |   color: #{colors.text};
+    |   color: #{colors.share_text};
     | }
     | #share-icon {
-    |   fill: #{colors.text};
+    |   fill: #{colors.share_text};
     | }
 
   h1#title #{title}

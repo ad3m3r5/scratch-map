@@ -15,6 +15,9 @@ global.COLOR_UNSCRATCHED_HOVER = process.env.COLOR_UNSCRATCHED_HOVER || '#8f8f8f
 global.COLOR_SCRATCHED = process.env.COLOR_SCRATCHED || '#c2c2c2';
 global.COLOR_TEXT = process.env.COLOR_TEXT || '#ffffff';
 global.COLOR_OUTLINES = process.env.COLOR_OUTLINES || '#ffffff';
+global.COLOR_SHARE = process.env.COLOR_SHARE || '#cca11f';
+global.COLOR_SHARE_TEXT = process.env.COLOR_SHARE_TEXT || '#ffffff';
+
 
 // allow LOG_LEVEL to be any case
 if ('LOG_LEVEL' in process.env) {
@@ -66,6 +69,8 @@ if (global.LOG_LEVEL == 'DEBUG') {
   console.debug("  global.COLOR_SCRATCHED:", global.COLOR_SCRATCHED);
   console.debug("  global.COLOR_TEXT:", global.COLOR_TEXT);
   console.debug("  global.COLOR_OUTLINES:", global.COLOR_OUTLINES);
+  console.debug("  global.COLOR_SHARE:", global.COLOR_SHARE);
+  console.debug("  global.COLOR_SHARE_TEXT:", global.COLOR_SHARE_TEXT);
 
   console.debug("\n");
 }
