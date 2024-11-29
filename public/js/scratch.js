@@ -150,7 +150,7 @@ async function clickObject(e) {
         Coloris({
           el: '#swal2-input-color',
           theme: 'default',
-          themeMode: 'auto',
+          themeMode: 'light',
           format: 'hex',
           alpha: false,
           clearButton: true,
@@ -236,7 +236,7 @@ async function clickObject(e) {
         Coloris({
           el: '#swal2-input-color',
           theme: 'default',
-          themeMode: 'auto',
+          themeMode: 'light',
           format: 'hex',
           alpha: false,
           clearButton: true,
