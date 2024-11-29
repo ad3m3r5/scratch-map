@@ -474,7 +474,6 @@ function renderSwalVisits(object) {
 
 function readSwalVisits() {
   let visits = document.querySelectorAll('#visit-section-wrapper .visit-section');
-  console.log(visits)
 
   let newVisits = [];
 
@@ -558,8 +557,13 @@ function deleteScratchVisit(e, object, visit, index) {
   e.stopPropagation();
 
   let visitDate = document.getElementById(`swal2-input-${index}-date`);
+  let visitUrl = document.getElementById(`swal2-input-${index}-url`);
 
-  let result = confirm(`Are you sure you want to delete the visit for ${visitDate.value}?`);
+  let result = confirm(`
+    Are you sure you want to delete visit #${index+1}?
+        Date: ${visitDate.value}
+        URL: ${visitUrl.value}
+  `);
 
   if (result) {
     let newVisits = object.visits;
