@@ -6,6 +6,7 @@ This changelog will be based on the syntax provided by [keep a changelog](https:
   - [README](../README.md)
   - Changes
     - [Unreleased](#unreleased---tbd)
+    - [1.2.3](#123---2024-12-08)
     - [1.2.2](#122---2024-11-27)
     - [1.2.1](#121---2024-11-26)
     - [1.2.0](#120---2024-11-26)
@@ -20,6 +21,11 @@ This changelog will be based on the syntax provided by [keep a changelog](https:
 - Multi-Visit Support
 - "Home" country tagging
 - Full date-picker rather than just "Year"
+
+## [1.2.3] - 2024-12-08
+
+### Fixed
+- Changed Pug rendering of Links/URLs on the index page. This was caused by the hex encoding for input sanitization introduced in 1.2.0. Mentioned in [issue #30](https://github.com/ad3m3r5/scratch-map/issues/30)
 
 ## [1.2.2] - 2024-11-27
 
@@ -60,7 +66,7 @@ This released includes a breaking change noted below.
 - Updated primary packages in `package.json`
 
 ### Fixed
-- The was an XSS vulnerabiltiy with the URL input for a photo album. This was fixed with input sanitization and validation. Discovered by [l4rm4nd](https://github.com/l4rm4nd)
+- There was an XSS vulnerabiltiy with the URL input for a photo album. This was fixed with input sanitization and validation. Discovered by [l4rm4nd](https://github.com/l4rm4nd)
 - The map had an issue where dragging and releasing on the same entity would cause a click event. A timeout has been added to decrease the change of that.
 
 ## [1.1.12] - 2023-11-23

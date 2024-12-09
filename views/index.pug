@@ -45,7 +45,7 @@ block content
                     td #{val.name}
                     td #{val.year}
                     td
-                      a(href=val.url target='_blank') #{val.url}
+                      a(href=val.url target='_blank') !{val.url}
         - if (validTypes[i+1] !== undefined)
             div.section-column
               button.section-collapsible-button
@@ -74,7 +74,7 @@ block content
                         td #{val.name}
                         td #{val.year}
                         td
-                          a(href=val.url target='_blank') #{val.url}
+                          a(href=val.url target='_blank') !{val.url}
 
   script.
     var collapsibles = document.querySelectorAll('.section-collapsible-button');
