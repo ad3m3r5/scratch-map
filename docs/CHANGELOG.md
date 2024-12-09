@@ -25,7 +25,7 @@ This changelog will be based on the syntax provided by [keep a changelog](https:
 ## [1.2.3] - 2024-12-08
 
 ### Fixed
-- Changed Pug rendering of Links/URLs on the index page. This was caused by the hex encoding for input sanitization introduced in 1.2.0. Mentioned in [issue #30](https://github.com/ad3m3r5/scratch-map/issues/30)
+- Rendering some symbols of Links/URLs on the index page was broken due to the hex encoding for input sanitization introduced in 1.2.0. The Pug template was adjusted to fix this. Mentioned in [issue #30](https://github.com/ad3m3r5/scratch-map/issues/30)
 
 ## [1.2.2] - 2024-11-27
 
