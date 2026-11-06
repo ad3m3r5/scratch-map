@@ -111,7 +111,7 @@ export const postScratch = (async (req, res, next) => {
   } else if (req.body.code.length < 1 || req.body.code.length > 3) {
     // country/state code length
     return res.status(422).json({ status: 422, message: 'Invalid code length' });
-  } else if (req.body.year.length > 6) {
+  } else if (req.body.year.length > 5) {
     // year length
     return res.status(422).json({ status: 422, message: 'Invalid year length' });
   } else if (req.body.year.length > 0 && !isValidYear(req.body.year)) {

@@ -89,7 +89,7 @@ async function clickObject(e) {
       preConfirm: () => {
         let year = document.getElementById('swal2-input-1').value.trim();
         let url = document.getElementById('swal2-input-2').value.trim();
-        if ((year.length > 0 && !isValidYear(year)) || year.length > 6) {
+        if ((year.length > 0 && !isValidYear(year)) || year.length > 5) {
           Swal.showValidationMessage(
             `Invalid Year - must be a number and less than 6 characters.`
           )
@@ -132,7 +132,7 @@ async function clickObject(e) {
       preConfirm: () => {
         let year = document.getElementById('swal2-input-1').value.trim();
         let url = document.getElementById('swal2-input-2').value.trim();
-        if ((year.length > 0 && !isValidYear(year)) || year.length > 6) {
+        if ((year.length > 0 && !isValidYear(year)) || year.length > 5) {
           Swal.showValidationMessage(
             `Invalid Year - must be a number and less than 6 characters.`
           )
