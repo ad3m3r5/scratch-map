@@ -49,7 +49,7 @@ export const getMap = ((req, res, next) => {
   let mapType = req.params.mapType;
 
   if (!validTypes.includes(mapType)) {
-    res.render('error', { status: '404', message: `${req.originalUrl} Not Found` });
+    res.status(404).render('error', { status: '404', message: `${req.originalUrl} Not Found` });
   } else {
     let objectList = getConnection().data[mapType];
     let scratchedObjects = getConnection().data.scratched[mapType];
@@ -71,7 +71,7 @@ export const getView = ((req, res, next) => {
   let mapType = req.params.mapType;
 
   if (!validTypes.includes(mapType)) {
-    res.render('error', { status: '404', message: `${req.originalUrl} Not Found` });
+    res.status(404).render('error', { status: '404', message: `${req.originalUrl} Not Found` });
   } else {
     let scratchedObjects = getConnection().data.scratched[mapType];
 
