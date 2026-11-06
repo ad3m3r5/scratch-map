@@ -92,7 +92,7 @@ export const postScratch = (async (req, res, next) => {
     console.debug(req.body);
   }
 
-  // trim surrounding whitespace (e.g. from copy/paste) before validation
+  // trim surrounding whitespace
   if (typeof req.body.year === 'string') req.body.year = req.body.year.trim();
   if (typeof req.body.url === 'string') req.body.url = req.body.url.trim();
 

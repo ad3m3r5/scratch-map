@@ -7,26 +7,26 @@ jobs:
     runs-on: ubuntu-latest
 
     strategy:
+      fail-fast: false
       matrix:
         node_alpine:
-          - node:18.20.4-alpine3.20
-          - node:20.18.0-alpine3.20
-          - node:22.11.0-alpine3.20
+          - node:22.23.4-alpine3.23
+          - node:24.22.2-alpine3.23
+          - node:26.13.0-alpine3.23
         image_arch:
           - linux/arm/v6
           - linux/arm/v7
           - linux/arm64
           - linux/amd64
         image_version:
-          - 3.16
-          - 3.20
+          - "3.23"
 
     steps:
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
+        uses: docker/setup-qemu-action@v4
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v4
 
       - name: Output Buildx Info
         run: docker buildx ls
