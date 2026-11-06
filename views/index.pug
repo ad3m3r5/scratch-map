@@ -21,7 +21,7 @@ block content
         div.section-column
           button.section-collapsible-button
             span.section-collapsible-title #{parseTypeName(validTypes[i])}
-            span.section-collapsible-icon ╲╱
+            span.section-collapsible-icon
           div.section-collapsible-content
             div.section-inner-column
               h3.table-title Not-Visited (#{Object.keys(unscratchedLists[validTypes[i]]).length})
@@ -50,7 +50,7 @@ block content
             div.section-column
               button.section-collapsible-button
                 span.section-collapsible-title #{parseTypeName(validTypes[i+1])}
-                span.section-collapsible-icon ╲╱
+                span.section-collapsible-icon
               div.section-collapsible-content
                 div.section-inner-column
                   h3.table-title Not-Visited (#{Object.keys(unscratchedLists[validTypes[i+1]]).length})
@@ -81,17 +81,14 @@ block content
 
     for (let i = 0; i < collapsibles.length; i++) {
       collapsibles[i].addEventListener('click', function() {
-        var collIcon = this.querySelector('.section-collapsible-icon');
         var collContent = this.nextElementSibling;
         let collContentStyle = getComputedStyle(collContent);
 
         if (!this.classList.contains('active')) {
           this.classList.add('active');
-          collIcon.innerHTML = '╱╲';
           collContent.style.display = 'flex';
         } else if (this.classList.contains('active')) {
           this.classList.remove('active');
-          collIcon.innerHTML = '╲╱';
           collContent.style.display = 'none';
         }
       });
