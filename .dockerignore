@@ -6,3 +6,8 @@ node_modules
 npm-debug.log
 nodemon.json
 README.md
+
+# local data and secrets - never bake into the image
+data
+.env
+.env.*
