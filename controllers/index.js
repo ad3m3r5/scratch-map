@@ -92,6 +92,10 @@ export const postScratch = (async (req, res, next) => {
     console.debug(req.body);
   }
 
+  // trim surrounding whitespace (e.g. from copy/paste) before validation
+  if (typeof req.body.year === 'string') req.body.year = req.body.year.trim();
+  if (typeof req.body.url === 'string') req.body.url = req.body.url.trim();
+
   if (Object.keys(req.body).length !== 5) {
     // body attribute count
     return res.status(422).json({ status: 422, message: 'Invalid attir length' }).send();

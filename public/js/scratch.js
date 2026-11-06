@@ -87,8 +87,8 @@ async function clickObject(e) {
         `<label for="swal2-input-2" class="swal2-input-label">Link to Photo Album</label>` +
         `<input id="swal2-input-2" class="swal2-input" placeholder="https://cloud.mydomain.com/${object.name.toLowerCase()}-trip-photos" value="${object.url || ''}" type="url" style="width: -webkit-fill-available;">`,
       preConfirm: () => {
-        let year = document.getElementById('swal2-input-1').value;
-        let url = document.getElementById('swal2-input-2').value;
+        let year = document.getElementById('swal2-input-1').value.trim();
+        let url = document.getElementById('swal2-input-2').value.trim();
         if ((year.length > 0 && !isValidYear(year)) || year.length > 6) {
           Swal.showValidationMessage(
             `Invalid Year - must be a number and less than 6 characters.`
@@ -100,8 +100,8 @@ async function clickObject(e) {
         } else {
           return {
             checkbox: document.getElementById('swal2-checkbox-1').checked,
-            year: document.getElementById('swal2-input-1').value,
-            url: document.getElementById('swal2-input-2').value
+            year,
+            url
           }
         }
       },
@@ -130,8 +130,8 @@ async function clickObject(e) {
         `<label for="swal2-input-2" class="swal2-input-label">Link to Photo Album</label>` +
         `<input id="swal2-input-2" class="swal2-input" placeholder="https://cloud.mydomain.com/${object.name.toLowerCase()}-trip-photos" type="url" style="width: -webkit-fill-available;">`,
       preConfirm: () => {
-        let year = document.getElementById('swal2-input-1').value;
-        let url = document.getElementById('swal2-input-2').value;
+        let year = document.getElementById('swal2-input-1').value.trim();
+        let url = document.getElementById('swal2-input-2').value.trim();
         if ((year.length > 0 && !isValidYear(year)) || year.length > 6) {
           Swal.showValidationMessage(
             `Invalid Year - must be a number and less than 6 characters.`
@@ -142,8 +142,8 @@ async function clickObject(e) {
           )
         } else {
           return {
-            year: document.getElementById('swal2-input-1').value,
-            url: document.getElementById('swal2-input-2').value
+            year,
+            url
           }
         }
       },
