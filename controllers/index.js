@@ -98,35 +98,35 @@ export const postScratch = (async (req, res, next) => {
 
   if (Object.keys(req.body).length !== 5) {
     // body attribute count
-    return res.status(422).json({ status: 422, message: 'Invalid attir length' }).send();
+    return res.status(422).json({ status: 422, message: 'Invalid attir length' });
   } else if (typeof req.body.type !== 'string' || typeof req.body.code !== 'string' || typeof req.body.scratch !== 'boolean' || typeof req.body.year !== 'string' || typeof req.body.url !== 'string') {
     // body attribute data types
-    return res.status(422).json({ status: 422, message: 'Invalid data type' }).send();
-  } else if (req.body.type.length < 0 || req.body.type.length > 30) {
+    return res.status(422).json({ status: 422, message: 'Invalid data type' });
+  } else if (req.body.type.length > 30) {
     // scratch type length
-    return res.status(422).json({ status: 422, message: 'Invalid object length' }).send();
+    return res.status(422).json({ status: 422, message: 'Invalid object length' });
   } else if (!validTypes.includes(req.body.type)) {
     // scratch type
-    return res.status(422).json({ status: 422, message: 'Invalid object type' }).send();
+    return res.status(422).json({ status: 422, message: 'Invalid object type' });
   } else if (req.body.code.length < 1 || req.body.code.length > 3) {
     // country/state code length
-    return res.status(422).json({ status: 422, message: 'Invalid code length' }).send();
-  } else if (req.body.year.length < 0 || req.body.year.length > 6) {
+    return res.status(422).json({ status: 422, message: 'Invalid code length' });
+  } else if (req.body.year.length > 6) {
     // year length
-    return res.status(422).json({ status: 422, message: 'Invalid year length' }).send();
+    return res.status(422).json({ status: 422, message: 'Invalid year length' });
   } else if (req.body.year.length > 0 && !isValidYear(req.body.year)) {
     // year only contains numbers
-    return res.status(422).json({ status: 422, message: 'Invalid year' }).send();
-  } else if (req.body.url.length < 0 || req.body.url.length > maxURLLength) {
+    return res.status(422).json({ status: 422, message: 'Invalid year' });
+  } else if (req.body.url.length > maxURLLength) {
     // url length
-    return res.status(422).json({ status: 422, message: 'Invalid url length' }).send();
+    return res.status(422).json({ status: 422, message: 'Invalid url length' });
   } else if (req.body.url.length > 0 && !validator.isURL(req.body.url, validatorURLOptions)) {
     // check URL validity
-    return res.status(422).json({ status: 422, message: 'Invalid url' }).send();
+    return res.status(422).json({ status: 422, message: 'Invalid url' });
   } else {
     // check that the country/state code exists
     if (!(req.body.code.toUpperCase() in getConnection().data[req.body.type])) {
-      return res.status(422).json({ status: 422, message: 'Invalid object code' }).send();
+      return res.status(422).json({ status: 422, message: 'Invalid object code' });
     }
 
     let sanitizedUrl = sanitizeInput(req.body.url);
@@ -170,7 +170,7 @@ export const postScratch = (async (req, res, next) => {
         getConnection().data.scratched = scratched;
         getConnection().write();
       } else {
-        return res.status(422).json({ status: 422, message: `Unable to unscratch ${req.body.code.toUpperCase()}` }).send();
+        return res.status(422).json({ status: 422, message: `Unable to unscratch ${req.body.code.toUpperCase()}` });
       }
     }
 
