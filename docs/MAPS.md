@@ -18,6 +18,7 @@
   - [Brazilian Map](#brazlian-map)
   - [Chinese Map](#chinese-map)
   - [Indian Map](#indian-map)
+  - [Italian Map](#italian-map)
   - [Credits](#credits)
     - [Maps](#maps)
 
@@ -220,6 +221,15 @@ Containers the 28 states and 8 union entities.
 
 Codes: https://www.iso.org/obp/ui/#iso:code:3166:IN
 
+<br />
+
+## Italian Map
+Contains the 20 regions of Italy.
+
+The ISO 3166-2:IT region codes are numeric, so three-letter abbreviations are used instead (e.g. LOM for Lombardia).
+
+Codes: https://www.iso.org/obp/ui/#iso:code:3166:IT
+
 
 <br />
 
@@ -267,4 +277,7 @@ Codes: https://www.iso.org/obp/ui/#iso:code:3166:IN
   - This map was moderately altered.
 - Indian Map SVG
   - https://commons.wikimedia.org/wiki/File:India_location_map.svg
+  - This map was moderately altered.
+- Italian Map SVG
+  - https://commons.wikimedia.org/wiki/File:Italian_regions_white.svg
   - This map was moderately altered.

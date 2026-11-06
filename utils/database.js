@@ -12,7 +12,7 @@ const defaultData = {
 export const validTypes = [
   'world', 'united-states-of-america', 'canada', 'australia', 'france',
   'mexico', 'japan', 'spain', 'united-kingdom', 'germany',
-  'new-zealand', 'brazil', 'china', 'india'
+  'new-zealand', 'brazil', 'china', 'india', 'italy'
 ];
 
 export const createConnection = async () => {
