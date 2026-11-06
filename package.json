@@ -11,13 +11,13 @@
     "dev": "nodemon --verbose server.js"
   },
   "dependencies": {
-    "dotenv": "^16.4.5",
-    "express": "^4.21.1",
+    "dotenv": "^16.6.1",
+    "express": "^4.22.3",
     "lowdb": "^7.0.1",
-    "pug": "^3.0.3",
-    "validator": "^13.12.0"
+    "pug": "^3.0.4",
+    "validator": "^13.15.35"
   },
   "devDependencies": {
-    "nodemon": "^3.1.7"
+    "nodemon": "^3.1.14"
   }
 }

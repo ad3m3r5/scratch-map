@@ -1,6 +1,5 @@
-# node:18 required due to npm bug on linux/arm/v7
-#   https://github.com/docker/build-push-action/issues/1071
-FROM node:18.20.4-alpine3.20
+# node:22 is latest LTS with armv7
+FROM node:22.23.4-alpine3.23
 
 ENV \
   NODE_ENV=production \
@@ -16,6 +15,7 @@ WORKDIR $APP_DIR
 
 COPY --chown=node:node . .
 
-RUN yarn install
+RUN yarn install --frozen-lockfile --production \
+  && yarn cache clean
 
 CMD [ "node", "server.js" ]
