@@ -35,12 +35,17 @@ function fullscreenView() {
   }
 }
 
+function getMaxZoom() {
+  let match = (svgContainer.dataset.zoomOnWheel || '').match(/max-scale:\s*([\d.]+)/);
+  return match ? Number(match[1]) : 2;
+}
+
 function resetView() {
   resetScale(svgContainer);
 }
 
 function zoomIn() {
-  let maxZoom = (window.location.pathname == '/map/world' ? 8 : 2);
+  let maxZoom = getMaxZoom();
   zoom(svgContainer, 1.2, {
     origin: {
       clientX: svgContainer.clientWidth/2,
@@ -52,7 +57,7 @@ function zoomIn() {
 }
 
 function zoomOut() {
-  let maxZoom = (window.location.pathname == '/map/world' ? 8 : 2);
+  let maxZoom = getMaxZoom();
   zoom(svgContainer, 0.8, {
     origin: {
       clientX: svgContainer.clientWidth/2,
