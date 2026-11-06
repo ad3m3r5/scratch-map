@@ -6,6 +6,9 @@ node_modules
 npm-debug.log
 nodemon.json
 README.md
+.github
+docs
+compose.yaml
 
 # local data and secrets - never bake into the image
 data
