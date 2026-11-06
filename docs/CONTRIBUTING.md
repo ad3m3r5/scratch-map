@@ -14,7 +14,7 @@
 <br />
 
 ## Who Can Contribute
-In short, anyone. All that I ask is that you familiarize yourself with the project, the idea behind it (simplicity), the [README](README.md), and this document. This project is meant to be open and contributed to by the public, so feel free to improve upon it.
+In short, anyone. All that I ask is that you familiarize yourself with the project, the idea behind it (simplicity), the [README](../README.md), and this document. This project is meant to be open and contributed to by the public, so feel free to improve upon it.
 
 <br />
 
@@ -24,10 +24,10 @@ In short, anyone. All that I ask is that you familiarize yourself with the proje
 If you come across any issues or bugs while using the application, document the issue as best as you can. After doing so, please open an issue with the `bug` label.
 
 ### Suggesting Improvements and Features
-If you have any ideas for improving the project, feel free to open up an issue with the `enhancement` label and do your best to thoughoughly explain the desire improvement. I will warn you though, I may opt to not implement the feature in favor of keeping the application simple. If that is the case, you are more than welcome to implement the feature yourself and open up a pull request
+If you have any ideas for improving the project, feel free to open up an issue with the `enhancement` label and do your best to thoroughly explain the desired improvement. I will warn you though, I may opt to not implement the feature in favor of keeping the application simple. If that is the case, you are more than welcome to implement the feature yourself and open up a pull request
 
 ### Adding Features
-If you would like to add a feature, you are more than welcome to. To do so, fork the project and implement your changes. After making your changes, you can open a pull request and an issue (labeled `enhancement`) referncing the afforementioned pull request.
+If you would like to add a feature, you are more than welcome to. To do so, fork the project and implement your changes. After making your changes, you can open a pull request and an issue (labeled `enhancement`) referencing the aforementioned pull request.
 
 <br />
 
@@ -55,7 +55,11 @@ Example of adding a map of Canadian Provinces/Territories:
           - viewBox="0 0 1200 600"
           - width="1200"
           - height="600"
-      - Top Level Group - group of entities (countries, states, etc.)
+      - Viewport Group - wraps the entities group
+        - Type: g (group)
+        - Attributes
+          - id="viewport"
+      - Entities Group - group of entities (countries, states, etc.)
         - Type: g (group)
         - Attributes
           - id="entities"
@@ -63,12 +67,13 @@ Example of adding a map of Canadian Provinces/Territories:
       - Individual entities (group of paths, sub-groups, etc.)
         - Type: g (group)
         - Attributes
-          - id="<2-LETTER-CODE>"
+          - id="<CODE>"
+          - <CODE> is 1-3 letters, ideally the ISO 3166-2 subdivision code
         - Label
           - Text
             - Type: path
             - Attributes
-              - id="<2-LETTER-CODE-text>
+              - id="<CODE>-text"
               - class="label-text"
             - Creation
               - Font: Roboto (will need to be installed locally to create original text)
@@ -78,12 +83,12 @@ Example of adding a map of Canadian Provinces/Territories:
           - Box (Only if main body cannot contain Text)
             - Type: path
             - Attributes
-              - id="<2-LETTER-CODE-box>
+              - id="<CODE>-box"
               - class="label-box"
           - Connector (Only if main body cannot contain Text)
             - Type: path
             - Attributes
-              - id="<2-LETTER-CODE-connector>
+              - id="<CODE>-connector"
               - class="label-connector"
       - Bodies of Water
         - Unless they are necessary, add class="water" to hide them
@@ -92,33 +97,33 @@ Example of adding a map of Canadian Provinces/Territories:
       ```
       public/images/canada.svg
 
-      <svg id="svg-map" viewBox="0 0 1200 600" width="1200px" height="600px">
-        <g class="entities">
-          <g id="AB">
-            <path id="AB-text" class="label-text" d="xxxxx" />
+      <svg id="svg-map" viewBox="0 0 1200 600" width="1200" height="600">
+        <g id="viewport">
+          <g id="entities" class="entities">
+            <g id="AB">
+              <path d="xxxxx" />
+              <path d="xxxxx" />
+              <path id="AB-text" class="label-text" d="xxxxx" />
+            </g>
 
-            <path d="xxxxx" />
-            <path d="xxxxx" />
+            <g id="NS">
+              <path d="xxxxx" />
+              <path d="xxxxx" />
+              <path id="NS-box" class="label-box" d="xxxxx" />
+              <path id="NS-text" class="label-text" d="xxxxx" />
+              <path id="NS-connector" class="label-connector" d="xxxxx" />
+            </g>
+
+            ...
+
           </g>
-
-          <g id="NS">
-            <path id="NS-connector" class="label-connector d="xxxxx" />
-            <path id="NS-text" class="label-text" d="xxxxx" />
-            <path id="NS-box" class="label-box" d="xxxxx" />
-
-            <path d="xxxxx" />
-            <path d="xxxxx" />
-          </g>
-
-          ...
-
         </g>
       </svg>
       ```
 
   - Creation of the database file.
     - The JSON must follow the same structure as the others.
-      - "2-LETTER-CODE": "NAME"
+      - "CODE": "NAME"
     - EXAMPLE:
       ```
       utils/canada.json

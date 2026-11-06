@@ -2,7 +2,7 @@
 
 ![logo](https://user-images.githubusercontent.com/11009228/201435148-647ed019-7cec-4e75-bce9-a4d1972fb4e9.jpg)
 
-<p style="text-align: center;">An open-source scratch-off style map to track your travels.</p>
+<p align="center">An open-source scratch-off style map to track your travels.</p>
 
 [![Docker Hub](https://img.shields.io/badge/DockerHub-image-blue?logo=docker&style=plastic)](https://hub.docker.com/r/ad3m3r5/scratch-map)
 ![Docker Image Size (tag)](https://img.shields.io/docker/image-size/ad3m3r5/scratch-map/latest?logo=docker&style=plastic)
@@ -17,7 +17,7 @@
   - [INSTALL](docs/INSTALL.md)
   - [CHANGELOG](docs/CHANGELOG.md)
   - [MAPS](docs/MAPS.md)
-  - [CONTRIBUTING](CONTRIBUTING.md)
+  - [CONTRIBUTING](docs/CONTRIBUTING.md)
   - [Tech Stack](#tech-stack)
   - [Screenshots](#screenshots)
   - [Credits](#credits)

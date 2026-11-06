@@ -15,7 +15,7 @@
   - [British Map](#british-map)
   - [German Map](#german-map)
   - [New Zealand Map](#new-zealand-map)
-  - [Brazilian Map](#brazlian-map)
+  - [Brazilian Map](#brazilian-map)
   - [Chinese Map](#chinese-map)
   - [Indian Map](#indian-map)
   - [Italian Map](#italian-map)
@@ -25,7 +25,7 @@
 <br />
 
 ## World Map
-Contains all official UN member states with some territories and other entities listed independantly.
+Contains all official UN member states with some territories and other entities listed independently.
 
 Baseline (Common Names): https://en.wikipedia.org/wiki/List_of_sovereign_states
 Codes: https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes
@@ -182,7 +182,7 @@ Codes: https://www.iso.org/obp/ui/#iso:code:3166:ES
 <br />
 
 ## British Map
-Contains the England, Scotland, Wales, and Northern Ireland
+Contains England, Scotland, Wales, and Northern Ireland.
 
 Codes: https://www.iso.org/obp/ui/#iso:code:3166:GB
 
@@ -196,28 +196,28 @@ Codes: https://www.iso.org/obp/ui/#iso:code:3166:DE
 <br />
 
 ## New Zealand Map
-Containers the 16 regions and 1 island.
+Contains the 16 regions and 1 island.
 
 Codes: https://www.iso.org/obp/ui/#iso:code:3166:NZ
 
 <br />
 
-## Brazlian Map
-Containers the 26 states and 1 federal district.
+## Brazilian Map
+Contains the 26 states and 1 federal district.
 
 Codes: https://www.iso.org/obp/ui/#iso:code:3166:BR
 
 <br />
 
 ## Chinese Map
-Containers the 22 provinces, 4 municipalities, 5 autonomous regions, and 1 special administrative region.
+Contains the 22 provinces, 4 municipalities, 5 autonomous regions, and 1 special administrative region.
 
 Codes: https://www.iso.org/obp/ui/#iso:code:3166:CN
 
 <br />
 
 ## Indian Map
-Containers the 28 states and 8 union entities.
+Contains the 28 states and 8 union entities.
 
 Codes: https://www.iso.org/obp/ui/#iso:code:3166:IN
 
