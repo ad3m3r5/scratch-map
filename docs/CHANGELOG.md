@@ -6,7 +6,7 @@ This changelog will be based on the syntax provided by [keep a changelog](https:
   - [README](../README.md)
   - Changes
     - [Unreleased](#unreleased---tbd)
-    - [1.2.4](#124---2026-11-06)
+    - [1.2.4](#124---2026-11-08)
     - [1.2.3](#123---2024-12-08)
     - [1.2.2](#122---2024-11-27)
     - [1.2.1](#121---2024-11-26)
@@ -23,11 +23,12 @@ This changelog will be based on the syntax provided by [keep a changelog](https:
 - "Home" country tagging
 - Full date-picker rather than just "Year"
 
-## [1.2.4] - 2026-11-06
+## [1.2.4] - 2026-11-08
 
 ### Added
 - Italian Map
 - Docker `HEALTHCHECK`
+- Autofit map to screen
 
 ### Changed
 - Base image bumped to Node 22 and Alpine 3.23
@@ -44,6 +45,7 @@ This changelog will be based on the syntax provided by [keep a changelog](https:
 - Zoom buttons now use the same max zoom as scrolling
 - Year validation consistency with length limit message
 - Update broken links in documentation pages
+- Popups were not visible when fullscreen was enabled
 
 ## [1.2.3] - 2024-12-08
 
