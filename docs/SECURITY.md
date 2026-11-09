@@ -13,4 +13,4 @@ Please include as much relevant information as possible, such as:
 * Impact of the issue, including how an attacker might exploit the issue
 
 
-I will do my best to respond and take care of any issues quickly .
+I will do my best to respond and take care of any issues quickly.

@@ -65,6 +65,7 @@ docker compose up -d
 ```
 
 ### npm or yarn
+- Requires Node.js 22 or newer
 - Set ENV vars (see above) somewhere they will persist
 - npm
   1) `npm install`

@@ -6,6 +6,7 @@ This changelog will be based on the syntax provided by [keep a changelog](https:
   - [README](../README.md)
   - Changes
     - [Unreleased](#unreleased---tbd)
+    - [1.2.4](#124---2026-11-08)
     - [1.2.3](#123---2024-12-08)
     - [1.2.2](#122---2024-11-27)
     - [1.2.1](#121---2024-11-26)
@@ -21,6 +22,30 @@ This changelog will be based on the syntax provided by [keep a changelog](https:
 - Multi-Visit Support
 - "Home" country tagging
 - Full date-picker rather than just "Year"
+
+## [1.2.4] - 2026-11-08
+
+### Added
+- Italian Map
+- Docker `HEALTHCHECK`
+- Autofit map to screen
+
+### Changed
+- Base image bumped to Node 22 and Alpine 3.23
+- Updated packages in `package.json`
+- `.dockerignore` excludes `data`, `.env`, `.github`, `docs`, and `compose.yaml`
+- Dockerfile installs dependencies first faster caching
+- Updating GitHub Actions dependencies and added build caching
+- Change home page dropdown icon
+
+### Fixed
+- Fixed 404 response code
+- Leading and trailing whitespace is trimmed from the year and photo album link
+- Photo album links on the home page now render correctly
+- Zoom buttons now use the same max zoom as scrolling
+- Year validation consistency with length limit message
+- Update broken links in documentation pages
+- Popups were not visible when fullscreen was enabled
 
 ## [1.2.3] - 2024-12-08
 
@@ -40,7 +65,7 @@ This changelog will be based on the syntax provided by [keep a changelog](https:
 
 ## [1.2.0] - 2024-11-26
 
-This released includes a breaking change noted below.
+This release includes a breaking change noted below.
 
 ### Added
 - View-only page using `/view/:map` URL path
@@ -59,15 +84,15 @@ This released includes a breaking change noted below.
   - The db.json file should be automatically updated for you, including the db version label
 - Moved from `npm` to `yarn` due to performance inconsistencies
 - Docs are more organized
-- Based Docker image to bump Node and Alpine versions
+- Base Docker image to bump Node and Alpine versions
 - Dockerfile logic to update alpine packages with apk
 - `console.log` has been replaced with `console.info` and `console.debug` to match `LOG_LEVEL`
 - json code files moved to subdirectory under `utils/`
 - Updated primary packages in `package.json`
 
 ### Fixed
-- There was an XSS vulnerabiltiy with the URL input for a photo album. This was fixed with input sanitization and validation. Discovered by [l4rm4nd](https://github.com/l4rm4nd)
-- The map had an issue where dragging and releasing on the same entity would cause a click event. A timeout has been added to decrease the change of that.
+- There was an XSS vulnerability with the URL input for a photo album. This was fixed with input sanitization and validation. Discovered by [l4rm4nd](https://github.com/l4rm4nd)
+- The map had an issue where dragging and releasing on the same entity would cause a click event. A timeout has been added to decrease the chance of that.
 
 ## [1.1.12] - 2023-11-23
 

@@ -76,6 +76,7 @@ async function clickObject(e) {
     saResponse = await Swal.fire({
       title: `Update ${object.name}?`,
       icon: 'question',
+      target: getPopupTarget(),
       html:
         `<label for="swal2-checkbox-1" class="swal2-checkbox" style="display: flex;">` +
           `<span class="swal2-label">Scratched: </span>` +
@@ -87,9 +88,9 @@ async function clickObject(e) {
         `<label for="swal2-input-2" class="swal2-input-label">Link to Photo Album</label>` +
         `<input id="swal2-input-2" class="swal2-input" placeholder="https://cloud.mydomain.com/${object.name.toLowerCase()}-trip-photos" value="${object.url || ''}" type="url" style="width: -webkit-fill-available;">`,
       preConfirm: () => {
-        let year = document.getElementById('swal2-input-1').value;
-        let url = document.getElementById('swal2-input-2').value;
-        if ((year.length > 0 && !isValidYear(year)) || year.length > 6) {
+        let year = document.getElementById('swal2-input-1').value.trim();
+        let url = document.getElementById('swal2-input-2').value.trim();
+        if ((year.length > 0 && !isValidYear(year)) || year.length > 5) {
           Swal.showValidationMessage(
             `Invalid Year - must be a number and less than 6 characters.`
           )
@@ -100,8 +101,8 @@ async function clickObject(e) {
         } else {
           return {
             checkbox: document.getElementById('swal2-checkbox-1').checked,
-            year: document.getElementById('swal2-input-1').value,
-            url: document.getElementById('swal2-input-2').value
+            year,
+            url
           }
         }
       },
@@ -124,15 +125,16 @@ async function clickObject(e) {
     saResponse = await Swal.fire({
       title: `Scratch ${object.name}?`,
       icon: 'question',
+      target: getPopupTarget(),
       html:
         `<label for="swal2-input-1" class="swal2-input-label">Year you visited</label>` +
         `<input id="swal2-input-1" class="swal2-input" placeholder="${new Date().getFullYear()}" type="text" style="width: -webkit-fill-available;">` +
         `<label for="swal2-input-2" class="swal2-input-label">Link to Photo Album</label>` +
         `<input id="swal2-input-2" class="swal2-input" placeholder="https://cloud.mydomain.com/${object.name.toLowerCase()}-trip-photos" type="url" style="width: -webkit-fill-available;">`,
       preConfirm: () => {
-        let year = document.getElementById('swal2-input-1').value;
-        let url = document.getElementById('swal2-input-2').value;
-        if ((year.length > 0 && !isValidYear(year)) || year.length > 6) {
+        let year = document.getElementById('swal2-input-1').value.trim();
+        let url = document.getElementById('swal2-input-2').value.trim();
+        if ((year.length > 0 && !isValidYear(year)) || year.length > 5) {
           Swal.showValidationMessage(
             `Invalid Year - must be a number and less than 6 characters.`
           )
@@ -142,8 +144,8 @@ async function clickObject(e) {
           )
         } else {
           return {
-            year: document.getElementById('swal2-input-1').value,
-            url: document.getElementById('swal2-input-2').value
+            year,
+            url
           }
         }
       },
@@ -158,6 +160,7 @@ async function clickObject(e) {
 
   if (saResponse == null) {
     Toast.fire({
+      target: getPopupTarget(),
       icon: 'error',
       title: 'An unknown error has occurred'
     });
@@ -190,11 +193,13 @@ async function clickObject(e) {
       renderScratched(objectGroups);
 
       Toast.fire({
+        target: getPopupTarget(),
         icon: 'success',
         title: jsonResponse.message
       })
     } else {
       Toast.fire({
+        target: getPopupTarget(),
         icon: 'error',
         title: jsonResponse.message
       });
@@ -229,6 +234,18 @@ const Toast = Swal.mixin({
     toast.addEventListener('mouseleave', Swal.resumeTimer)
   }
 });
+
+['fullscreenchange', 'webkitfullscreenchange'].forEach(event => {
+  document.addEventListener(event, () => {
+    if (getPopupTarget() === 'body' && Swal.isVisible()) {
+      Swal.close();
+    }
+  });
+});
+
+function getPopupTarget() {
+  return document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement || 'body';
+}
 
 function isValidYear(year) {
   const regex = /^(0|[1-9]\d*)$/;

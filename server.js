@@ -24,7 +24,7 @@ app.use('/', indexRouter);
 
 // error handling
 app.use((req, res, next) => {
-  res.render('error', { status: '404', message: 'Not Found' });
+  res.status(404).render('error', { status: '404', message: 'Not Found' });
 });
 app.use((err, req, res, next) => {
   console.error(err.message);

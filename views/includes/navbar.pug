@@ -30,11 +30,6 @@ div.navbar-container
     navToggle.addEventListener('click', toggleClick);
     navLinks.forEach(elem => elem.addEventListener('click', navLinkClick));
 
-    function allEventListners() {
-      navToggle.addEventListener('click', toggleClick);
-      navLinks.forEach(elem => elem.addEventListener('click', navLinkClick));
-    }
-
     function toggleClick() {
       navToggle.classList.toggle('toggle-open');
       navMenu.classList.toggle('open');
