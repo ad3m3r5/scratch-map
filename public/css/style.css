@@ -213,8 +213,17 @@ html, body {
   font-weight: bold;
   font-size: 15px;
 }
+#zoom-controls > button[aria-pressed="true"] {
+  background-color: #cca11f;
+  border: 1px solid #a8841a;
+  border-radius: 3px;
+  padding: 4px 9px;
+  color: white;
+}
 
 #svg-container {
+  clear: both;
+  margin: 0 auto;
   width: 100%;
   overflow: hidden;
 }

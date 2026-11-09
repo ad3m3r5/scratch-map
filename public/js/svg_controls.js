@@ -1,8 +1,9 @@
 const { pan, zoom, getScale, setScale, resetScale } = svgPanZoomContainer;
-var isFullscreen = false;
 
 var mapContainer = document.getElementById('map-container');
 const svgContainer = document.getElementById('svg-container');
+const autofitButton = document.getElementById('zoom-autofit');
+let autofit = readAutofit();
 
 const options = {
   origin: {
@@ -14,7 +15,7 @@ const options = {
 };
 
 function fullscreenView() {
-  if (!isFullscreen) {
+  if (!(document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement)) {
     if (mapContainer.requestFullscreen) {
       mapContainer.requestFullscreen();
     } else if (mapContainer.webkitRequestFullscreen) { /* Safari */
@@ -22,7 +23,6 @@ function fullscreenView() {
     } else if (mapContainer.msRequestFullscreen) { /* IE11 */
       mapContainer.msRequestFullscreen();
     }
-    isFullscreen = true;
   } else {
     if (document.exitFullscreen) {
       document.exitFullscreen();
@@ -31,7 +31,6 @@ function fullscreenView() {
     } else if (document.msExitFullscreen) { /* IE11 */
       document.msExitFullscreen();
     }
-    isFullscreen = false;
   }
 }
 
@@ -68,3 +67,44 @@ function zoomOut() {
   });
 }
 
+
+function readAutofit() {
+  try {
+    return localStorage.getItem('autofit') !== 'false';
+  } catch {
+    return true;
+  }
+}
+
+function toggleAutofit() {
+  autofit = !autofit;
+  try {
+    localStorage.setItem('autofit', autofit);
+  } catch {}
+  applyAutofit();
+}
+
+function getMapRatio() {
+  let viewBox = document.getElementById('svg-map').viewBox.baseVal;
+  return viewBox.width / viewBox.height;
+}
+
+function applyAutofit() {
+  autofitButton.setAttribute('aria-pressed', autofit);
+
+  if (!autofit) {
+    svgContainer.style.maxWidth = '';
+    return;
+  }
+
+  let inFullscreen = !!(document.fullscreenElement || document.webkitFullscreenElement);
+  let top = svgContainer.getBoundingClientRect().top + (inFullscreen ? 0 : window.scrollY);
+  let bottomGap = inFullscreen ? 0 : parseFloat(getComputedStyle(mapContainer).marginBottom);
+  let availableHeight = Math.max(window.innerHeight - top - bottomGap, 150);
+
+  svgContainer.style.maxWidth = `${availableHeight * getMapRatio()}px`;
+}
+
+['resize', 'load'].forEach(event => window.addEventListener(event, applyAutofit));
+['fullscreenchange', 'webkitfullscreenchange'].forEach(event => document.addEventListener(event, applyAutofit));
+applyAutofit();

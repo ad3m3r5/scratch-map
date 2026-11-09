@@ -76,6 +76,7 @@ async function clickObject(e) {
     saResponse = await Swal.fire({
       title: `Update ${object.name}?`,
       icon: 'question',
+      target: getPopupTarget(),
       html:
         `<label for="swal2-checkbox-1" class="swal2-checkbox" style="display: flex;">` +
           `<span class="swal2-label">Scratched: </span>` +
@@ -124,6 +125,7 @@ async function clickObject(e) {
     saResponse = await Swal.fire({
       title: `Scratch ${object.name}?`,
       icon: 'question',
+      target: getPopupTarget(),
       html:
         `<label for="swal2-input-1" class="swal2-input-label">Year you visited</label>` +
         `<input id="swal2-input-1" class="swal2-input" placeholder="${new Date().getFullYear()}" type="text" style="width: -webkit-fill-available;">` +
@@ -158,6 +160,7 @@ async function clickObject(e) {
 
   if (saResponse == null) {
     Toast.fire({
+      target: getPopupTarget(),
       icon: 'error',
       title: 'An unknown error has occurred'
     });
@@ -190,11 +193,13 @@ async function clickObject(e) {
       renderScratched(objectGroups);
 
       Toast.fire({
+        target: getPopupTarget(),
         icon: 'success',
         title: jsonResponse.message
       })
     } else {
       Toast.fire({
+        target: getPopupTarget(),
         icon: 'error',
         title: jsonResponse.message
       });
@@ -229,6 +234,18 @@ const Toast = Swal.mixin({
     toast.addEventListener('mouseleave', Swal.resumeTimer)
   }
 });
+
+['fullscreenchange', 'webkitfullscreenchange'].forEach(event => {
+  document.addEventListener(event, () => {
+    if (getPopupTarget() === 'body' && Swal.isVisible()) {
+      Swal.close();
+    }
+  });
+});
+
+function getPopupTarget() {
+  return document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement || 'body';
+}
 
 function isValidYear(year) {
   const regex = /^(0|[1-9]\d*)$/;

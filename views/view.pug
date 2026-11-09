@@ -29,6 +29,7 @@ block content
       button#zoom-reset(type='button', onclick='resetView()') Reset
       button#zoom-in(type='button', onclick='zoomIn()') +
       button#zoom-out(type='button', onclick='zoomOut()') -
+      button#zoom-autofit(type='button', onclick='toggleAutofit()', aria-pressed='true') Autofit
 
     if mapType == 'world'
       div#svg-container(
